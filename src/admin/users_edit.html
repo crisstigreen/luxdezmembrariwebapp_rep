@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lux Dezmembrari &mdash; Colorlib e-Commerce Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css">
+    <link rel="stylesheet" href="../css/jquery-ui.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+
+    <link rel="stylesheet" href="../css/aos.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/piese.css">
+
+</head>
+<body>
+
+    <div class="site-wrap">
+
+     
+        <div id="top-placeholder"></div>
+
+        <div class="bg-light py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-0">
+                        <a href="../index.html">Acasa</a>
+                        <span class="mx-2 mb-0">/</span><strong class="text-black">Edit utilizatori</strong>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div id="menu-placeholder"></div>
+
+        <div class="container_div">
+
+            <!--add form-->
+            <div id="edit_form" class="row">
+                <div class="col-md-12">
+                    <h5 class="h5 mb-3 text-black">Adauga/Modifica</h5>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-button" onclick="openTab(event, 'tab1')">General</button>
+                     <!--    <button class="tab-button" onclick="openTab(event, 'tab2')">Istoric</button> -->
+                    </div>
+
+                    <div id="tab1" class="tab-content">  
+
+                       
+                        <form action="#" method="post">
+                            <strong id="lb_comandaAnulata" style="color: red; display: none;">Comanda anulata</strong>
+        
+                            <!-- form -->
+                            <div class="p-3 p-lg-5 border">
+        
+                                <div class="form-group row">
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Nume utilizator</label>
+                                        <input type="text" class="form-control ddd" id="tb_username" disabled="true" name="tb_username">
+                                    </div>
+                                                                
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Email</label>
+                                        <input type="text" class="form-control ddd" id="tb_email" disabled="true"  name="tb_email">
+                                    </div>
+    
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Parola</label>
+                                        <input type="text" class="form-control ddd" id="tb_pass" disabled="true"  name="tb_pass">
+                                    </div>
+                                                                       
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Nume</label>
+                                        <input type="text" class="form-control ddd" id="tb_Nume"  disabled="true" name="tb_Nume">
+                                    </div>
+        
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Prenume</label>
+                                        <input type="text" class="form-control ddd" id="tb_prenume" disabled="true"  name="tb_prenume">
+                                    </div>
+    
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Telefon</label>
+                                        <input type="text" class="form-control ddd" id="tb_phone" disabled="true"  name="tb_phone">
+                                    </div>
+    
+    
+                                  
+                                                                                                                                                                                                                                                                           
+                                </div>
+    
+                                <div class="form-group row">
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">Activ</label>
+                                        <select id="ddd_activ" class="form-control ddd">
+                                            <option value="">-----</option>
+                                            <option value="true">Activ</option>
+                                            <option value="false">Inactiv</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">Activ</label>
+                                        <select id="ddd_rol" class="form-control ddd">
+                                            <option value="">-----</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">User</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Email confirmat</label>
+                                        <select id="ddd_emailConfirm" class="form-control ddd">
+                                            <option value="">-----</option>
+                                            <option value="true">Confirmat</option>
+                                            <option value="false">Neconfirmat</option>
+                                        </select>
+                                    </div>
+    
+                                    
+                                    <div class="col-md-2 ddd">
+                                        <label for="data_created">Data creare</label>  
+                                        <input type="datetime-local" id="data_created" name="data_created" class="form-control ddd" disabled="true">                                                                      
+                                    </div>
+                                    
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Data ultimei logari</label>  
+                                        <input type="datetime-local" id="data_lastLog" name="data_lastLog" class="form-control ddd" disabled="true">                                                                      
+                                    </div>
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Data ultimei schimbari a parolei</label>  
+                                        <input type="datetime-local" id="data_lastPassChanged" name="data_lastPassChanged" class="form-control ddd" disabled="true">                                                                      
+                                    </div>
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Data deblocare utilizator</label>  
+                                        <input type="datetime-local" id="data_lockout" name="data_lockout" class="form-control ddd">                                                                      
+                                    </div>
+                                </div>
+                               
+                                                 
+                            </div>   
+                           
+                            <!-- buttons -->
+                            <div class="form-group row">                                                 
+                                <div class="col-md-1 ddd">
+                                    <br>
+                                    <button class="btn btn-success btn-sm ddd" type="button" onclick="updateUser()">Salveaza</button>
+                                </div>
+                                <div class="col-md-1 ddd">
+                                    <br>
+                                    <button class="btn btn-warning btn-sm ddd" type="button" onclick="renunta()">Renunta</button>
+                                </div>
+                            </div>                           
+                           
+                        </form>  
+                                                                  
+                    </div>
+                    
+                    <div id="tab2" class="tab-content" style="display:none">        
+                   
+                        <div class="p-3 p-lg-5 border">
+                            
+                            <div class="form-group row">
+                                <div class="col-md-3 ddd">
+                                    <label for="html">Ultima modificare pe</label>
+                                    <input type="text" class="form-control ddd" disabled="true" id="tb_ultimaModifData" name="tb_ultimaModifData">
+                                </div>
+                                <div class="col-md-3 ddd">
+                                    <label for="html">Ultima modificare (nume)</label>
+                                    <input type="text" class="form-control ddd" disabled="true" id="tb_ultimaModif" name="tb_ultimaModif">
+                                </div>
+                                <div class="col-md-3 ddd">
+                                    <label for="html">Ultima modificare (email)</label>
+                                    <input type="text" class="form-control ddd" disabled="true" id="tb_ultimaModifEmail"  name="tb_ultimaModifEmail">
+                                </div>
+                                <div class="col-md-3 ddd">
+                                    <label for="html">Ultima modificare (_id)</label>
+                                    <input type="text" class="form-control ddd" disabled="true" id="tb_ultimaModifId"  name="tb_ultimaModifId">
+                                </div>
+                             
+                                
+                                                                                                                                                                                                
+                            </div>
+
+                            <div class="form-group row">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Operatie</th>
+                                            <th>Inregistrare data si ora</th>
+                                            <th>Nume utilizator</th>
+                                            <th>Email utilizator</th>
+                                            <th>Modificare data si ora</th>                                             
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rezultate-istoric">
+                                        <!-- istoric -->
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+
+
+
+                        </div>
+                                                                                               
+                    </div>                                    
+                </div>                                                
+            </div>
+        </div>
+        <footer class="site-footer border-top">
+        </footer>
+    </div>
+
+    <!-- popup -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-button" id="close-popup">&times;</span>
+            <h2>Articol</h2>
+            <p id="popup-message">Some content here...</p>
+
+            <div class="form-group row">                                                                                           
+                <div class="col-md-6 ddd">
+                    <label for="html">Masina</label>                                    
+                    <input type="text" class="form-control" id="tb_masinaEdit" name="tb_masinaEdit"></input>
+                </div>  
+                <div class="col-md-6 ddd">
+                    <label for="html">Piesa auto</label>                                    
+                    <input type="text" class="form-control" id="tb_piesaEdit" name="tb_piesaEdit"></input>
+                </div> 
+                
+                                                                                 
+            </div>   
+            
+            <div class="form-group row">                                                                                           
+
+                
+                <div class="col-md-12 ddd">
+                    <label for="html">Articol/Serviciu</label>                                    
+                    <input type="text" class="form-control" id="tb_articolEdit" name="tb_articolEdit"></input>
+                </div>                                                                    
+            </div>   
+
+            <div class="form-group row">                                                                                           
+                <div class="col-md-2 ddd">
+                    <label for="html">Cantitate</label>                                    
+                    <input type="text" class="form-control" id="tb_cantitateEdit" name="tb_cantitateEdit"></input>
+                </div>  
+                <div class="col-md-2 ddd">
+                    <label for="html">Pret</label>                                    
+                    <input type="text" class="form-control" id="tb_pretEdit" name="tb_pretEdit"></input>
+                </div> 
+                <div class="col-md-2 ddd">
+                    <label for="html">Discount %</label>                                    
+                    <input type="text" class="form-control" id="tb_discountEdit" name="tb_discountEdit"></input>
+                </div>  
+                <div class="col-md-2 ddd">
+                    <label for="html">pretFaraTVA</label>                                    
+                    <input type="text" class="form-control" id="tb_pretFaraTVA" name="tb_pretFaraTVA"></input>
+                </div>  
+                <div class="col-md-2 ddd">
+                    <label for="html">VAT %</label>                                    
+                    <input type="text" class="form-control" id="tb_vat" name="tb_vat"></input>
+                </div>     
+                <div class="col-md-2 ddd">
+                    <label for="html">Total</label>                                    
+                    <input type="text" class="form-control" id="tb_total" name="tb_total"></input>
+                </div>                                                                
+            </div>   
+            <div class="form-group row">
+                <div class="col-md-6 ddd"></div>
+                <div class="col-md-3 ddd">
+                    <br>
+                    <button id="bt_salveazaPiesa" class="btn btn-success btn-sm ddd" type="button" onclick="salveazaPiesa()">Salveaza</button>
+                </div>
+                <div class="col-md-3 ddd">
+                    <br>
+                    <button class="btn btn-danger btn-sm ddd" type="button" onclick="stergePiesa()">Sterge</button>
+                </div>
+            </div>          
+        </div>
+    </div>
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.magnific-popup.min.js"></script>
+    <script src="../js/aos.js"></script>
+
+
+    <script src="../js/config.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/admin.js"></script>
+    <script src="../js/users_edit.js"></script>
+    
+</body>
+</html>

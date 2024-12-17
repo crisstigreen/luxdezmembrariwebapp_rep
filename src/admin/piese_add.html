@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lux Dezmembrari &mdash; Colorlib e-Commerce Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css">
+    <link rel="stylesheet" href="../css/jquery-ui.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+
+    <link rel="stylesheet" href="../css/aos.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/piese.css">
+
+</head>
+<body>
+
+
+
+
+    <div class="site-wrap">
+
+
+        <div class="bg-light py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-0">
+                        <a href="../index.html">Acasa</a>
+                        <span class="mx-2 mb-0">/</span><strong class="text-black">Edit Piese</strong>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="menu-placeholder"></div>
+
+   
+
+
+        <div class="container_div">
+
+            <!--add form-->
+            <div id="edit_form" class="row">
+                <div class="col-md-12">
+                    <h5 class="h4 mb-3 text-black">Adauga/Modifica</h5>
+                </div>
+                <div class="col-md-12 ml-auto">
+
+                    <form action="#" method="post">
+
+                        
+
+                        <div class="p-3 p-lg-5 border">                            
+                            <div class="form-group row">
+                                <div id="compatDiv" class="col-md-12 ddd"></div>   
+                            </div>
+
+                            <div class="form-group row">
+                                <p >Masina[<a style="cursor: pointer !important;" id="linkMasina" href="https://www.w3schools.com/" target="_blank"></a>]</p>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2 ddd">
+                                    <label for="html">Marca</label>  
+                                    <select id="ddd_cars" class="form-control ddd" onclick="verifRemoveRed('ddd_cars')">
+                                        <option value="">Marca</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 ddd">
+                                    <label for="html">Model</label>  
+                                    <select id="ddd_models" class="form-control ddd" onclick="verifRemoveRed('ddd_models')">
+                                        <option value="">Model</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 ddd">
+                                    <label for="html">Generatie</label>  
+                                    <select id="ddd_generatii" class="form-control ddd" onclick="verifRemoveRed('ddd_generatii')">
+                                        <option value="">Generatii</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 ddd">
+                                    <label for="html">Tip Caroserie</label>                                                                                                             
+                                        <select id="ddd_TipCaroserie" class="form-control ddd" onclick="verifRemoveRed('ddd_TipCaroserie')">
+                                            <option value="">Tip Caroserie</option>
+                                        </select>                                                                    
+                                </div>
+                                
+                                
+
+                                <div class="col-md-2 ddd" style="padding-top: 40px; width: 100%;">                                                                                                                       
+                                    <button class="btn btn-primary btn-sm buttons" type="button" onclick="adaugaPiesaCompat()">Adauga compatibilitate</button>
+                                </div>                                                               
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2 ddd">
+                                    <label for="html">Tip</label>  
+                                    <select id="ddd_Tip" class="form-control ddd" onclick="verifRemoveRed('ddd_Tip')">
+                                        <option value="">---</option>                                                                           
+                                    </select>                                                        
+                                </div>     
+                                  <div class="col-md-2 ddd">
+                                      <label for="html">Categorii</label>  
+                                      <select id="ddd_Categorii" class="form-control ddd" onclick="verifRemoveRed('ddd_Categorii')">
+                                          <option value="">---</option>                                                                           
+                                      </select>                                 
+                                  </div>
+    
+                                  <div class="col-md-2 ddd">
+                                      <label for="html">Subcategorii</label>  
+                                      <select id="ddd_subcateg" class="form-control ddd" onclick="verifRemoveRed('ddd_subcateg')">
+                                          <option value="">---</option>                                                                          
+                                      </select>
+                                  </div>                                                
+                              </div>
+
+                                                       
+                            <div class="form-group row">
+                                <div class="col-md-3 ddd">
+                                    <label for="html">Nume</label>
+                                    <input type="text" class="form-control ddd" id="tb_nume" placeholder="Nume" name="tb_nume" onclick="verifRemoveRed('tb_nume')">
+                                </div>
+                           
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Cod Piesa</label>
+                                    <input type="text" class="form-control ddd" id="tb_codPiesa" placeholder="..." name="tb_codPiesa">
+                                </div>
+                               
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Valuta</label>
+                                    <select id="ddd_valuta" class="form-control ddd">
+                                        <option value="">...</option>
+                                        <option value="">RON</option>
+                                        <option value="">EUR</option>
+                                        <option value="">USD</option>
+                                        <option value="">GBP</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Pret</label>
+                                    <input type="text" class="form-control ddd" id="tb_pret" placeholder="..." name="tb_pret">
+                                </div>
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">UM</label>
+                                    <input type="text" class="form-control ddd" id="tb_um" placeholder="..." name="tb_um">
+                                </div>
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Discount</label>
+                                    <input type="number"  class="form-control ddd" id="tb_discount" placeholder="..." name="tb_discount">
+                                </div>
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Locatie</label>
+                                    <input type="text" class="form-control ddd" id="tb_locatie" placeholder="..." name="tb_locatie">
+                                </div>
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Stoc</label>
+                                    <input type="text"  class="form-control ddd" id="tb_stoc" placeholder="..." name="tb_stoc">
+                                </div>
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Vandut</label>
+                                    <input type="number"  class="form-control ddd" id="tb_vandut" placeholder="..." name="tb_Vandut">
+                                </div>
+                                
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Vizibilitate</label>
+                                    <select id="ddd_vizibil" class="form-control ddd">
+                                        <option value=""></option>
+                                        <option value="">vizibil</option>
+                                        <option value="">ascuns</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">SKU_ID</label>
+                                    <input type="text" class="form-control ddd" id="tb_sku" placeholder="SKU(ID)" name="tb_sku">
+                                </div>
+
+                                <div class="col-md-1 ddd">                                    
+                                    <label for="html">Utl</label>
+                                    <input type="text" class="form-control ddd" id="tb_utl" placeholder="Utl" name="tb_utl">
+                                </div>
+
+                                <div class="col-md-10 ddd">
+                                    <label for="html">Remarks</label>
+                                    
+                                    <textarea class="form-control" id="tb_remarks" name="tb_remarks"></textarea>
+                                </div>
+                              
+                            </div>
+                                                 
+                            <div class="form-group row">
+                                <div class="col-md-12 ddd">
+                                    <input type="file" id="fileInput" accept="image/*" multiple>
+                                    <label for="fileInput">Selectează Poze</label>  
+                                </div>
+                                <div class="col-md-12 ddd">
+                                    <div class="preview" id="preview"></div>
+                                </div>                                
+                           </div>
+                            
+                            <div class="form-group row">                                                               
+                                <div class="col-md-2 ddd">
+                                    <br>
+                                    <button class="btn btn-success btn-sm buttons" type="button" onclick="registerPiesa()">Salveaza</button>
+                                </div>
+                                <div class="col-md-2 ddd">
+                                    <br>
+                                    <button class="btn btn-warning btn-sm buttons" type="button" onclick="renunta()">Renunta</button>
+                                </div>
+                            </div>                                                                 
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="site-footer border-top">
+        </footer>
+    </div>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.magnific-popup.min.js"></script>
+    <script src="../js/aos.js"></script>
+
+
+    <script src="../js/config.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/admin.js"></script>
+        
+    <script src="../js/piese_add.js"></script>
+    <script src="../js/nomeclator.js"></script>
+  
+
+
+    
+
+
+</body>
+</html>

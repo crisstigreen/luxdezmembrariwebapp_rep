@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lux Dezmembrari &mdash; Colorlib e-Commerce Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css">
+    <link rel="stylesheet" href="../css/jquery-ui.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+
+    <link rel="stylesheet" href="../css/aos.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/piese.css">
+
+</head>
+  <body>
+
+
+      <div class="site-wrap">
+
+
+          <div class="bg-light py-3">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-12 mb-0"><a href="../index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Admin</strong></div>
+                  </div>
+              </div>
+          </div>
+
+        
+          <div id="menu-placeholder"></div>
+
+          <div class="container_div">
+
+            <h5>RAPOARTE</h5>
+            <div id="edit_form" class="row">                    
+                <div class="col-md-12 ml-auto">
+                    <form action="#" method="post">                  
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="preluareDiv" style="background-color: blue;">
+                                    <label for="cb_local">
+                                        <input type="checkbox" value="1" id="cb_local" onchange="preluareChange()">Local
+                                    </label>
+                                </div>
+                        
+                                <div class="preluareDiv" style="background-color: darkgreen">
+                                    <label for="cb_lux">
+                                        <input type="checkbox" value="1" id="cb_lux" onchange="preluareChange()">Lux
+                                    </label>
+                                </div>
+                        
+                                <div class="preluareDiv" style="background-color: red">
+                                    <label for="cb_pieseAuto">
+                                        <input type="checkbox" value="1" id="cb_pieseAuto" onchange="preluareChange()">Piese Auto
+                                    </label>
+                                </div>
+                        
+                                <div class="preluareDiv" style="background-color: lightskyblue">
+                                    <label for="cb_ofertepieseAuto">
+                                        <input type="checkbox" value="1" id="cb_ofertepieseAuto" onchange="preluareChange()">Oferte piese auto
+                                    </label>
+                                </div>
+                        
+                                <div class="preluareDiv" style="background-color: lightgreen">
+                                    <label for="cb_for">
+                                        <input type="checkbox" value="1" id="cb_for" onchange="preluareChange()">For
+                                    </label>
+                                </div>
+                        
+                                <div class="preluareDiv" style="background-color: brown">
+                                    <label for="cb_dezro">
+                                        <input type="checkbox" value="1" id="cb_dezro" onchange="preluareChange()">Dez.ro
+                                    </label>
+                                </div>
+                        
+                                <div class="preluareDiv" style="background-color: darkgoldenrod">
+                                    <label for="cb_ofertepieseAuto">
+                                        <input type="checkbox" value="1" id="cb_ofertepieseAuto" onchange="preluareChange()">Oferte dez.ro
+                                    </label>
+                                </div>
+                        
+                                <div class="preluareDiv" style="background-color: #e91df0">
+                                    <label for="cb_olx">
+                                        <input type="checkbox" value="1" id="cb_olx" onchange="preluareChange()">Olx
+                                    </label>
+                                </div>
+                        
+                                <div class="preluareDiv" style="background-color: black">
+                                    <label for="cb_lajumate">
+                                        <input type="checkbox" value="1" id="cb_lajumate" onchange="preluareChange()">La jumate
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">                            
+                                <div class="checkbox-container" id="containerUsers"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">                            
+                                <div class="checkbox-container" id="containerStatus"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-2">                            
+                                <button class="btn btn-success btn-sm ddd" type="button" onclick="afiseaza()">Afiseaza</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>rowType</th>
+                                            <th>orderDate</th>
+                                            <th>noulocal</th>                                
+                                            <th>noucurier</th>
+                                            <th>Vandut in parc</th>
+                                            <th>Vandut pe Dragon</th>
+                                            <th>Plecat pe Sameday</th> 
+                                            <th>Total</th>                                                                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rezultate-tabel">
+                                        <!-- Rândurile generate vor fi adăugate aici -->
+                                    </tbody>
+                                </table>
+                            </div>    
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+          </div>
+
+
+    
+
+
+          <footer class="site-footer border-top">
+          </footer>
+      </div>
+
+      <script src="../js/jquery-3.3.1.min.js"></script>
+      <script src="../js/jquery-ui.js"></script>
+      <script src="../js/popper.min.js"></script>
+      <script src="../js/bootstrap.min.js"></script>
+      <script src="../js/owl.carousel.min.js"></script>
+      <script src="../js/jquery.magnific-popup.min.js"></script>
+      <script src="../js/aos.js"></script>
+
+      <script src="../js/config.js"></script>
+      <script src="../js/main.js"></script>
+      <script src="../js/admin.js"></script>
+      <script src="../js/rapoarte.js"></script>
+
+
+  </body>
+</html>

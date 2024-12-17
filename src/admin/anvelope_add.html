@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lux Dezmembrari &mdash; Colorlib e-Commerce Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css">
+    <link rel="stylesheet" href="../css/jquery-ui.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+
+    <link rel="stylesheet" href="../css/aos.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/anvelope.css">
+
+</head>
+<body>
+
+
+
+
+    <div class="site-wrap">
+
+
+        <div class="bg-light py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-0">
+                        <a href="../index.html">Home</a>
+                        <span class="mx-2 mb-0">/</span><strong class="text-black">Anvelope-Edit</strong>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="menu-placeholder"></div>
+
+
+        <div class="container_div">
+
+              <!--add form-->
+            <div id="edit_form" class="row">
+                <div class="col-md-12">
+                    <h5 class="h4 mb-3 text-black">Adauga/Modifica</h5>
+                </div>
+                <div class="col-md-12 ml-auto">
+
+                    <form action="#" method="post">
+
+                        <div class="p-3 p-lg-5 border">
+
+                            <div class="form-group row">
+                                <div class="col-md-2 ddd">
+                                    <label for="html">TipProdus</label>  
+                                    <select id="ddd_tipProdus" class="form-control ddd" onclick="verifRemoveRed('ddd_tipProdus')">
+                                        <option value="">TipProdus</option>
+                                        <option value="anvelopa">Anvelopa</option>
+                                        <option value="dameraDeAer">Camera de aer</option>
+                                        <option value="roata">Roata</option>
+                                        <option value="janta">Janta</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 ddd">
+                                    <label for="html">Stare</label>  
+                                    <select id="ddd_stare" class="form-control ddd" onclick="verifRemoveRed('ddd_stare')">
+                                        <option value="">Stare</option>
+                                        <option value="new">Nou</option>
+                                        <option value="second-hand">Second Hand</option>
+                                        <option value="refurbished">Refurbished</option>
+                                        <option value="reconditioned">Reconditioned</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 ddd">
+                                    <label for="html">Sezon</label>                                                                                                             
+                                        <select id="ddd_sezon" class="form-control ddd" onclick="verifRemoveRed('ddd_sezon')"> 
+                                            <option value="">Sezon</option>
+                                            <option value="all-season">All Season</option>
+                                            <option value="summer">Vara</option>
+                                            <option value="winter">Iarna</option>
+                                            <option value="m-s">M + S</option>
+                                        </select>                                                                    
+                                </div>
+                                                                                                              
+                                <div class="col-md-2 ddd">
+                                    <label for="html">TipVehicul</label>  
+                                    <select id="ddd_tipVehicul" class="form-control ddd" onclick="verifRemoveRed('ddd_tipVehicul')">
+                                        <!-- <option value="">TipVehicul</option> -->
+                                        <option value="autovehicul">Autovehicul</option>
+                                        <option value="suv">Suv</option>
+                                        <option value="autoutilitara">Autoutilitara</option>
+                                        <option value="autobuz">Autobuz</option>
+                                        <option value="truck">Truck</option>
+                                        <option value="semiremorcaRemorca">Semiremorca/Remorca</option>
+                                        <option value="utilajConstructii">Utilaj de constructii</option>
+                                        <option value="agroIndustrial">Agro industrial</option>
+                                        <option value="cositoareAtv">Cositoare/ATV</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Latime</label>
+                                    <input type="number"  class="form-control ddd" id="tb_latime" placeholder="..." name="tb_latime" onclick="verifRemoveRed('tb_latime')">
+                                </div>
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Inaltime</label>
+                                    <input type="number"  class="form-control ddd" id="tb_inaltime" placeholder="..." name="tb_inaltime" onclick="verifRemoveRed('tb_inaltime')">
+                                </div>
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Diametru</label>
+                                    <input type="number"  class="form-control ddd" id="tb_diametru" placeholder="..." name="tb_diametru" onclick="verifRemoveRed('tb_diametru')">
+                                </div>
+                                
+
+
+                            </div>
+
+
+                            <div class="form-group row">
+
+                                <div class="col-md-2 ddd">
+                                    <label for="html">Producator</label>  
+                                    <select id="ddd_producator" class="form-control ddd">
+                                        <option value="">Producator</option>
+                                   
+                                    </select>
+                                </div>
+                              
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">DOT</label>
+                                    <input type="number"  class="form-control ddd" id="tb_dot" placeholder="..." name="tb_dot">
+                                </div>
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Locatie</label>
+                                    <input type="number"  class="form-control ddd" id="tb_locatie" placeholder="..." name="tb_locatie">
+                                </div>
+                                <div class="col-md-1 ddd">
+                                    <label for="html">SKU</label>
+                                    <input type="number"  class="form-control ddd" id="tb_sku" placeholder="..." name="tb_sku">
+                                </div>
+                                                                                              
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Pret</label>
+                                    <input type="text" class="form-control ddd" id="tb_pret" placeholder="..." name="tb_pret">
+                                </div>          
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Valuta</label>
+                                    <select id="ddd_valuta" class="form-control ddd">
+                                        <option value="">...</option>
+                                        <option value="RON">RON</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="USD">USD</option>
+                                        <option value="GBP">GBP</option>
+                                    </select>
+                                </div>                
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Discount</label>
+                                    <input type="text"  class="form-control ddd" id="tb_discount" placeholder="..." name="tb_discount">
+                                </div>
+                                
+
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Stoc</label>
+                                    <input type="number" class="form-control ddd" id="tb_stoc" placeholder="..." name="tb_stoc">
+                                </div>
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Vandut</label>
+                                    <input type="number"  class="form-control ddd" id="tb_vandut" placeholder="..." name="tb_vandut">
+                                </div>
+                                <div class="col-md-1 ddd">
+                                    <label for="html">Vizibilitate</label>
+                                    <select id="ddd_vizibil" class="form-control ddd">
+                                        <option value=""></option>
+                                        <option value="vizibil">Vizibil</option>
+                                        <option value="ascuns">Ascuns</option>
+                                    </select>
+                                </div>
+                                                                                                                                                                                         
+                            </div>                                                                                                                                                                                                                                                                                    
+
+                            <div class="form-group row">
+                                <div class="col-md-2 ddd">
+                                    <br>
+                                    <button class="btn btn-primary btn-sm buttons" type="button" onclick="registerPiesa()">Upload</button>
+                                </div>
+                                <div class="col-md-2 ddd">
+                                    <br>
+                                    <button class="btn btn-success btn-sm buttons" type="button" onclick="registerAnvelopa()">Salveaza</button>
+                                </div>
+                                <div class="col-md-2 ddd">
+                                    <br>
+                                    <button class="btn btn-warning btn-sm buttons" type="button" onclick="renunta()">Renunta</button>
+                                </div>
+                            </div>
+                                                 
+
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+            
+            
+        </div>
+
+
+
+<!--         
+        <div class="col-md-2 ddd">
+            <label for="html">Tip</label>  
+            <select id="ddd_tipProdus" class="form-control ddd">
+                <option value="">Tip</option>
+                <option value="allRoad">All-road</option>
+                <option value="offRoad">Aff-road</option>
+                <option value="runflat">Runflat</option>
+                <option value="ranforsate">Ranforsate xl</option>
+                <option value="regional">Regional</option>
+                <option value="constructiiOnOff">Constructii on-off</option>
+                <option value="autostrada">Autostrada</option>
+                <option value="industrial">Industrial</option>
+                <option value="agricol">Agricol</option>
+            </select>
+        </div>
+ -->
+
+
+        <footer class="site-footer border-top">
+        </footer>
+    </div>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.magnific-popup.min.js"></script>
+    <script src="../js/aos.js"></script>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/admin.js"></script>
+    <script src="../js/anvelope_add.js"></script>
+
+    
+
+
+</body>
+</html>
