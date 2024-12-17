@@ -1,0 +1,143 @@
+﻿body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.side-menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 50px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+    padding-top: 20px;
+    z-index: 1000; /* Asigură-te că meniul este deasupra conținutului */
+}
+
+    .side-menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .side-menu ul li {
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+
+            .side-menu ul li a {
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 10px;
+            }
+
+                .side-menu ul li a i {
+                    margin-right: 8px; /* Adaugă 8px spațiu între icon și text */
+                }
+
+                .side-menu ul li a:hover {
+                    background-color: #575757;
+                }
+
+        .side-menu ul ul {
+            display: none; /* Ascunde submeniurile implicit */
+            position: absolute;
+            left: 50px; /* Poziționează submeniurile la dreapta */
+            top: 0;
+            background-color: rgba(68, 68, 68, 1); /* Asigură-te că fundalul este complet opac */
+            padding: 0;
+            margin: 0;
+            width: 200px; /* Lățimea submeniurilor */
+            z-index: 1100; /* Submeniul este deasupra meniului principal */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Umbră pentru un efect de suprapunere */
+            overflow: hidden; /* Asigură-te că nimic din submeniu nu depășește limitele sale */
+        }
+
+        .side-menu ul li:hover > ul {
+            display: block; /* Afișează submeniul când hover-ul este pe elementul părinte */
+        }
+
+        .side-menu ul ul li {
+            text-align: left; /* Aliniază submeniurile la stânga */
+            margin: 0;
+            position: relative; /* Asigură poziționarea corectă a submeniurilor */
+        }
+
+            .side-menu ul ul li a {
+                padding: 10px 15px; /* Ajustează padding-ul */
+                white-space: nowrap; /* Previne ruperea textului pe linii noi */
+            }
+
+                .side-menu ul ul li a:hover {
+                    background-color: #575757; /* Schimbă culoarea la hover pentru submeniuri */
+                }
+
+.content {
+    margin-left: 220px; /* Lasă spațiu pentru meniul din stânga */
+    padding: 20px;
+    position: relative;
+    z-index: 1; /* Asigură-te că conținutul se află sub meniuri */
+}
+
+.divLogin{
+    border: 1px solid #dfdfdf;
+    border-radius: 3px 3px 3px;
+    height: 800px;    
+    margin-top: 100px;    
+    padding-top: 50px;
+    box-shadow: 2px 2px 5px #dfdfdf;
+    background-color: white;
+}
+
+.labelGeneral{
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0px !important;
+}
+
+.red-box-shadow {
+    box-shadow: 0 0 5px 2px red;
+}
+
+.swal2-container .swal2-container {
+    z-index: 9999; /* Asigură-te că este mai mare decât celelalte elemente */
+}
+
+.eye-icon {
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.textwarning{
+    color: rgba(243, 112, 5, 0.945);
+}
+
+.loader {
+    border: 2px solid #f3f3f3; /* Light grey */
+    border-top: 2px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    margin-top: 10px;
+    display: none;
+  }
+  
+  /* Spin animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

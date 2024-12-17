@@ -1,0 +1,92 @@
+.bg-light {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
+.container {
+    max-width: 1200px;
+}
+.order-container {
+    margin-top: 30px;
+}
+.order-container .order {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.order-container .order-details, .order-container .order-info {
+    width: 90%;
+}
+.order-container .order-details h5 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #333;
+}
+.order-container .order-info p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #555;
+}
+.order-container .order-details a {
+    color: #007bff;
+    text-decoration: none;
+}
+.order-container .order-details a:hover {
+    text-decoration: underline;
+}
+
+
+.form-control {
+    font-size: 14px;
+    padding: 8px;
+}
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    padding: 8px 12px;
+}
+.btn-success:hover {
+    background-color: #218838;
+}
+#orderContainer {
+    margin-top: 20px;
+    width: 90% !important;
+}
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.pagination-controls button {
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+
+
+/* Stil pentru valorile din Data comenzii, Total și Cantitate */
+strong {
+    font-weight: bold; /* Asigură că textul din strong este îngroșat */
+}
+
+/* Stil pentru valorile efective (Data, Cantitate, Total) */
+.order-info p, .order-details p {
+    font-weight: 600;  /* Valorile vor fi îngroșate */
+}
+
+/* Stil pentru valorile cu culoare verde închis */
+.order-info p span, .order-details p span {
+    color: #7971ea;    /* Verde închis */
+}
+
+.order-infoDiv{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    border-radius: 5px 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+}

@@ -1,0 +1,276 @@
+﻿.container_div {
+
+    width: 93%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+.table {
+    width: 100%;
+    border-collapse: collapse; 
+}
+
+    .table th, .table td {
+        padding: 5px; 
+        line-height: 1.2; 
+        border: 1px solid #ddd; 
+    }
+
+  
+
+
+.table-striped tbody tr:nth-child(even) {
+    background-color: #fff; 
+}
+
+/* style.css */
+.edit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 3px 7px;    
+    border-radius: 4px;
+    cursor: pointer !important; /* Asigură-te că stilul cursorului este aplicat */
+}
+
+    .edit-button:hover {
+        background-color: #0056b3;       
+    }
+
+.visibleForm {
+    display: none;
+}
+
+.red-box-shadow {
+    box-shadow: 0 0 5px 2px red;
+}
+
+
+/* photo */
+
+
+.upload-container {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.upload-container input[type="file"] {
+    display: none;
+}
+
+.upload-container label {
+    display: inline-block;
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.upload-container label:hover {
+    background-color: #005f73;
+}
+
+.preview {
+    margin-top: 20px;
+}
+
+.preview img {
+    width: 100%;
+    max-width: 250px;
+    position: relative;
+}
+
+.image-container {
+    display: inline-block;
+    position: relative;
+    margin: 10px;
+}
+
+.image-container img {
+    display: block;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 5px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: darkred;
+}
+
+
+.form-group {
+    display: flex; /* Flexbox pentru a alinia elementele pe un rând */
+    flex-wrap: wrap; /* Permite ca elementele să se mute pe un nou rând */
+    justify-content: flex-start; /* Alinierea elementelor la stânga */
+}
+
+.preluareDiv {
+    width: 140px; /* Lățimea fiecărui div */
+    color: white; 
+    height: 25px;
+    padding: 3px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px grey;
+    font-size: 12px;
+    margin: 5px; /* Adaugă un pic de margine între elemente */
+    text-shadow: 1px 1px 1px grey;
+    transition: background-color 0.3s, transform 0.2s; /* Adaugă o tranziție pentru efecte */
+}
+
+.preluareDiv:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Schimbă culoarea de fundal la hover */
+    transform: scale(1.05); /* Crește puțin dimensiunea div-ului */
+    
+}
+
+
+.preluareDiv :hover {
+ 
+    box-shadow: 0px 0px 0px grey;
+}
+
+
+.col-md-12 {
+    display: flex; /* Asigură-te că acest container folosește flexbox */
+    flex-wrap: wrap; /* Permite ca elementele să se mute pe un nou rând */
+    justify-content: flex-start; /* Alinierea elementelor la stânga */
+}
+
+
+
+@media (max-width: 1200px) {
+    .preluareDiv {
+        width: calc(25% - 10px); /* 4 div-uri pe rând */
+    }
+}
+
+@media (max-width: 800px) {
+    .preluareDiv {
+        width: calc(33.33% - 10px); /* 3 div-uri pe rând */
+    }
+}
+
+@media (max-width: 600px) {
+    .preluareDiv {
+        width: calc(50% - 10px); /* 2 div-uri pe rând */
+    }
+}
+
+@media (max-width: 400px) {
+    .preluareDiv {
+        width: 100%; /* 1 div pe rând */
+    }
+}
+
+.checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    padding: 2px 10px 2px 10px;
+    border: 1px solid grey;
+    box-shadow: 1px 1px 3px #ccc;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+}
+.checkbox-item label {
+    margin-left: 8px;
+    margin-bottom: 0px !important;
+}
+
+.slimTextBox{
+    height: 30px;
+}
+
+
+
+/* tabs */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ccc;
+    width: 300px;
+    margin-left: 30px;
+}
+
+.tab-button {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 4px 6px;
+    transition: 0.3s;
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+}
+
+.tab-button:hover {
+    background-color: #ddd;
+}
+
+.tab-button.active {
+    background-color: #ccc;
+}
+
+.tab-content {
+    flex: 1;
+    padding: 2px;
+    border-top: none;
+    display: none;
+    width: 100%;
+
+}
+
+.divMyAccount{
+    border: 1px solid #dfdfdf;
+    border-radius: 3px 3px 3px;
+    height: 800px;    
+    margin-top: 10px;    
+    padding-top: 50px;
+    box-shadow: 2px 2px 5px #dfdfdf;
+    background-color: white;
+}
