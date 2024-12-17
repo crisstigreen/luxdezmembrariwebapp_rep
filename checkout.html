@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    
+  </head>
+  <body>
+  
+  <div class="site-wrap backgroundCommand">
+ 
+    <div id="top-placeholder"></div>
+
+    <div class="bg-light py-3">
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <a href="cart.html">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="container">
+   
+        <br>
+        <a href="admin/login.html">Click aici</a> pentru login
+        <br>
+      
+      
+<div class="row">
+        <!-- detalii facturare -->
+        <div class="col-md-12">
+          
+          <div class="p-3 border divComamda backgroundWhite">
+            <h2 class="h3 mb-3 text-black">Detalii de facturare</h2>
+        
+            
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label for="tb_nume" class="text-black">Nume <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="tb_nume" name="tb_nume" onclick="verifRemoveRed('tb_nume')">
+              </div>
+              <div class="col-md-6">
+                <label for="tb_prenume" class="text-black">Prenume <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="tb_prenume" name="tb_prenume" onclick="verifRemoveRed('tb_prenume')">
+              </div>
+            </div>
+
+                        
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label for="tb_adresa" class="text-black">Adresa <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="tb_adresa" name="tb_adresa" onclick="verifRemoveRed('tb_adresa')">
+              </div>
+            </div>                                  
+            <div class="form-group row mb-5">
+              <div class="col-md-6">
+                <label for="tb_email" class="text-black">Adresa Email <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="tb_email" name="tb_email" onclick="verifRemoveRed('tb_email')">
+              </div>
+              <div class="col-md-6">
+                <label for="tb_telefon" class="text-black">Telefon <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="tb_telefon" name="tb_telefon" onclick="verifRemoveRed('tb_telefon')">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cb_facturaSC" class="text-black" data-toggle="collapse" href="#ship_different_address" role="button" aria-expanded="false" 
+              aria-controls="ship_different_address">
+              <input type="checkbox" value="1" id="cb_facturaSC">  Factura pe Societate Comerciala</label>
+              <div class="collapse" id="ship_different_address">
+                <div class="py-2">                                    
+                  <div class="form-group row">
+                    <div class="col-md-6">
+                      <label for="tb_numeSC" class="text-black">Nume societate comerciala<span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="tb_numeSC" name="tb_numeSC">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="tb_cui" class="text-black">CUI societate comerciala <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="tb_cui" name="tb_cui">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <label for="tb_regComJ" class="text-black">Reg. Com. (J) societate comerciala <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="tb_regComJ" name="tb_regComJ">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <label for="tb_adresaSC" class="text-black">Adresa societate comerciala <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="tb_adresaSC" name="tb_adresaSC">
+                    </div>
+                  </div>
+
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="tb_detalii" class="text-black">Detalii comanda:</label>
+              <textarea name="tb_detalii" id="tb_detalii" cols="30" rows="2" class="form-control" placeholder="Scrie detaliile tale aici..."></textarea>
+            </div>
+
+          </div>
+        </div>
+        
+
+        <!-- livrare -->
+        <div class="col-md-6">
+          <br/>  
+          <div class="p-3 border divComamda backgroundWhite" style="height: 180px;">
+            <h2 class="h3 mb-3 text-black">Metoda livrare</h2>                                                                 
+            <input type="radio" checked="true" id="rb_personal" name="livrare" value="Local">
+            <label for="personal">Ridicare personala (de la sediul nostru)</label><br/>
+            <input type="radio" id="rb_curier" name="livrare" value="Curier">
+            <label for="curier">Livreare prin curier</label> 
+           
+                                                                                       
+        </div>          
+        
+        </div>
+
+        <!-- plata -->
+        <div class="col-md-6">
+          <br/>
+          <div class="p-3 border divComamda backgroundWhite" style="height: 180px;">
+            <h2 class="h3 mb-3 text-black">Metoda plata</h2>                                                                 
+            <input type="radio" checked="true" id="rb_cash" name="plata" value="Local">
+            <label for="cash">Plata cash (la ridicarea comenzii)</label><br/>
+            <input type="radio" id="rb_ramburs" name="plata" value="Ramburs">
+            <label for="ramburs">Ramburs (la livrare prin curier)</label><br/>                                                                           
+            <input type="radio" id="rb_transfer" name="plata" value="Card Online">
+            <label for="transfer">Transfer bancar (in avans)</label>    
+          </div>          
+        
+        </div>
+
+        <!-- comanda dvs -->
+        <div class="col-md-12">
+          <br/>                        
+          <div class="p-3 border divComamda backgroundWhite">
+            <h2 class="h3 mb-3 text-black">Comanda dvs.</h2>
+            <table class="table site-block-order-table mb-5">
+              <thead>                
+                <th style="width: 200px;">Produse</th>
+                <th></th>
+                <th>Total</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="images/placeholder.jpg" alt="Placeholder" class="img-thumbnail" style="width: 50px; height: 50px;"></td>
+                  <td> <strong class="mx-2">x</strong> 1</td>
+                  <td>0</td>
+                </tr>                                                
+                <tr>
+                  <td></td>
+                  <td class="text-black font-weight-bold"><strong>Total Comanda</strong></td>
+                  <td class="text-black font-weight-bold"><strong>0</strong></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>                                      
+            <div class="row">
+              <div class="col-md-8"></div>
+              <div class="col-md-3">
+                <button class="btn btn-primary btn-lg py-3 btn-block" onclick="registerOrder()">Plaseaza comanda</button>
+              </div>
+            </div>                                                          
+          </div>
+        </div>              
+      </div>
+      <!-- </form> -->
+    </div>
+   
+
+    <footer class="site-footer border-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="footer-heading mb-4">Navigations</h3>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><a href="#">Sell online</a></li>
+                  <li><a href="#">Features</a></li>
+                  <li><a href="#">Shopping cart</a></li>
+                  <li><a href="#">Store builder</a></li>
+                </ul>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><a href="#">Mobile commerce</a></li>
+                  <li><a href="#">Dropshipping</a></li>
+                  <li><a href="#">Website development</a></li>
+                </ul>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><a href="#">Point of sale</a></li>
+                  <li><a href="#">Hardware</a></li>
+                  <li><a href="#">Software</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+            <h3 class="footer-heading mb-4">Promo</h3>
+            <a href="#" class="block-6">
+              <img src="images/cars.jpg" alt="Image placeholder" class="img-fluid rounded mb-4">
+              <h3 class="font-weight-light  mb-0">Finding Your Perfect Shoes</h3>
+              <p>Promo from  nuary 15 &mdash; 25, 2019</p>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="block-5 mb-5">
+              <h3 class="footer-heading mb-4">Contact Info</h3>
+              <ul class="list-unstyled">
+                <li class="address">203 Fake St. Mountain View, San Francisco, California, USA</li>
+                <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
+                <li class="email">emailaddress@domain.com</li>
+              </ul>
+            </div>
+
+            <div class="block-7">
+              <form action="#" method="post">
+                <label for="email_subscribe" class="footer-heading">Subscribe</label>
+                <div class="form-group">
+                  <input type="text" class="form-control py-4" id="email_subscribe" placeholder="Email">
+                  <input type="submit" class="btn btn-sm btn-primary" value="Send">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+		
+      </div>
+    </footer>
+  </div>
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/top.js"></script>  
+  <script src="js/topload.js"></script> 
+  <script src="js/orders.js"></script> 
+
+
+    
+  </body>
+</html>
