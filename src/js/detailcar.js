@@ -26,9 +26,6 @@ function loadPiesa() {
                 return response.json();
             })
             .then(car => {
-
-
-
                 debugger;                                                 
                 const carImages = car.imagini;   
                 const carouselInner = document.getElementById('carousel-inner');
@@ -38,8 +35,8 @@ function loadPiesa() {
                 carouselInner.innerHTML = '';
                 carouselIndicatorsContainer.innerHTML = '';
 
-                if (carImages.length === 0) {
-                    const placeholderSrc = `${BASE_URL}/images/placeholder.jpg`;
+                if (carImages.length === 0) {                    
+                    const placeholderSrc = BASE_URL + '/images/placeholder.jpg';                            
                     carImages.push(placeholderSrc);
                     $("#carousel-indicators").hide();
                 }
