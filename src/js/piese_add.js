@@ -124,23 +124,6 @@ function verificare(){
     } 
     return verif;
 }
-function verifRed(controlId) {
-    var control = document.getElementById(controlId);    
-    if (control) {        
-        control.classList.add('red-box-shadow');
-    } else {
-        console.error('Controlul cu id-ul ' + controlId + ' nu a fost găsit.');
-    }
-}
-function verifRemoveRed(controlId){
-    //debugger;
-    var control = document.getElementById(controlId);    
-    if (control) {        
-        control.classList.remove('red-box-shadow');
-    } else {
-        console.error('Controlul cu id-ul ' + controlId + ' nu a fost găsit.');
-    }
-}
 
 function registerPiesa() {
     //debugger;
