@@ -7,9 +7,20 @@ document.addEventListener('DOMContentLoaded', async  () => {
     await getCars(`${API_BASE_URL}/Cars/get`);      
     await fetchAndPopulatePieseData();       
     if(piesaId){
-        await getPieseCompatAndGenerateHtml(piesaId);    
-    }    
+        await getPieseCompatAndGenerateHtml(piesaId);            
+    }   
+    else{
+        await sku_gen();
+    }     
 });
+
+async function  sku_gen() {
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+        code += Math.floor(Math.random() * 10);
+    }   
+    document.getElementById("tb_sku").value = code;         
+}
 
 //load imagini
 document.addEventListener('DOMContentLoaded', function() {
