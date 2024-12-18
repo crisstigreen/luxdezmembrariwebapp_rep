@@ -3,7 +3,7 @@
 //**********  PAGE LOAD ********************************************************************* */
 //**********  PAGE LOAD ********************************************************************* */
 
-//PULA
+
 let currentPage = 1;
 let totalPages = 1;
 let pageSize = 24; // Valoarea implicită
@@ -23,7 +23,7 @@ let Nivel = "";
 document.addEventListener('DOMContentLoaded', getCarsForDropdown(populateCheckboxesMarca));
 //
 document.addEventListener('DOMContentLoaded', async  () => {
-    debugger;    
+    debugger;        
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
     document.getElementById('next-page').addEventListener('click', () => changePage(1));
     const carId = getQueryParam('id');
@@ -111,7 +111,7 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
                     </figure>
                         <div class="block-4-text p-4 d-flex flex-column flex-grow-1" id="piesa-${piesa.id}">
                         <h6>
-                            <a target='_blank' href="shop-single.html?id=${piesa.id}&masina=${piesa.masina}" id="piesaTitlu-${piesa.id}">${piesa.nume}</a>
+                            <a target='_blank' href="shop-single.html?id=${piesa.id}&masina=${piesa.masina}" id="piesaTitlu-${piesa.id}">${piesa.nume}, ${piesa.codPiesa}, ${piesa.masina}</a>
                         </h6>
                         <p class="mb-0"><strong style='font-weight: bold'>Masina: </strong> <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
                         <p class="mb-0"><strong style='font-weight: bold'>Disponibilitate: </strong> ${piesa.stoc > 0 ? `În stoc (${piesa.stoc})` : 'Fără stoc'}</p>
