@@ -33,8 +33,12 @@ TipDropdown.addEventListener('change', function() {
     }
 });
 async function addEdit_Tip(){
-    debugger;
-    const tipId = getSelectedValue('ddd_Tip');        
+    debugger;         
+    const tipId = getSelectedValue('ddd_Tip');      
+    if(verificareTip() == false){
+        return;
+    }
+    
     const data = {
         Id: tipId,
         tip:  document.getElementById("tb_Tip").value         
@@ -56,6 +60,17 @@ async function addEdit_Tip(){
         getTip();  
     }, 500); 
 }
+
+function verificareTip(){
+    verif = true;
+    var tip = document.getElementById("tb_Tip");    
+    if(tip.value == ""){
+        verif = false;
+        verifRed(tip.id);
+    }       
+    return verif;
+}
+
 async function remove_Tip(){
     debugger;
     const tipId = getSelectedValue('ddd_Tip');  
@@ -74,6 +89,7 @@ async function remove_Tip(){
     }, 500); 
     
 }
+
 
 
 
@@ -109,6 +125,9 @@ CategDropdown.addEventListener('change', function() {
 });
 async function addEdit_Categ(){
     debugger;
+    if(verificareCateg() == false){
+        return;
+    }
     const catId = getSelectedValue('ddd_Categorii');     
     const tipId = getSelectedValue('ddd_Tip');    
     const data = {
@@ -133,6 +152,17 @@ async function addEdit_Categ(){
         getCategorii(tipId);  
     }, 500); 
 }
+
+function verificareCateg(){
+    verif = true;
+    var categ = document.getElementById("tb_numeCat");    
+    if(categ.value == ""){
+        verif = false;
+        verifRed(categ.id);
+    }       
+    return verif;
+}
+
 async function remove_Categ(){
     debugger;
     const catId = getSelectedValue('ddd_Categorii');  
@@ -182,6 +212,9 @@ tipSubCategDropdown.addEventListener('change', function() {
 });
 async function addEdit_SubCateg(){
     debugger;
+    if(verificareSubCateg() == false){
+        return;
+    }
     const subcatId = getSelectedValue('ddd_subcateg');     
     const catId = getSelectedValue('ddd_Categorii');    
     const data = {
@@ -205,6 +238,15 @@ async function addEdit_SubCateg(){
     setTimeout(() => {
         subCategorii();  
     }, 500);  
+}
+function verificareSubCateg(){
+    verif = true;
+    var subcateg = document.getElementById("tb_numeSubCat");    
+    if(subcateg.value == ""){
+        verif = false;
+        verifRed(subcateg.id);
+    }       
+    return verif;
 }
 async function remove_subCateg(){
     debugger;
