@@ -1,6 +1,7 @@
 ﻿//PAGE LOAD
 document.addEventListener('DOMContentLoaded', async  () => {
-    await getTip();        
+    await getTip();     
+    await getCars(`${API_BASE_URL}/Cars/getAll`); 
 });
 
 //TIP
@@ -35,9 +36,12 @@ TipDropdown.addEventListener('change', function() {
 async function addEdit_Tip(){
     debugger;         
     const tipId = getSelectedValue('ddd_Tip');      
-    if(verificareTip() == false){
+
+    var tip = document.getElementById("tb_Tip");  
+    if(tip.value == ""){        
+        verifRed(tip.id);
         return;
-    }
+    }  
     
     const data = {
         Id: tipId,
@@ -60,38 +64,43 @@ async function addEdit_Tip(){
         getTip();  
     }, 500); 
 }
-
-function verificareTip(){
-    verif = true;
-    var tip = document.getElementById("tb_Tip");    
-    if(tip.value == ""){
-        verif = false;
-        verifRed(tip.id);
-    }       
-    return verif;
-}
-
 async function remove_Tip(){
     debugger;
     const tipId = getSelectedValue('ddd_Tip');  
+
+    var tip = document.getElementById("ddd_Tip");   
+    if(tipId == ""){        
+        verifRed(tip.id);
+        return;
+    }   
     const link = `${API_BASE_URL}/CategoriiTip/` + tipId;  
     try{
-        del(tipId,link);
-        showDeleteSuccessMessage();
+
+        // Confirmarea ștergerii
+        Swal.fire({
+            title: 'Ești sigur?',
+            text: 'Acest tip va fi sters!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da, sterge!'
+        }).then((result) => {
+            if (result.isConfirmed) {                                       
+                del(tipId,link);
+                clearddd('ddd_Tip');
+                cleartb('tb_Tip');    
+                setTimeout(() => {
+                    getTip();  
+                }, 500); 
+                showDeleteSuccessMessage();
+            }
+        });      
     }
     catch(err){
         showErrorMessage(err.message);
-    }
-    clearddd('ddd_Tip');
-    cleartb('tb_Tip');    
-    setTimeout(() => {
-        getTip();  
-    }, 500); 
-    
+    }       
 }
-
-
-
 
 //CATEGORII
 async function getCategorii(tipId){
@@ -108,7 +117,7 @@ function populateCategs(categ){
     categ.forEach(item => {
         const option = document.createElement('option');
         option.value = item.id;
-        option.text = item.categorie; // Presupunem că acesta este câmpul pentru numele culorii
+        option.text = item.categorie;
         CategDropdown.add(option);
     });
 }
@@ -124,10 +133,12 @@ CategDropdown.addEventListener('change', function() {
     }
 });
 async function addEdit_Categ(){
-    debugger;
-    if(verificareCateg() == false){
+    debugger;   
+    var categ = document.getElementById("tb_numeCat");  
+    if(categ.value == ""){        
+        verifRed(categ.id);
         return;
-    }
+    }  
     const catId = getSelectedValue('ddd_Categorii');     
     const tipId = getSelectedValue('ddd_Tip');    
     const data = {
@@ -152,40 +163,45 @@ async function addEdit_Categ(){
         getCategorii(tipId);  
     }, 500); 
 }
-
-function verificareCateg(){
-    verif = true;
-    var categ = document.getElementById("tb_numeCat");    
-    if(categ.value == ""){
-        verif = false;
-        verifRed(categ.id);
-    }       
-    return verif;
-}
-
 async function remove_Categ(){
     debugger;
     const catId = getSelectedValue('ddd_Categorii');  
-    const tipId = getSelectedValue('ddd_Tip');    
+    const tipId = getSelectedValue('ddd_Tip');         
+    var categ = document.getElementById("ddd_Categorii");   
+    if(catId == ""){        
+        verifRed(categ.id);
+        return;
+    }   
     const link = `${API_BASE_URL}/Categorii/` + catId;  
     try{
-        del(catId,link);
-        showDeleteSuccessMessage();
+        // Confirmarea ștergerii
+            Swal.fire({
+            title: 'Ești sigur?',
+            text: 'Aceasta categorie va fi stearsa!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da, sterge!'
+        }).then((result) => {
+            if (result.isConfirmed) {                                                          
+                del(catId,link);
+                clearddd('ddd_Categorii');
+                cleartb('tb_numeCat');
+                setTimeout(() => {
+                    getCategorii(tipId);  
+                }, 500);  
+                
+                showDeleteSuccessMessage();
+            }
+        });         
     }
     catch(err){
         showErrorMessage(err.message);
-    }
-    clearddd('ddd_Categorii');
-    cleartb('tb_numeCat');
-    setTimeout(() => {
-        getCategorii(tipId);  
-    }, 500);  
-    
+    }   
 }
 
-
-
-
+//SUBCATEGORII
 async function subCategorii(){
     debugger;
     var x = getSelectedValue("ddd_Categorii");
@@ -211,12 +227,15 @@ tipSubCategDropdown.addEventListener('change', function() {
     if(document.getElementById("tb_numeSubCat")){document.getElementById("tb_numeSubCat").value = subcatText;}     
 });
 async function addEdit_SubCateg(){
-    debugger;
-    if(verificareSubCateg() == false){
-        return;
-    }
+    debugger;    
     const subcatId = getSelectedValue('ddd_subcateg');     
     const catId = getSelectedValue('ddd_Categorii');    
+
+    var subcateg = document.getElementById("tb_numeSubCat");  
+    if(subcateg.value == ""){        
+        verifRed(subcateg.id);
+        return;
+    }  
     const data = {
         Id: subcatId,
         NumeSubCat:  document.getElementById("tb_numeSubCat").value,
@@ -239,33 +258,257 @@ async function addEdit_SubCateg(){
         subCategorii();  
     }, 500);  
 }
-function verificareSubCateg(){
-    verif = true;
-    var subcateg = document.getElementById("tb_numeSubCat");    
-    if(subcateg.value == ""){
-        verif = false;
-        verifRed(subcateg.id);
-    }       
-    return verif;
-}
+
 async function remove_subCateg(){
     debugger;
     const subcatId = getSelectedValue('ddd_subcateg');  
-    const catId = getSelectedValue('ddd_Categorii');    
+    const catId = getSelectedValue('ddd_Categorii');   
+    
+    var subcateg = document.getElementById("ddd_subcateg");   
+    if(subcatId == ""){        
+        verifRed(subcateg.id);
+        return;
+    }      
     const link = `${API_BASE_URL}/CategoriiSub/` + subcatId;  
     try{
-        del(catId,link);
-        showDeleteSuccessMessage();
+
+         // Confirmarea ștergerii
+         Swal.fire({
+            title: 'Ești sigur?',
+            text: 'Aceasta subcategorie va fi stearsa!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da, sterge!'
+        }).then((result) => {
+            if (result.isConfirmed) {                                                          
+                del(catId,link);
+                clearddd('ddd_subcateg');
+                cleartb('tb_numeSubCat');
+                setTimeout(() => {
+                    subCategorii();  
+                }, 500);   
+
+                showDeleteSuccessMessage();
+            }
+        });              
     }
     catch(err){
         showErrorMessage(err.message);
-    }
-    clearddd('ddd_subcateg');
-    cleartb('tb_numeSubCat');
-    setTimeout(() => {
-        subCategorii();  
-    }, 500);   
-    
+    }       
 }
+
+//MARCA
+async function addEdit_Car(){
+    debugger;         
+    const carId = getSelectedValue('ddd_cars');   
+    var car = document.getElementById("tb_cars");   
+    if(car.value == ""){        
+        verifRed(car.id);
+        return;
+    }         
+    const data = {
+        marcaID: carId,
+        marcaName:  document.getElementById("tb_cars").value         
+    };   
+    if(carId == ""){//post
+        data.marcaID = 0;        
+        const link = `${API_BASE_URL}/Cars/marca`; 
+        insert(data,link);
+        showInsertSuccessMessage();
+    } 
+    else{ //put        
+        const link = `${API_BASE_URL}/Cars/marca/` + carId; 
+        update(carId,data,link );
+        showUpdateSuccessMessage();
+    }
+    clearddd('ddd_cars');
+    cleartb('tb_cars');
+    setTimeout(() => {
+        getCars(`${API_BASE_URL}/Cars/getAll`);
+    }, 500); 
+}
+
+async function remove_Car(){
+    debugger;    
+    const carId = getSelectedValue('ddd_cars');  
+    var car = document.getElementById("ddd_cars");   
+    if(carId == ""){        
+        verifRed(car.id);
+        return;
+    }   
+    const link = `${API_BASE_URL}/Cars/marca/` + carId;  
+    try{
+        // Confirmarea ștergerii
+        Swal.fire({
+            title: 'Ești sigur?',
+            text: 'Aceasta marca va fi ștearsă!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da, sterge!'
+        }).then((result) => {
+            if (result.isConfirmed) {                       
+                del(carId,link);
+                clearddd('ddd_cars');
+                cleartb('tb_cars');  
+                setTimeout(() => {
+                    getCars(`${API_BASE_URL}/Cars/getAll`);
+                }, 500);
+                showDeleteSuccessMessage();
+            }
+        });
+        }
+        catch(err){
+            showErrorMessage(err.message);
+        }        
+}
+
+//MODEL
+async function addEdit_Model(){
+    debugger;         
+    const modelId = getSelectedValue('ddd_models');            
+    const marcaId = getSelectedValue('ddd_cars');     
+    var model = document.getElementById("tb_models"); 
+    if(model.value == ""){        
+        verifRed(model.id);
+        return;
+    } 
+    const data = {
+        modelID: modelId,
+        marcaID: marcaId,
+        modelName:  document.getElementById("tb_models").value         
+    };   
+    if(modelId == ""){//post
+        data.modelID = 0;        
+        const link = `${API_BASE_URL}/Cars/model`; 
+        insert(data,link);
+        showInsertSuccessMessage();
+    } 
+    else{ //put        
+        const link = `${API_BASE_URL}/Cars/model/` + modelId; 
+        update(modelId,data,link );
+        showUpdateSuccessMessage();
+    }
+    clearddd('ddd_models');
+    cleartb('tb_models');
+
+    setTimeout(() => {
+        getModelsForDropdown(marcaId, populateModelsDropdown);
+    }, 500); 
+}
+
+async function remove_Model(){     
+    const modelId = getSelectedValue('ddd_models');  
+    const marcaId = getSelectedValue('ddd_cars'); 
+    var model = document.getElementById("ddd_models");   
+    if(modelId == ""){        
+        verifRed(model.id);
+        return;
+    }   
+    const link = `${API_BASE_URL}/Cars/model/` + modelId;  
+    try{
+        // Confirmarea ștergerii
+        Swal.fire({
+            title: 'Ești sigur?',
+            text: 'Acest model va fi sters!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da, sterge!'
+        }).then((result) => {
+            if (result.isConfirmed) {                       
+                del(modelId,link);
+                clearddd('ddd_models');
+                cleartb('tb_models');   
+                debugger;                                
+                setTimeout(() => {
+                    getModelsForDropdown(marcaId, populateModelsDropdown);
+                }, 500); 
+                showDeleteSuccessMessage();
+            }
+        });
+    }
+    catch(err){
+        showErrorMessage(err.message);
+    }         
+}
+
+//GENERATIE
+async function addEdit_Generatie(){
+    debugger;         
+    const generatieId = getSelectedValue('ddd_generatii');            
+    const modelId = getSelectedValue('ddd_models');           
+    var generatie = document.getElementById("tb_generatii"); 
+    if(generatie.value == ""){        
+        verifRed(generatie.id);
+        return;
+    } 
+    const data = {
+        generatieId: generatieId,
+        modelId: modelId,
+        generatieName:  document.getElementById("tb_generatii").value         
+    };   
+    if(generatieId == ""){//post
+        data.generatieId = 0;        
+        const link = `${API_BASE_URL}/Cars/generatie`; 
+        insert(data,link);
+        showInsertSuccessMessage();
+    } 
+    else{ //put        
+        const link = `${API_BASE_URL}/Cars/generatie/` + generatieId; 
+        update(generatieId,data,link );
+        showUpdateSuccessMessage();
+    }
+    clearddd('ddd_generatii');
+    cleartb('tb_generatii');
+
+    setTimeout(() => {
+        getGeneratiiForDropdown(modelId, populateGeneratiiDropdown);
+    }, 500); 
+}
+
+async function remove_Generatie(){     
+    const generatieId = getSelectedValue('ddd_generatii');  
+    const modelId = getSelectedValue('ddd_models');  
+
+    var generatie = document.getElementById("ddd_generatii");   
+    if(generatieId == ""){        
+        verifRed(generatie.id);
+        return;
+    }   
+    const link = `${API_BASE_URL}/Cars/generatie/` + generatieId;  
+    try{
+        // Confirmarea ștergerii
+        Swal.fire({
+            title: 'Ești sigur?',
+            text: 'Aceasta generatie va fi stearsa!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da, sterge!'
+        }).then((result) => {
+            if (result.isConfirmed) {                       
+                del(generatieId,link);
+                clearddd('ddd_generatii');
+                cleartb('tb_generatii');   
+                debugger;                                
+                setTimeout(() => {
+                    getGeneratiiForDropdown(modelId, populateGeneratiiDropdown);
+                }, 500); 
+
+                showDeleteSuccessMessage();
+            }
+        });
+    }
+    catch(err){
+        showErrorMessage(err.message);
+    }         
+}
+
 
 

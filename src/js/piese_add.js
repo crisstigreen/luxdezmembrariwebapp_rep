@@ -2,7 +2,7 @@
 
 //load piesa
 document.addEventListener('DOMContentLoaded', async  () => {  
-    //debugger; 
+    debugger; 
     const piesaId = getQueryParam('id');
     await getCars(`${API_BASE_URL}/Cars/get`);      
     await fetchAndPopulatePieseData();       

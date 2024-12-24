@@ -211,7 +211,7 @@ function deleteLogged(itemId){
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Da, șterge!'
+        confirmButtonText: 'Da, sterge!'
     }).then((result) => {
         if (result.isConfirmed) {
             fetch(url, {

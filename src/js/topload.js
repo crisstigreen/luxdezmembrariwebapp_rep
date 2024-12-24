@@ -48,9 +48,7 @@ function addToCart(product) {
     } else {
         cartItems.push(product);
     }
-
     setCartItems(cartItems);
-
 }
 
 // Function to set cart items in localStorage

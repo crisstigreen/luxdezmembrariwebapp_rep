@@ -31,13 +31,6 @@ function loadPiesa(){
                 {                    
                     disableAddToCart();                   
                 }
-
-
-
-
-
-
-
                 
                 debugger;           
                 const carImages = piesa.imagini;   
@@ -129,18 +122,6 @@ function loadPiesa(){
                         });
                     }
                 }
-
-
-
-
-
-
-
-
-
-
-
-
                  
                  document.getElementById('piesaTitlu').innerText = piesa.nume + " " + masina;
                  document.getElementById('piesaMeniu').innerText = piesa.nume;
@@ -202,7 +183,13 @@ document.getElementById('addToCart').addEventListener('click', () => {
     var pretText = document.getElementById('piesaPret').innerText;
     var pret = parseInt(pretText.substring(0, pretText.indexOf(' ')));        
     var pretTotal = pret;    
-    var imagini = document.getElementById('piesaImagine').src;
+    
+    var firstImageElement = document.querySelector('#carousel-inner img');    
+    var firstImageSrc = firstImageElement ? firstImageElement.src : null;
+       
+    //var imagini = document.getElementById('piesaImagine').src;
+    var imagini = firstImageSrc;
+
     var masina = document.getElementById('piesaMasina').innerText;
     var tipCaroserie = document.getElementById('piesatipCaroserie').innerText;
     var codIntern = document.getElementById('piesaCodPiesa').innerText;
