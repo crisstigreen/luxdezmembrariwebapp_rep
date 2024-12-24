@@ -42,7 +42,7 @@
             <!--add form-->
           <div id="edit_form" class="row">
               <div class="col-md-12">
-                  <h5 class="h4 mb-3 text-black">Nomenclator categorii piese</h5>
+                  
               </div>
               <div class="col-md-12 ml-auto">
 
@@ -51,24 +51,24 @@
                       <div class="p-3 p-lg-5 border">
 
                        
-                        
+                        <h7 class="h4 mb-3 text-black">Nomenclator categorii piese</h7>
                           <div class="form-group row">
                             <div class="col-md-3 ddd">
                                 <label for="html">Tip</label>  
-                                <select id="ddd_Tip" class="form-control ddd" onclick="verifRemoveRed('tb_Tip')">
+                                <select id="ddd_Tip" class="form-control ddd" onclick="verifRemoveRed('ddd_Tip')">
                                     <option value="">---</option>                                                                           
                                 </select>                                                        
                             </div>     
                               <div class="col-md-3 ddd">
                                   <label for="html">Categorii</label>  
-                                  <select id="ddd_Categorii" class="form-control ddd" onclick="verifRemoveRed('tb_numeCat')">
+                                  <select id="ddd_Categorii" class="form-control ddd" onclick="verifRemoveRed('ddd_Categorii')">
                                       <option value="">---</option>                                                                           
                                   </select>                                 
                               </div>
 
                               <div class="col-md-3 ddd">
                                   <label for="html">Subcategorii</label>  
-                                  <select id="ddd_subcateg" class="form-control ddd" onclick="verifRemoveRed('tb_numeSubCat')">
+                                  <select id="ddd_subcateg" class="form-control ddd" onclick="verifRemoveRed('ddd_subcateg')">
                                       <option value="">---</option>                                                                          
                                   </select>
                               </div>                                                
@@ -115,6 +115,74 @@
 
 
           </div>
+
+            <!--add form-->
+            <div id="edit_form" class="row">
+                <div class="col-md-12">
+                    
+                </div>
+                <div class="col-md-12 ml-auto">
+  
+                    <form action="#" method="post">
+  
+                        <div class="p-3 p-lg-5 border">
+  
+                         
+                          <h7 class="h4 mb-3 text-black">Nomenclator tipuri masini</h7>
+                            <div class="form-group row">
+                              <div class="col-md-3 ddd">
+                                  <label for="html">Marca</label>  
+                                  <select id="ddd_cars" class="form-control ddd" onclick="verifRemoveRed('ddd_cars')">
+                                      <option value="">---</option>                                                                           
+                                  </select>                                                        
+                              </div>     
+                                <div class="col-md-3 ddd">
+                                    <label for="html">Model</label>  
+                                    <select id="ddd_models" class="form-control ddd" onclick="verifRemoveRed('ddd_models')">
+                                        <option value="">---</option>                                                                           
+                                    </select>                                 
+                                </div>
+  
+                                <div class="col-md-3 ddd">
+                                    <label for="html">Generatie</label>  
+                                    <select id="ddd_generatii" class="form-control ddd" onclick="verifRemoveRed('ddd_generatii')">
+                                        <option value="">---</option>                                                                          
+                                    </select>
+                                </div>                                                
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-md-2 ddd">
+                                  <input type="text" class="form-control" id="tb_cars" name="tb_cars" onclick="verifRemoveRed('tb_cars')">                                
+                              </div>
+                              <div class="col-md-1 ddd">
+                                  <button class="btn btn-warning" type="button" onclick="addEdit_Car()"><i class="icon-add"></i><i class="icon-edit"></i></button>
+                                  <button class="btn btn-danger" type="button" onclick="remove_Car()"><i class="icon-remove"></i></button>
+                              </div>
+                           
+                              
+                              <div class="col-md-2 ddd">
+                                  <input type="text" class="form-control" id="tb_models" name="tb_models" onclick="verifRemoveRed('tb_models')">                                
+                              </div>
+                              <div class="col-md-1 ddd">
+                                  <button class="btn btn-primary" type="button" onclick="addEdit_Model()"><i class="icon-add"></i><i class="icon-edit"></i></button>
+                                  <button class="btn btn-danger" type="button" onclick="remove_Model()"><i class="icon-remove"></i></button>
+                              </div>
+  
+                              <div class="col-md-2 ddd">
+                                  <input type="text" class="form-control" id="tb_generatii" name="tb_generatii" onclick="verifRemoveRed('tb_generatii')">                                
+                              </div>
+                              <div class="col-md-1 ddd">
+                                  <button class="btn btn-success" type="button" onclick="addEdit_Generatie()"><i class="icon-add"></i><i class="icon-edit"></i></button>
+                                  <button class="btn btn-danger" type="button" onclick="remove_Generatie()"><i class="icon-remove"></i></button>
+                              </div>
+                            </div>
+                                                                                                                                  
+                        </div>
+                    </form>
+                </div>
+  
+  
+            </div>
           
           
       </div>
