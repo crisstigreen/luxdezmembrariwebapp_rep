@@ -15,29 +15,35 @@
 <link rel="stylesheet" href="../css/style.css">
 
 
+
+
+
       
 <header class="site-navbar" role="banner">
 <div class="topDiv">
-  <div style="width: 60%; margin-left: auto; margin-right: auto;">
+  <div class="responsive-div">
     
     <div class="row">    
-      <img src="images/phone-call.png" alt="Image placeholder" class="img-fluid rounded">
-      <div class="col-2">
+    
+      
+      <img src="images/phone-call.png" width="25px" height="25px" alt="Image placeholder">
+      <div>
         <strong>+40371783184</strong>    
       </div>
-      <div class="col-3">
-        <img src="images/clock.png" alt="Image placeholder" class="img-fluid rounded">
+      <div>
+        <img src="images/clock.png" width="25px" height="25px" alt="Image placeholder">
         <strong>L-V: 08-17:30 | S: 08-13:30</strong>
       </div>
       
-      <div class="col-4 text-right">
-        <strong style="margin-left: 50px;" class="topMenu"><a href="contact.html">Despre noi</a></strong>
-        <strong class="topMenu"><a href="contact.html">Contact</a></strong>
+      <div>
+   <!--      <strong class="topMenu"><a href="contact.html">Despre noi</a></strong>
+        <strong class="topMenu"><a href="contact.html">Contact</a></strong> -->
 
-        <span id="userName" style="margin-left: 30px;" class="topMenu">User: </span>   
-        <span id="userId" style="margin-left: 30px;" class="topMenu">UserId: </span>   
+
       </div>
 
+
+        
       
       
     </div>
@@ -50,53 +56,92 @@
 </div>
   <div class="site-navbar-top">
     <div class="container">
-      <div class="row align-items-center">
-        <a href="index.html" class="js-logo-clone">
-          <img src="images/logo-lux-dezmembrari.webp" alt="Image placeholder">
-        </a>   
-
-        <nav class="site-navigation text-right text-md-center" role="navigation">
-      
-            <ul style="padding: 0px !important;" class="site-menu js-clone-nav d-none d-md-block">                                   
-              <li><a href="index.html">Prima pagina</a></li>
-              <li><a href="shop.html">Piese auto</a></li>
-              <li><a href="shop-cars.html">Masini</a></li>                
-              <li><a href="shop-tires.html">Anvelope</a></li>        
-              <li id="adminMenu"><a href="admin/piese.html">Admin</a></li>
-              <li id="userOrdersMenu"><a href="user-orders.html">Comenzile mele</a></li>
-            </ul>
-         
-        </nav>
-                
-        
-        <div class="col-1 text-right" style="padding-left: 0px; padding-right: 0px !important;">
-          <div class="site-top-icons">
-
-            <ul class="navbar-menu">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle"><span class="icon icon-person"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="admin/login.html">Autentificare</a></li>
-                  <li><a href="admin/register.html">Inregistrare</a></li>
-                  <li><a href="myaccount.html">Contul meu</a></li>
-                  <li onclick="logout()"><a href="admin/login.html">Log out</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="cart.html" class="site-cart">
-                  <span class="icon icon-shopping_cart"></span>
-                  <span class="count" id="cart-count">0</span>
-                </a>
-              </li>
-              <li class="d-inline-block d-md-none ml-md-0">
-                <a href="#" class="site-menu-toggle js-menu-toggle">
-                  <span class="icon-menu"></span>
-                </a>
-              </li>
-            </ul>            
-          </div> 
+      <div class="row">
+        <div class="col-3">
+          <a href="index.html">
+            <img src="images/logo-lux-dezmembrari.webp" class="logo_img" alt="Image placeholder">
+          </a>   
         </div>
 
+        <div class="col-6 text-right">
+          <span id="userName" style="margin-left: 30px;" class="topMenu">User: </span>   
+          <span id="userId" style="margin-left: 30px;" class="topMenu">UserId: </span>
+        </div>
+
+         <!-- col user -->
+        <div class="col-3">
+           
+            <div>  
+              <div class="site-top-icons">            
+               <ul class="navbar-menu">
+                 
+                 <li class="dropdown">
+                   <a href="#" class="dropdown-toggle"><span class="icon icon-person"></span></a>
+                   <ul class="dropdown-menu">
+                     <li><a href="admin/login.html">Autentificare</a></li>
+                     <li><a href="admin/register.html">Inregistrare</a></li>
+                     <li><a href="myaccount.html">Contul meu</a></li>
+                     <li onclick="logout()"><a href="admin/login.html">Log out</a></li>
+                   </ul>
+                 </li>
+                 <li>
+                   <a href="cart.html" class="site-cart">
+                     <span class="icon icon-shopping_cart"></span>
+                     <span class="count" id="cart-count">0</span>
+                   </a>
+                 </li>
+  
+  
+                 <!-- hamburger -->
+                 <li class="d-inline-block d-md-none ml-md-0">
+                   <a href="#" class="site-menu-toggle js-menu-toggle">
+                       <span class="icon-menu"></span>
+                   </a>
+                 </li>
+  
+               </ul>                          
+             </div>          
+            </div>
+        </div>
+      </div>
+      <div class="row">
+               
+         <!-- col logo -->
+        <div class="col-2">      
+         
+        </div>
+                                                  
+       <!-- col meniu + hamburger -->
+        <div class="col-12">
+              <!-- menu -->
+              <nav class="site-navigation text-md-center" role="navigation">
+                <ul id="main-menu" class="site-menu js-clone-nav d-none d-md-block text-left">
+                    <li><a href="index.html">Prima pagina</a></li>
+                    <li><a href="shop.html">Piese auto</a></li>
+                    <li><a href="shop-cars.html">Masini</a></li>
+                    <li><a href="shop-tires.html">Anvelope</a></li>
+                    <li id="adminMenu"><a href="admin/piese.html">Admin</a></li>
+                    <li id="userOrdersMenu"><a href="user-orders.html">Comenzile mele</a></li>
+                    <li><a href="contact.html">Despre noi</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+
+
+      <!--               <strong class="topMenu"><a href="contact.html">Despre noi</a></strong>
+                    <strong class="topMenu"><a href="contact.html">Contact</a></strong> -->
+
+
+
+                </ul>
+            </nav>
+
+              <!-- hamburger-->
+            <div id="hamburger-menu-container" class="hamburger-menu-container d-md-none text-right">
+              <ul id="hamburger-menu"></ul>
+            </div>        
+        </div>
+        
+     
+                            
       </div>
     
   </div> 
@@ -105,10 +150,11 @@
 
 
 
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script src="js/config.js"></script>
+
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/jquery-ui.js"></script>
   <script src="js/popper.min.js"></script>
@@ -116,9 +162,8 @@
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/jquery.magnific-popup.min.js"></script>
   <script src="js/aos.js"></script>
-  
+  <script src="js/config.js"></script>
 
-  
 
   
 
