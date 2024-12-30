@@ -54,7 +54,49 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
          
-            
+
+
+            //menu cristi
+            debugger;            
+            const mainMenu = document.getElementById('main-menu');
+            const hamburgerMenu = document.getElementById('hamburger-menu');
+            const hamburgerMenuContainer = document.getElementById('hamburger-menu-container');
+            const toggleButton = document.querySelector('.site-menu-toggle.js-menu-toggle');
+
+            // Verify that elements are correctly selected
+            if (!mainMenu || !hamburgerMenu || !toggleButton || !hamburgerMenuContainer) {
+                console.error('One or more elements could not be found in the DOM');
+                return;
+            }
+
+            // Copy menu items from the main menu to the hamburger menu
+            function copyMenuItems() {
+                hamburgerMenu.innerHTML = mainMenu.innerHTML;
+            }
+
+            // Toggle the display of the hamburger menu
+            function toggleHamburgerMenu() {
+                if (hamburgerMenuContainer.classList.contains('active')) {
+                    hamburgerMenuContainer.classList.remove('active');
+                } else {
+                    hamburgerMenuContainer.classList.add('active');
+                }
+            }
+
+            // Initialize
+            copyMenuItems();
+
+            // Event listener for the toggle button
+            toggleButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                toggleHamburgerMenu();
+            });
+
+
+
+
+
+
           
         });        
 });
