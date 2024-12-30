@@ -146,8 +146,8 @@ a {
     margin-bottom: 0px; }
     @media (min-width: 768px) {
       .site-navbar .site-navbar-top {
-        padding-top: 40px;
-        padding-bottom: 40px; } }
+        padding-top: 20px;
+        padding-bottom: 20px; } }
   .site-navbar .site-search-icon a span {
     display: inline-block;
     margin-right: 10px; }
@@ -547,8 +547,8 @@ a {
     transform: scale(1.1); }
 
 .block-3 .owl-stage {
-  padding-top: 40px;
-  padding-bottom: 40px; }
+  padding-top: 20px;
+  padding-bottom: 20px; }
 
 .block-3 .owl-nav {
   position: relative;
@@ -820,7 +820,7 @@ a {
 /* styles.css */
 .topMenu a {
   margin-left: 10px;
-  color: white !important;
+  color: black !important;
   text-decoration: none !important; /* opțional, pentru a elimina sublinierea */
 }
 
@@ -1132,6 +1132,99 @@ a:hover {
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+
+
+.logo_img{
+  width: 189px;
+  height: 46px;
+}
+
+/* responsive top */
+ /* Stilul implicit pentru desktop */
+ .responsive-div {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Stil pentru tablete */
+@media (max-width: 768px) {
+  .responsive-div {
+    width: 95%;
+  }
+  .logo_img{
+    width: 135px;
+    height: 33px;
+  }
+}
+
+/* Stil pentru telefoane */
+@media (max-width: 480px) {
+  .responsive-div {
+    width: 95%;
+  }
+  .logo_img{
+    width: 135px;
+    height: 33px;
+  }
+}
+
+
+.text-left{
+  text-align: left;
+}
+
+/* meniu hamburger */
+/* Example CSS */
+/* Styles for the main menu */
+#main-menu {
+  padding: 0px !important;
+}
+
+/* Styles for the hamburger menu container */
+.hamburger-menu-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+/* Display the hamburger menu container when active */
+.hamburger-menu-container.active {
+  transform: translateX(0);
+}
+
+/* Styles for the hamburger menu items */
+.hamburger-menu-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hamburger-menu-container li {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.hamburger-menu-container a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* Hide the original main menu on small screens */
+@media (max-width: 768px) {
+  #main-menu {
+      display: none;
+  }
 }
 
 
