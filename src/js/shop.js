@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async  () => {
        
 });
 
-document.addEventListener('DOMContentLoaded', generateDynamicMenu);
+
 
 //**********  CAUTARE ********************************************************************* */
 //**********  CAUTARE ********************************************************************* */
@@ -77,7 +77,7 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
     //cristi testache
     
     data.piese.forEach(piesa => {
-        debugger;
+        //debugger;
        
         var imageSrc = piesa.imagini ? `${API_BASE_URL_IMG}/uploads/` + piesa.imagini[0] : 'images/placeholder.jpg';
         if(piesa.imagini != null && piesa.imagini.length == 0){
@@ -306,16 +306,27 @@ async function handleMenuClick(level, id, name) {
 }
 
 
+document.addEventListener('DOMContentLoaded', async function () {
+    await generateDynamicMenu();
+
+    const hamburger = document.getElementById('hamburgerButton');
+    const menu = document.getElementById('dynamicMenu');
+
+    hamburger.addEventListener('click', function () {
+        this.classList.toggle('active');
+        menu.classList.toggle('active');
+    });
+});
 
 async function generateDynamicMenu() {
-    try {        
+    try {
         const link = `${API_BASE_URL}/InfoCars/GetMenuItems`;
         const response = await fetch(link);
         const menuItems = await response.json();
         const menu = document.getElementById('dynamicMenu');
         const categoriiTipMap = new Map();
         const categoriiMap = new Map();
-        
+
         menuItems.forEach(item => {
             const tipId = item.CategoriiTipId;
             const tipNume = item.CategoriiTipNume;
@@ -329,35 +340,31 @@ async function generateDynamicMenu() {
                     const tipElement = document.createElement('div');
                     tipElement.classList.add('menu-item');
 
-                    // Verificăm dacă există copii pentru nivelul 1 (Categorii)
                     const hasChildren = menuItems.some(mi => mi.CategoriiTipId === tipId && Number.isInteger(mi.CategoriiId) && mi.CategoriiNume);
 
-                    tipElement.innerHTML = `<a href="#" class="menu-link">${tipNume}${hasChildren ? '&nbsp <i class="arrow down"></i>' : ''}</a><div class="submenu"></div>`;
+                    tipElement.innerHTML = `<a href="#" class="menu-link">${tipNume}${hasChildren ? '&nbsp;<i class="arrow down"></i>' : ''}</a><div class="submenu"></div>`;
                     menu.appendChild(tipElement);
                     categoriiTipMap.set(tipId, tipElement.querySelector('.submenu'));
 
-                    // Adăugăm funcția de click pentru CategoriiTip
-                    tipElement.querySelector('.menu-link').addEventListener('click', function() {
-                        handleMenuClick('tip', tipId, tipNume);  // Apelăm funcția de filtrare pentru Nivel 1
+                    tipElement.querySelector('.menu-link').addEventListener('click', function () {
+                        handleMenuClick('tip', tipId, tipNume);
                     });
                 }
-                
+
                 if (Number.isInteger(catId) && catNume) {
                     if (!categoriiMap.has(catId)) {
                         const catElement = document.createElement('div');
                         catElement.classList.add('submenu-item');
                         catElement.dataset.catId = catId;
 
-                        // Verificăm dacă există copii pentru nivelul 2 (CategoriiSub)
                         const hasSubChildren = menuItems.some(mi => mi.CategoriiId === catId && Number.isInteger(mi.CategoriiSubId) && mi.CategoriiSubNume);
 
                         catElement.innerHTML = `<a href="#" class="menu-link">${catNume}${hasSubChildren ? ' <i class="arrow right"></i>' : ''}</a><div class="subsubmenu"></div>`;
                         categoriiTipMap.get(tipId).appendChild(catElement);
                         categoriiMap.set(catId, catElement.querySelector('.subsubmenu'));
 
-                        // Adăugăm funcția de click pentru Categorii
-                        catElement.querySelector('.menu-link').addEventListener('click', function() {
-                            handleMenuClick('categorie', catId, catNume);  // Apelăm funcția de filtrare pentru Nivel 2
+                        catElement.querySelector('.menu-link').addEventListener('click', function () {
+                            handleMenuClick('categorie', catId, catNume);
                         });
                     }
 
@@ -367,9 +374,8 @@ async function generateDynamicMenu() {
                         subElement.innerHTML = `<a href="#" class="menu-link">${subNume}</a>`;
                         categoriiMap.get(catId).appendChild(subElement);
 
-                        // Adăugăm funcția de click pentru CategoriiSub
-                        subElement.querySelector('.menu-link').addEventListener('click', function() {
-                            handleMenuClick('subcategorie', subId, subNume);  // Apelăm funcția de filtrare pentru Nivel 3
+                        subElement.querySelector('.menu-link').addEventListener('click', function () {
+                            handleMenuClick('subcategorie', subId, subNume);
                         });
                     }
                 }
@@ -380,6 +386,10 @@ async function generateDynamicMenu() {
     }
 }
 
+function handleMenuClick(type, id, name) {
+    // Funcție de exemplu pentru a trata click-urile pe meniuri
+    console.log(`Click pe ${type}: ${name} (ID: ${id})`);
+}    
 
 
 
