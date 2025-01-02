@@ -1176,9 +1176,8 @@ a:hover {
   text-align: left;
 }
 
-/* meniu hamburger */
-/* Example CSS */
-/* Styles for the main menu */
+
+
 #main-menu {
   padding: 0px !important;
 }
@@ -1225,6 +1224,7 @@ a:hover {
   #main-menu {
       display: none;
   }
+
 }
 
 
@@ -1267,12 +1267,69 @@ a:hover {
   .hamburger {
     display: flex;
   }
+  #filtreBtn {
+    display: block;
+  }
   .menu {
     display: none;
   }
   .menu.active {
     display: flex;
     flex-direction: column;
-  }
+  }  
 }
+
+/* side bar filtrare */
+
+.filter-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: white;
+  border-right: 1px solid #ccc;
+  display: none;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#filtrare {
+  display: block;
+}
+
+#filtreBtn {
+  display: none;
+}
+
+
+#closeFilters {
+  display: none;
+}
+
+
+/* Ascundem filtrarea pe ecranele mici */
+@media (max-width: 768px) {
+  #filtrare {
+      display: none;
+  }
+  #closeFilters {
+    display: none;
+  }
+
+  #filterButtonContainer {
+      display: block;
+  }
+  #filtreBtn {
+    display: block;
+  }   
+}
+
+
+
+
+
+
 
