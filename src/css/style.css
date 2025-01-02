@@ -1152,7 +1152,7 @@ a:hover {
 /* Stil pentru tablete */
 @media (max-width: 768px) {
   .responsive-div {
-    width: 95%;
+    width: 75%;
   }
   .logo_img{
     width: 135px;
