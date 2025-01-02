@@ -37,6 +37,23 @@
                 </div>
             </div>
 
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 80%;"> 
+                      
+                        
+                    </td>
+                    <td>
+                        <button id="filtreBtn" class="btn btn-primary">Filtre</button>
+                        <button id="closeFilters" class="btn btn-danger">Închide</button>
+                    </td>
+                    <td>
+
+                       
+                    </td>
+                </tr>
+              </table>
+
             <div class="site-section">
                 <div class="container">
                     <div class="row mb-5">
@@ -81,15 +98,42 @@
 
                         </div>
 
-                        <div class="col-md-3 order-1 mb-5 mb-md-0" style="padding: 0px 3px 0px 3px !important;">                    
-                            <div class="border p-4 rounded mb-4" style="padding: 15px 5px 5px 8px !important;">                                                                                    
-                            <div id="checkboxContainerMarca"></div>
-                            <br/>
-                            <div id="checkboxContainerModel"></div>
-                            <br/>
-                            <div id="checkboxContainerGeneratie"></div>                          
-                            </div>
+                   
+                        
+                           <!-- filtrare div -->
+                      <div class="col-md-3 order-1 mb-5 mb-md-0" style="padding: 0px 3px 0px 3px !important;" id="filtrare">                    
+                        <div class="border p-4 rounded mb-4" style="padding: 15px 5px 5px 8px !important;">
+                                                                                        
+                          <div id="checkboxContainerMarca"></div>
+                          <br/>
+                          <div id="checkboxContainerModel"></div>
+                          <br/>
+                          <div id="checkboxContainerGeneratie"></div>
+                          
                         </div>
+                    </div>
+
+                   <!-- Butonul Filtre (pentru ecrane mici) -->
+                   <div id="filterButtonContainer" class="d-md-none">
+                      
+                   </div>
+
+                  <!-- Meniul lateral cu filtre (pentru ecrane mici) -->
+                  <div id="filterSidebar" class="filter-sidebar">
+                      <div class="border p-4 rounded mb-4" style="padding: 5px 5px 5px 8px !important;margin-top: 150px">
+                          
+                          
+                          <div id="checkboxContainerMarcaSidebar"></div>
+                          <br />
+                          <div id="checkboxContainerModelSidebar"></div>
+                          <br />
+                          <div id="checkboxContainerGeneratieSidebar"></div>
+
+                      </div>                           
+                  </div>
+
+
+
                     </div>
                 </div>
 
@@ -240,6 +284,7 @@
       <script src="js/common.js"></script> 
       <script src="js/top.js"></script>
       <script src="js/topload.js"></script> 
+
       <script src="js/shop-cars.js"></script> 
     
       

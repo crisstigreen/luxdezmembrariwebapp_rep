@@ -36,27 +36,34 @@
               <div class="container">
                   <div class="row">
                       <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
+                      
                   </div>
 
                   <!-- meniu dinamic -->
-                  <div class="row">
-                    <nav class="menu" id="dynamicMenu">
-                        
-                    </nav>
+                  <div class="row">                   
+                        <nav class="menu" id="dynamicMenu">                        
+                        </nav>                                                                          
                   </div>
+                  
+                  <table style="width: 100%;">
+                    <tr>
+                        <td style="width: 80%;"> <div class="hamburger" id="hamburgerButton">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                          </div>
+                        </td>
+                        <td>
+                            <button id="filtreBtn" class="btn btn-primary">Filtre</button>
+                            <button id="closeFilters" class="btn btn-danger">Închide</button>
+                        </td>
+                        <td>
 
-                   <!-- Buton de meniu hamburger -->
-              <!--   <div class="hamburger" id="hamburger">
-                    <div class="bar"></div>
-                </div> -->
-
-                <div class="hamburger" id="hamburgerButton">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                  </div>
-
-
+                           
+                        </td>
+                    </tr>
+                  </table>
+                                                                                                                                                                                              
               </div>
           </div>
 
@@ -66,6 +73,10 @@
               <div class="container">
 
                   <div class="row mb-5">
+
+
+                                
+                      <!-- rezultatele -->
                       <div class="col-md-9 order-2">
                        
                           <table style="width: 100%">
@@ -96,14 +107,12 @@
 
 
                                    
-                      </div>
-
-                      <div class="col-md-3 order-1 mb-5 mb-md-0" style="padding: 0px 3px 0px 3px !important;">                    
+                      </div>    
+                             
+                       <!-- filtrare div -->
+                      <div class="col-md-3 order-1 mb-5 mb-md-0" style="padding: 0px 3px 0px 3px !important;" id="filtrare">                    
                           <div class="border p-4 rounded mb-4" style="padding: 15px 5px 5px 8px !important;">
-                            
-
-                                  
-                            
+                                                                                          
                             <div id="checkboxContainerMarca"></div>
                             <br/>
                             <div id="checkboxContainerModel"></div>
@@ -112,7 +121,33 @@
                             
                           </div>
                       </div>
+
+                     <!-- Butonul Filtre (pentru ecrane mici) -->
+                     <div id="filterButtonContainer" class="d-md-none">
+                        
+                     </div>
+
+                    <!-- Meniul lateral cu filtre (pentru ecrane mici) -->
+                    <div id="filterSidebar" class="filter-sidebar">
+                        <div class="border p-4 rounded mb-4" style="padding: 5px 5px 5px 8px !important;margin-top: 150px">
+                            
+                            
+                            <div id="checkboxContainerMarcaSidebar"></div>
+                            <br />
+                            <div id="checkboxContainerModelSidebar"></div>
+                            <br />
+                            <div id="checkboxContainerGeneratieSidebar"></div>
+
+                        </div>                           
+                    </div>
+
                   </div>
+
+
+
+
+
+
 
                   <div class="row">
                       <div class="col-md-12">
