@@ -19,8 +19,15 @@ let IdSubCat = "";
 let Nivel = "";
 
 
-// Apelează funcția pentru a popula checkbox-urile pentru mărci când pagina se încarcă
-document.addEventListener('DOMContentLoaded', getCarsForDropdown(populateCheckboxesMarca));
+document.addEventListener('DOMContentLoaded', function() {
+    const containerMarca = document.getElementById('checkboxContainerMarca');
+    getCarsForDropdown(function(cars) {
+        populateCheckboxesMarca(cars, containerMarca);
+    });
+});
+
+
+
 //
 document.addEventListener('DOMContentLoaded', async  () => {
     debugger;        
@@ -185,7 +192,7 @@ function onImageClick(idPiesa) {
 
  // Funcția API GET DATE pentru a căuta piese după Marca, Model și Generatie
  function pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm) {
-    debugger;    
+    //debugger;    
     if(marca == ""){model = ""; generatie = "";}
     if(model == ""){generatie = "";}                       
     const url = `${API_BASE_URL}/Piese/search_fields?Marca=${encodeURIComponent(marca)}&Model=${encodeURIComponent(model)}&Generatie=${encodeURIComponent(generatie)}&IdSubCat=${encodeURIComponent(IdSubCat)}&Nivel=${encodeURIComponent(Nivel)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
@@ -386,10 +393,81 @@ async function generateDynamicMenu() {
     }
 }
 
-function handleMenuClick(type, id, name) {
-    // Funcție de exemplu pentru a trata click-urile pe meniuri
-    console.log(`Click pe ${type}: ${name} (ID: ${id})`);
-}    
+
+
+
+//logica
+
+document.addEventListener('DOMContentLoaded', function () {
+    debugger;
+    const filtreBtn = document.getElementById('filtreBtn');
+    const filterSidebar = document.getElementById('filterSidebar');
+    const closeFilters = document.getElementById('closeFilters');
+    const filtrare = document.getElementById('filtrare');
+
+    // Functia pentru a copia filtrele in meniul lateral
+    function copyFiltersToSidebar() {
+        const checkboxContainerMarca = document.getElementById('checkboxContainerMarca');
+        const checkboxContainerModel = document.getElementById('checkboxContainerModel');
+        const checkboxContainerGeneratie = document.getElementById('checkboxContainerGeneratie');
+        
+        // Găsim div-urile specifice din filterSidebar
+        const checkboxContainerMarcaSidebar = document.getElementById('checkboxContainerMarcaSidebar');
+        const checkboxContainerModelSidebar = document.getElementById('checkboxContainerModelSidebar');
+        const checkboxContainerGeneratieSidebar = document.getElementById('checkboxContainerGeneratieSidebar');
+
+        // Golim div-urile laterale înainte de a copia conținutul
+     /*    checkboxContainerMarcaSidebar.innerHTML = '';
+        checkboxContainerModelSidebar.innerHTML = '';
+        checkboxContainerGeneratieSidebar.innerHTML = ''; */
+
+
+         // Copiem conținutul din div-urile de filtre în div-urile specifice din sidebar
+         checkboxContainerMarcaSidebar.appendChild(checkboxContainerMarca.cloneNode(true));
+         checkboxContainerModelSidebar.appendChild(checkboxContainerModel.cloneNode(true));
+         checkboxContainerGeneratieSidebar.appendChild(checkboxContainerGeneratie.cloneNode(true));
+
+        // Reatașăm evenimentele de filtrare la checkbox-urile copiate
+        attachFilterEvents(filterSidebar);
+    }
+    function attachFilterEvents(container) {
+        // Găsim toate checkbox-urile din meniul lateral
+        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+
+        // Adăugăm evenimentul 'change' pentru fiecare checkbox
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                // Codul tău de filtrare va fi aici
+                // Exemplu:
+                console.log(`Filtrare activată pentru: ${checkbox.name}`);
+                // Adaugă funcționalitatea de filtrare
+
+                //!!!  aici trebuie
+                handleMarcaChange(this, container);
+            });
+        });
+    }
+
+    filtreBtn.addEventListener('click', function () {
+        debugger;
+        copyFiltersToSidebar(); // Copiem filtrele în lateral
+        filterSidebar.style.display = 'block';
+        filtreBtn.style.display = 'none';  // Ascundem butonul "Filtre"
+        closeFilters.style.display = 'block';
+    });
+
+    // Închidem meniul lateral de filtre
+    closeFilters.addEventListener('click', function () {
+        filterSidebar.style.display = 'none';
+        filtreBtn.style.display = 'block';  // Afișăm din nou butonul "Filtre"
+        closeFilters.style.display = 'none';
+    });
+});
+
+
+
+
+
 
 
 

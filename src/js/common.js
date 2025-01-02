@@ -3,6 +3,9 @@
 //**********  GET POST UPDATE GENERIC********************************************************************* */
 //**********  GET POST UPDATE GENERIC********************************************************************* */
 //**********  GET POST UPDATE GENERIC********************************************************************* */
+
+let prime = 0;
+
 async function get(link) {
     try {
         const response = await fetch(link, {
@@ -100,7 +103,7 @@ async function getCars(link) {
     }
 }
 function pieseApiCall(callback) {
-    debugger;
+    //debugger;
     const url = `${API_BASE_URL}/Piese/search?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
     
     // Afișează loaderul
@@ -256,7 +259,7 @@ function carsApiCall(callback) {
 //**********  GET WITH CALL BACK ********************************************************************* */
 //**********  GET WITH CALL BACK ********************************************************************* */
 async function getCarsForDropdown(callback) {
-    debugger;
+    //debugger;
     try {
         const url = `${API_BASE_URL}/Cars/get`;
         const response = await fetch(url, {
@@ -274,7 +277,7 @@ async function getCarsForDropdown(callback) {
     }
 }
 async function getModelsForDropdown(marcaId, callback) {
-    debugger;        
+    //debugger;        
         try {
 
             var currentURL = window.location.href;
@@ -643,12 +646,58 @@ function populateTipCaroserieDropdown() {
 //**********  POPULATE CB, HANDKE, RESTORE ********************************************************************* */
 //**********  POPULATE CB, HANDKE, RESTORE ********************************************************************* */
 //**********  POPULATE CB, HANDKE, RESTORE ********************************************************************* */
-function populateCheckboxesMarca(cars) {
+
+function handleMarcaChange(checkbox) {  //container este container ul tot
+    debugger;    
+    currentPage = 1;
+    marca = checkbox.checked ? checkbox.nextSibling.textContent : "";
+    const marcaId = checkbox.value;
+    document.getElementById('tb_cauta').value = "";
+
+    let marcaContainer;
+    let modelContainer; 
+    if (checkbox.closest('#filterSidebar')) {
+        modelContainer = document.getElementById('checkboxContainerModelSidebar'); // Containerul din bara laterală
+        marcaContainer = document.getElementById("checkboxContainerMarcaSidebar");
+    } else {
+        modelContainer = document.getElementById('checkboxContainerModel'); // Containerul principal
+        marcaContainer = document.getElementById("checkboxContainerMarca");
+    }    
+      marcaContainer.innerHTML = '';
+      modelContainer.innerHTML = '';
+    if (checkbox.checked) {
+              
+        const checkboxWrapper = document.createElement('div');
+        checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
+
+        const label = checkbox.nextSibling; // Obține eticheta asociată
+        checkboxWrapper.appendChild(checkbox);
+        checkboxWrapper.appendChild(label); // Adaugă eticheta
+        marcaContainer.appendChild(checkboxWrapper);        
+        getModelsForDropdown(marcaId, function(models) {
+            populateCheckboxesModel(models, modelContainer);
+        });
+    } else {
+        restoreMarcaCheckboxes(marcaContainer);
+    }
+    //debugger;
+    model = "";
+    generatie = "";
+    pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
+        .then(data => {                
+            populateShopGrid(data);
+        })
+        .catch(error => {
+            console.error('Eroare la obținerea datelor:', error);
+        });
+}
+function restoreMarcaCheckboxes(container) {
+    debugger;
+    populateCheckboxesMarca(allMarci,container);
+}
+function populateCheckboxesMarca(cars, container) {
     debugger;
     allMarci = cars;
-    const container = document.getElementById('checkboxContainerMarca');
-    container.innerHTML = ''; // Golește containerul înainte de a adăuga noile checkbox-uri
-
     cars.forEach(car => {
         const checkboxWrapper = document.createElement('div');
         checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
@@ -675,40 +724,50 @@ function populateCheckboxesMarca(cars) {
         container.appendChild(checkboxWrapper);
     });
 }
-function handleMarcaChange(checkbox) {
-    currentPage = 1;
-    marca = checkbox.checked ? checkbox.nextSibling.textContent : "";
-    const marcaId = checkbox.value;
-    document.getElementById('tb_cauta').value = "";
-    
-    debugger;
-    if (checkbox.checked) {
-        // Golește lista de mărci și păstrează doar marca selectată
-        const container = document.getElementById('checkboxContainerMarca');
-        container.innerHTML = '';
 
+//------------------------------------------------
+
+function handleModelChange(checkbox) {
+    debugger;
+    currentPage = 1;
+    model = checkbox.checked ? checkbox.nextSibling.textContent : "";
+    const modelId = checkbox.value;
+    document.getElementById('tb_cauta').value = "";
+
+   
+    let modelContainer;  
+    let generatieContainer;
+
+    if (checkbox.closest('#filterSidebar')) {
+        modelContainer = document.getElementById('checkboxContainerModelSidebar'); // Containerul din bara laterală
+        generatieContainer = document.getElementById("checkboxContainerGeneratieSidebar");
+    } else {
+        modelContainer = document.getElementById('checkboxContainerModel'); // Containerul principal
+        generatieContainer = document.getElementById("checkboxContainerGeneratie");
+    }    
+    
+      modelContainer.innerHTML = '';
+      generatieContainer.innerHTML = '';
+
+    if (checkbox.checked) {
         const checkboxWrapper = document.createElement('div');
         checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
 
         const label = checkbox.nextSibling; // Obține eticheta asociată
         checkboxWrapper.appendChild(checkbox);
         checkboxWrapper.appendChild(label); // Adaugă eticheta
+        modelContainer.appendChild(checkboxWrapper);
 
-        container.appendChild(checkboxWrapper);
-
-        // Obține modelele pentru marca selectată
-        getModelsForDropdown(marcaId,populateCheckboxesModel);
+        // Obține generațiile pentru modelul selectat
+        //getGeneratiiForDropdown(modelId, generatii => populateCheckboxesGeneratie(generatii, document.getElementById('checkboxContainerGeneratie')));
+        getGeneratiiForDropdown(modelId, function(generatii) {
+            populateCheckboxesGeneratie(generatii, generatieContainer);
+        });
     } else {
-        // Restaurează lista completă de mărci
-        restoreMarcaCheckboxes();
-
-        const container = document.getElementById('checkboxContainerModel');
-        container.innerHTML = ''; 
-        const containerg = document.getElementById('checkboxContainerGeneratie');
-        containerg.innerHTML = ''; 
+        // Restaurează lista completă de modele
+        restoreModelCheckboxes(modelContainer);
     }
     debugger;
-    model = "";
     generatie = "";
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {                
@@ -718,16 +777,12 @@ function handleMarcaChange(checkbox) {
             console.error('Eroare la obținerea datelor:', error);
         });
 }
-function restoreMarcaCheckboxes() {
-    populateCheckboxesMarca(allMarci);
+function restoreModelCheckboxes(container) {
+    populateCheckboxesModel(allModels,container);
 }
-
-//------------------------------------------------
-function populateCheckboxesModel(models) {
+function populateCheckboxesModel(models, container) {
+    debugger;
     allModels = models;
-    const container = document.getElementById('checkboxContainerModel');
-    container.innerHTML = ''; // Golește containerul înainte de a adăuga noile checkbox-uri
-
     models.forEach(model => {
         const checkboxWrapper = document.createElement('div');
         checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
@@ -754,18 +809,24 @@ function populateCheckboxesModel(models) {
         container.appendChild(checkboxWrapper);
     });
 }
-function handleModelChange(checkbox) {
+//------------------------------------------------
+
+function handleGeneratieChange(checkbox,container) {
     currentPage = 1;
-    model = checkbox.checked ? checkbox.nextSibling.textContent : "";
-    const modelId = checkbox.value;
+    generatie = checkbox.checked ? checkbox.nextSibling.textContent : "";
+    const generatieId = checkbox.value;
     document.getElementById('tb_cauta').value = "";
 
-    debugger;
-    if (checkbox.checked) {
-        // Golește lista de modele și păstrează doar modelul selectat
-        const container = document.getElementById('checkboxContainerModel');
-        container.innerHTML = '';
+    let generatieContainer;
 
+    if (checkbox.closest('#filterSidebar')) {        
+        generatieContainer = document.getElementById("checkboxContainerGeneratieSidebar");
+    } else {        
+        generatieContainer = document.getElementById("checkboxContainerGeneratie");
+    }  
+    generatieContainer.innerHTML = '';
+
+    if (checkbox.checked) {
         const checkboxWrapper = document.createElement('div');
         checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
 
@@ -773,19 +834,14 @@ function handleModelChange(checkbox) {
         checkboxWrapper.appendChild(checkbox);
         checkboxWrapper.appendChild(label); // Adaugă eticheta
 
-        container.appendChild(checkboxWrapper);
+        generatieContainer.appendChild(checkboxWrapper);
 
-        // Obține generațiile pentru modelul selectat
-        getGeneratiiForDropdown(modelId, populateCheckboxesGeneratie);
     } else {
-        // Restaurează lista completă de modele
-        restoreModelCheckboxes();
-        const containerg = document.getElementById('checkboxContainerGeneratie');
-        containerg.innerHTML = ''; 
+        // Restaurează lista completă de generații
+        restoreGeneratieCheckboxes(generatieContainer);
     }
     //cristi fields
     debugger;
-    generatie = "";
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {                
             populateShopGrid(data);
@@ -794,15 +850,12 @@ function handleModelChange(checkbox) {
             console.error('Eroare la obținerea datelor:', error);
         });
 }
-function restoreModelCheckboxes() {
-    populateCheckboxesModel(allModels);
+function restoreGeneratieCheckboxes(container) {
+    populateCheckboxesGeneratie(allGeneratii,container);
 }
-//------------------------------------------------
-function populateCheckboxesGeneratie(generatii) {
+function populateCheckboxesGeneratie(generatii,container) {
     debugger;
-    allGeneratii = generatii;
-    const container = document.getElementById('checkboxContainerGeneratie');
-    container.innerHTML = ''; // Golește containerul înainte de a adăuga noile checkbox-uri
+    allGeneratii = generatii;    
 
     generatii.forEach(generatie => {
         const checkboxWrapper = document.createElement('div');
@@ -829,44 +882,6 @@ function populateCheckboxesGeneratie(generatii) {
 
         container.appendChild(checkboxWrapper);
     });
-}
-function handleGeneratieChange(checkbox) {
-    currentPage = 1;
-    generatie = checkbox.checked ? checkbox.nextSibling.textContent : "";
-    const generatieId = checkbox.value;
-    document.getElementById('tb_cauta').value = "";
-
-    debugger;
-    if (checkbox.checked) {
-        // Golește lista de generații și păstrează doar generația selectată
-        const container = document.getElementById('checkboxContainerGeneratie');
-        container.innerHTML = '';
-
-        const checkboxWrapper = document.createElement('div');
-        checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
-
-        const label = checkbox.nextSibling; // Obține eticheta asociată
-        checkboxWrapper.appendChild(checkbox);
-        checkboxWrapper.appendChild(label); // Adaugă eticheta
-
-        container.appendChild(checkboxWrapper);
-
-    } else {
-        // Restaurează lista completă de generații
-        restoreGeneratieCheckboxes();
-    }
-    //cristi fields
-    debugger;
-    pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
-        .then(data => {                
-            populateShopGrid(data);
-        })
-        .catch(error => {
-            console.error('Eroare la obținerea datelor:', error);
-        });
-}
-function restoreGeneratieCheckboxes() {
-    populateCheckboxesGeneratie(allGeneratii);
 }
 
 //**********  GET SET SELECTED ********************************************************************* */
