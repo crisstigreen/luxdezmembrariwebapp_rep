@@ -125,7 +125,18 @@ async function getCars(link) {
 }
 function pieseApiCall(callback) {
     //debugger;
-    const url = `${API_BASE_URL}/Piese/search?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
+    searchTerm = document.getElementById('tb_cauta').value.trim();
+    var url = "";    
+    if (/^\d+$/.test(searchTerm)) {   //cautare dupa sku        
+        url = `${API_BASE_URL}/Piese/search_sku?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
+    } else {
+        url = `${API_BASE_URL}/Piese/search?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
+    }
+
+
+
+
+    //const url = `${API_BASE_URL}/Piese/search?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
     
     // Afișează loaderul
     Swal.fire({

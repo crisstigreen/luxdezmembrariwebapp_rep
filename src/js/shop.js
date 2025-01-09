@@ -214,6 +214,7 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
                         <p class="mb-0"><strong style='font-weight: bold; display:none'>Tip caroserie: </strong><span style='display:none' id="piesaTipCaroserie-${piesa.id}">${piesa.tipCaroserie}</span></p>
                         
                         <p class="mb-0"><strong style='font-weight: bold'>Cod intern: </strong><span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
+                        <p class="mb-0"><strong style='font-weight: bold'>SKU_ID: </strong><span id="piesasku_ID-${piesa.id}">${piesa.skU_Id}</span></p>
                         <div class="mt-auto d-flex justify-content-between align-items-center">
                             <h3 style="margin: 0;" id="piesaPret-${piesa.id}"><strong style='font-weight: bold; color:'>${piesa.pret}</strong></h3>
                             <a href="cart.html" class="site-cart">
