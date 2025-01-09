@@ -461,7 +461,7 @@ async function remove_Model(){
 //GENERATIE
 async function addEdit_Generatie(){
     debugger;         
-    const generatieId = getSelectedValue('ddd_generatii');          ß  
+    const generatieId = getSelectedValue('ddd_generatii');          
     const modelId = getSelectedValue('ddd_models');           
     var generatie = document.getElementById("tb_generatii"); 
     if(generatie.value == ""){        
