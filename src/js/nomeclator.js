@@ -45,7 +45,8 @@ async function addEdit_Tip(){
     
     const data = {
         Id: tipId,
-        tip:  document.getElementById("tb_Tip").value         
+        tip:  document.getElementById("tb_Tip").value,
+        Descriere: document.getElementById("ta_DescTip").value         
     };   
     if(tipId == ""){//post
         data.Id = 0;
@@ -60,6 +61,7 @@ async function addEdit_Tip(){
     }
     clearddd('ddd_Tip');
     cleartb('tb_Tip');
+    cleartb('ta_DescTip'); 
     setTimeout(() => {
         getTip();  
     }, 500); 
@@ -104,17 +106,19 @@ async function remove_Tip(){
 
 //CATEGORII
 async function getCategorii(tipId){
-    debugger;
-    
+    //debugger;    
     const link = `${API_BASE_URL}/Categorii/GetCategByTipId?idTip=` + tipId;   
     const categ = await get(link);
     populateCategs(categ);
 }
 const CategDropdown = document.getElementById('ddd_Categorii');
 function populateCategs(categ){
-    debugger;
-    
-    categ.forEach(item => {
+    //debugger;    
+    var currentURL = window.location.href;	
+    if(currentURL.includes("nomenclator")){ 
+        document.getElementById("ta_DescTip").value = categ.descriere;
+    }     
+    categ.items.forEach(item => {        
         const option = document.createElement('option');
         option.value = item.id;
         option.text = item.categorie;
@@ -144,7 +148,8 @@ async function addEdit_Categ(){
     const data = {
         Id: catId,
         Categorie:  document.getElementById("tb_numeCat").value,
-        Tip: tipId         
+        Tip: tipId,        
+        Descriere: document.getElementById("ta_DescCat").value 
     };   
     if(catId == ""){//post
         data.Id = 0;
@@ -158,7 +163,8 @@ async function addEdit_Categ(){
         showUpdateSuccessMessage();
     }
     clearddd('ddd_Categorii');
-    cleartb('tb_numeCat');    
+    cleartb('tb_numeCat');   
+    cleartb('ta_DescCat');    
     setTimeout(() => {
         getCategorii(tipId);  
     }, 500); 
@@ -203,7 +209,7 @@ async function remove_Categ(){
 
 //SUBCATEGORII
 async function subCategorii(){
-    debugger;
+    //debugger;
     var x = getSelectedValue("ddd_Categorii");
     const link = `${API_BASE_URL}/CategoriiSub/GetSubCategById?idCateg=` + x;  
     const subcateg = await get(link); 
@@ -211,20 +217,30 @@ async function subCategorii(){
 }
 const tipSubCategDropdown = document.getElementById('ddd_subcateg');
 function populateSubCategs(subcateg){
-    debugger;    
+    //debugger;    
+    var currentURL = window.location.href;	
+    if(currentURL.includes("nomenclator")){ 
+        document.getElementById("ta_DescCat").value = subcateg.descriere;
+    }     
     clearddd('ddd_subcateg');    
-    subcateg.forEach(item => {
+    subcateg.items.forEach(item => {
         const option = document.createElement('option');
         option.value = item.id;
         option.text = item.numeSubCat; // Presupunem că acesta este câmpul pentru numele culorii
         tipSubCategDropdown.add(option);
     });
 }
-tipSubCategDropdown.addEventListener('change', function() {
+tipSubCategDropdown.addEventListener('change', async function() {
     debugger;        
     const subcatId = getSelectedValue('ddd_subcateg');
     const subcatText = getSelectedText('ddd_subcateg');       
     if(document.getElementById("tb_numeSubCat")){document.getElementById("tb_numeSubCat").value = subcatText;}     
+    const link = `${API_BASE_URL}/CategoriiSub/GetSubCategByIdDesc?id=` + subcatId;      
+    var subCat = await get(link);
+    var currentURL = window.location.href;	
+    if(currentURL.includes("nomenclator")){ 
+        document.getElementById('ta_DescSubCat').value = subCat.descriere;
+    }         
 });
 async function addEdit_SubCateg(){
     debugger;    
@@ -239,7 +255,8 @@ async function addEdit_SubCateg(){
     const data = {
         Id: subcatId,
         NumeSubCat:  document.getElementById("tb_numeSubCat").value,
-        IdCateg: catId         
+        IdCateg: catId,
+        Descriere: document.getElementById("ta_DescSubCat").value          
     };   
     if(subcatId == ""){//post
         data.Id = 0;
@@ -254,6 +271,7 @@ async function addEdit_SubCateg(){
     }
     clearddd('ddd_subcateg');
     cleartb('tb_numeSubCat');;  
+    cleartb('ta_DescSubCat');    
     setTimeout(() => {
         subCategorii();  
     }, 500);  
@@ -310,7 +328,8 @@ async function addEdit_Car(){
     }         
     const data = {
         marcaID: carId,
-        marcaName:  document.getElementById("tb_cars").value         
+        marcaName:  document.getElementById("tb_cars").value,
+        descriere:  document.getElementById("ta_DescMarca").value,         
     };   
     if(carId == ""){//post
         data.marcaID = 0;        
@@ -325,6 +344,7 @@ async function addEdit_Car(){
     }
     clearddd('ddd_cars');
     cleartb('tb_cars');
+    cleartb('ta_DescMarca');
     setTimeout(() => {
         getCars(`${API_BASE_URL}/Cars/getAll`);
     }, 500); 
@@ -379,7 +399,8 @@ async function addEdit_Model(){
     const data = {
         modelID: modelId,
         marcaID: marcaId,
-        modelName:  document.getElementById("tb_models").value         
+        modelName:  document.getElementById("tb_models").value,        
+        descriere:  document.getElementById("ta_DescModel").value,  
     };   
     if(modelId == ""){//post
         data.modelID = 0;        
@@ -394,7 +415,7 @@ async function addEdit_Model(){
     }
     clearddd('ddd_models');
     cleartb('tb_models');
-
+    cleartb('ta_DescModel');
     setTimeout(() => {
         getModelsForDropdown(marcaId, populateModelsDropdown);
     }, 500); 
@@ -440,7 +461,7 @@ async function remove_Model(){
 //GENERATIE
 async function addEdit_Generatie(){
     debugger;         
-    const generatieId = getSelectedValue('ddd_generatii');            
+    const generatieId = getSelectedValue('ddd_generatii');          ß  
     const modelId = getSelectedValue('ddd_models');           
     var generatie = document.getElementById("tb_generatii"); 
     if(generatie.value == ""){        
@@ -450,7 +471,8 @@ async function addEdit_Generatie(){
     const data = {
         generatieId: generatieId,
         modelId: modelId,
-        generatieName:  document.getElementById("tb_generatii").value         
+        generatieName:  document.getElementById("tb_generatii").value,
+        descriere: document.getElementById("ta_DescGeneratie").value       
     };   
     if(generatieId == ""){//post
         data.generatieId = 0;        
@@ -465,6 +487,7 @@ async function addEdit_Generatie(){
     }
     clearddd('ddd_generatii');
     cleartb('tb_generatii');
+    cleartb('ta_DescGeneratie');
 
     setTimeout(() => {
         getGeneratiiForDropdown(modelId, populateGeneratiiDropdown);
@@ -509,6 +532,7 @@ async function remove_Generatie(){
         showErrorMessage(err.message);
     }         
 }
+
 
 
 

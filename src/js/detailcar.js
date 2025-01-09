@@ -117,11 +117,6 @@ function loadPiesa() {
                 }
 
 
-
-
-
-
-
                 document.getElementById('piesaTitlu').innerText = car.nume;
                 document.getElementById('piesaMeniu').innerText = car.nume;
                 document.getElementById('piesaIdentificator').innerText = car.nrOrdine;    
@@ -129,6 +124,7 @@ function loadPiesa() {
                 document.getElementById('piesaCombustibil').innerText = car.combustibil;
                 document.getElementById('piesaAn').innerText = car.an;
                 document.getElementById('piesaCapacitCil').innerText = car.capacitCil;
+                document.getElementById('piesaPutereCP').innerText = car.putereCP;
                 document.getElementById('piesaKm').innerText = car.km;
                 document.getElementById('piesaNrLoc').innerText = car.nrLocuri;
                 document.getElementById('piesaTransmisie').innerText = car.transmisie;

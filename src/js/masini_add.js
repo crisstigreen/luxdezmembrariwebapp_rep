@@ -1,12 +1,12 @@
 ﻿//PAGE LOAD
 document.addEventListener('DOMContentLoaded', async  () => {
-    await getCarsForDropdown(populateDropdown);   
+    //debugger;      
+    await getCars(`${API_BASE_URL}/Cars/get`);  
     await fetchAndPopulateCarData(); 
     populatePieseMasiniTable()
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    debugger;
+document.addEventListener('DOMContentLoaded', async function() {    
     const previewContainer = document.getElementById('preview');
     const piesaId = getQueryParam('id'); // Funcția getQueryParam definită anterior
 
@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function populatePreview(images) {
-        debugger;
+        
         const previewContainer = document.getElementById('preview');
         previewContainer.innerHTML = '';
         const piesaId = getQueryParam('id');
     
         images.forEach(image => {
-            debugger;
+            //debugger;
             const imageContainer = document.createElement('div');
             imageContainer.classList.add('image-container');
     
@@ -67,12 +67,31 @@ document.addEventListener('DOMContentLoaded', function() {
             previewContainer.appendChild(imageContainer);
         });
     }
-    if(piesaId){fetchImagini(piesaId);}
+    debugger;
+    await sku_gen("tb_skupiese");
+    if(piesaId){
+        fetchImagini(piesaId);
+    }
+    else{
+        await sku_gen("tb_sku");        
+        nr_ordine_gen();
+    }
 });
 
+async function  nr_ordine_gen() {      
+    //debugger;  
+    var link =  `${API_BASE_URL}/InfoCars/GetMaxNrOrdine`; 
+    var x = await get(link);
+    document.getElementById("tb_nrOrdine").value = x + 1;
+}
 
 function populatePieseMasiniTable() {
+    debugger;
     const carId = getQueryParam('id');
+    if(carId == null){
+        document.getElementById('tb_nrPiese').value = 0;
+        return;
+    }
     const url =   `${API_BASE_URL}/InfoCars/GetById?IdMasina=` +  carId; 
         
     fetch(url)
@@ -84,6 +103,7 @@ function populatePieseMasiniTable() {
         })
         .then(data => {
             debugger;
+            document.getElementById('tb_nrPiese').value = data.piese.length;   
             const rezultateTable = document.getElementById('rezultate-tabel');
             rezultateTable.innerHTML = ''; // Resetează tabela
 
@@ -218,7 +238,7 @@ async function populateOtherFields(data) {
     await setSelectedValue('ddd_vizibil', data.vizibilitate);
     document.getElementById('tb_sku').value = data.skU_ID || '';
     document.getElementById('tb_discount').value = data.discount || '';
-    document.getElementById('tb_nrPiese').value = data.nrPiese || '';    
+    //document.getElementById('tb_nrPiese').value = data.nrPiese || '';    
     document.getElementById('tb_utl').value = data.utl || ''; 
     document.getElementById('tb_detalii').value = data.detalii || ''; 
     document.getElementById('tb_codMotor').value = data.codMotor || ''; 
@@ -229,6 +249,11 @@ async function populateOtherFields(data) {
     document.getElementById('tb_nrUsi').value = data.nrUsi || ''; 
     document.getElementById('tb_nrViteze').value = data.nrViteze || ''; 
     document.getElementById('tb_alteDetalii').value = data.alteDetaliiTrans || ''; 
+
+    document.getElementById('tb_putere').value = data.putere || ''; 
+    document.getElementById('tb_puterecp').value = data.putereCP || ''; 
+
+
 }
 
 function extractGeneratie(nume) {
@@ -289,9 +314,9 @@ function registerPiesaCar() {
     var modelText= model.options[model.selectedIndex].text;
     var gener = document.getElementById("ddd_generatii");
     var generText= gener.options[gener.selectedIndex].text;    
-    var nume = document.getElementById('tb_numePiesa').value;
+    var nume = document.getElementById('tb_nume').value;
     var numeCar = marcaText + ' ' + modelText + ' ' + generText;  
-    var codPiesa = document.getElementById('tb_numePiesa').value;
+    var codPiesa = document.getElementById('tb_codPiesa').value;
     //var valuta = document.getElementById("ddd_valuta");
     var valutaText= "RON";
     var pret = document.getElementById('tb_pret').value;
@@ -303,7 +328,8 @@ function registerPiesaCar() {
     var vizibil= document.getElementById("ddd_vizibil");
     var vizibilText= vizibil.options[vizibil.selectedIndex].text;
     var skU_ID = document.getElementById('tb_sku').value || -1;       
-    var utl = document.getElementById('tb_utl').value;                                   
+    var utl = document.getElementById('tb_utl').value;                
+                                
     const piesa = {
         masina: numeCar,
         nume: nume,
@@ -325,7 +351,7 @@ function registerPiesaCar() {
 }
 
 //Add masina
-function registerCar() {    
+async function registerCar() {    
     debugger;
      if(verificare() == false){
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -362,8 +388,11 @@ function registerCar() {
     var culoare = document.getElementById("ddd_culoare");
     var culoareText= culoare.options[culoare.selectedIndex].text; 
     var nrViteze = document.getElementById('tb_nrViteze').value  || -1;
-     var vizibil= document.getElementById("ddd_vizibil");
-     var vizibilText= vizibil.options[vizibil.selectedIndex].text;
+    var vizibil= document.getElementById("ddd_vizibil");
+    var vizibilText= vizibil.options[vizibil.selectedIndex].text;
+    var puterecp = document.getElementById('tb_puterecp').value  || -1;
+
+
     const data = {
         nume: numeCar,
         nrOrdine: nrOrdine,
@@ -389,29 +418,57 @@ function registerCar() {
         alteDetaliiTrans: alteDetalii,
         culoare: culoareText,
         discount: discount,
-        nrViteze: nrViteze
+        nrViteze: nrViteze,
+        puterecp: puterecp
     };
     debugger;
     const carId = getQueryParam('id');
-    if(carId != null){
-        update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`)        
+    
+/*     if(carId != null){
+        update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`)    
+        showUpdateSuccessMessage();        
     }  
     else{
-        insert(data,`${API_BASE_URL}/CarsRegister`);      
-    }        
+        var x = await insert(data,`${API_BASE_URL}/CarsRegister`);    
+        debugger;
+        if (x.success) {
+            showInsertSuccessMessage();
+        } else {
+            showErrorMessage(x.error);            
+        }
+    }      */   
+
+    if (carId != null) {
+        const updateResponse = await update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`);
+        if (updateResponse.success) {
+            showUpdateSuccessMessage();
+        } else {
+            showErrorMessage(updateResponse.error);
+        }
+    } else {
+        const insertResponse = await insert(data, `${API_BASE_URL}/CarsRegister`);
+        if (insertResponse.success) {
+            showInsertSuccessMessage();
+        } else {
+            showErrorMessage(insertResponse.error);
+        }
+    }
 }
 
 //Add masina
 async function registerPiesaMasina() {
     debugger;
-    var marca = document.getElementById("ddd_cars");
-    var marcaText = marca.options[marca.selectedIndex].text;
-    var model = document.getElementById("ddd_models");
-    var modelText = model.options[model.selectedIndex].text;
-    var gener = document.getElementById("ddd_generatii");
-    var generText = gener.options[gener.selectedIndex].text;
-    var numeCar = marcaText + ' ' + modelText + ' ' + generText;
-    var nume = document.getElementById('tb_numePiesa').value || -1;
+    var marcaObj = document.getElementById("ddd_cars");
+    var marca = marcaObj.options[marcaObj.selectedIndex].text;
+    var marcaId = marcaObj.options[marcaObj.selectedIndex].value;
+    var modelObj = document.getElementById("ddd_models");
+    var model = modelObj.options[modelObj.selectedIndex].text;
+    var modelId = modelObj.options[modelObj.selectedIndex].value;
+    var generatieObj = document.getElementById("ddd_generatii");
+    var generatie = generatieObj.options[generatieObj.selectedIndex].text;
+    var generatieId = generatieObj.options[generatieObj.selectedIndex].value;
+    var numeCar = marca + ' ' + model + ' ' + generatie;
+    var nume = document.getElementById('tb_nume').value || -1;
     var codPiesa = document.getElementById('tb_codPiesa').value;
     var pret = document.getElementById('tb_pret').value;
     var valuta = document.getElementById("ddd_valuta");
@@ -421,7 +478,8 @@ async function registerPiesaMasina() {
     var stoc = document.getElementById('tb_stoc').value || -1;
     var vizibil = document.getElementById("ddd_vizibil");
     var vizibilText = vizibil.options[vizibil.selectedIndex].text;
-    var skU_ID = document.getElementById('tb_sku').value || -1;
+    var skU_ID = document.getElementById('tb_skupiese').value || -1;
+    var IdSubCat = getSelectedValue('ddd_subcateg');  
 
     const data = {
         masina: numeCar,
@@ -434,6 +492,13 @@ async function registerPiesaMasina() {
         vandut: 0,
         vizibilitate: vizibilText,
         skU_Id: skU_ID,
+        marca: marca,
+        model: model,
+        generatie: generatie,
+        IdSubCat,
+        marcaId,
+        modelId,
+        generatieId        
     };
 
     try {
@@ -441,7 +506,7 @@ async function registerPiesaMasina() {
         const masinaId = getQueryParam('id');
         const piesaMasina = {
             IdMasina: masinaId,
-            IdPiesa: carData.id
+            IdPiesa: carData.data.id
         };
 
         await insert(piesaMasina, `${API_BASE_URL}/InfoCars`); 
