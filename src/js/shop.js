@@ -12,6 +12,10 @@ let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 let marca = "";
 let model = "";
 let generatie = "";
+let marcaId = null;
+let modelId = null;
+let generatieId = null;
+
 let allMarci = [];
 let allModels = [];
 let allGeneratii = []
@@ -19,16 +23,17 @@ let IdSubCat = "";
 let Nivel = "";
 
 
+//get cars
 document.addEventListener('DOMContentLoaded', function() {
     const containerMarca = document.getElementById('checkboxContainerMarca');
     getCarsForDropdown(function(cars) {
         populateCheckboxesMarca(cars, containerMarca);
     });
+
+    getDescriere('test',0);
 });
 
-
-
-//
+//populate grid
 document.addEventListener('DOMContentLoaded', async  () => {
     debugger;        
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
@@ -46,6 +51,87 @@ document.addEventListener('DOMContentLoaded', async  () => {
 
        
 });
+
+//hamburger
+document.addEventListener('DOMContentLoaded', async function () {
+    await generateDynamicMenu();
+
+    const hamburger = document.getElementById('hamburgerButton');
+    const menu = document.getElementById('dynamicMenu');
+
+    hamburger.addEventListener('click', function () {
+        this.classList.toggle('active');
+        menu.classList.toggle('active');
+    });
+});
+
+//side menu
+document.addEventListener('DOMContentLoaded', function () {
+    //debugger;
+    const filtreBtn = document.getElementById('filtreBtn');
+    const filterSidebar = document.getElementById('filterSidebar');
+    const closeFilters = document.getElementById('closeFilters');
+    const filtrare = document.getElementById('filtrare');
+
+    // Functia pentru a copia filtrele in meniul lateral
+    function copyFiltersToSidebar() {
+        const checkboxContainerMarca = document.getElementById('checkboxContainerMarca');
+        const checkboxContainerModel = document.getElementById('checkboxContainerModel');
+        const checkboxContainerGeneratie = document.getElementById('checkboxContainerGeneratie');
+        
+        // Găsim div-urile specifice din filterSidebar
+        const checkboxContainerMarcaSidebar = document.getElementById('checkboxContainerMarcaSidebar');
+        const checkboxContainerModelSidebar = document.getElementById('checkboxContainerModelSidebar');
+        const checkboxContainerGeneratieSidebar = document.getElementById('checkboxContainerGeneratieSidebar');
+
+        // Golim div-urile laterale înainte de a copia conținutul
+     /*    checkboxContainerMarcaSidebar.innerHTML = '';
+        checkboxContainerModelSidebar.innerHTML = '';
+        checkboxContainerGeneratieSidebar.innerHTML = ''; */
+
+
+         // Copiem conținutul din div-urile de filtre în div-urile specifice din sidebar
+         checkboxContainerMarcaSidebar.appendChild(checkboxContainerMarca.cloneNode(true));
+         checkboxContainerModelSidebar.appendChild(checkboxContainerModel.cloneNode(true));
+         checkboxContainerGeneratieSidebar.appendChild(checkboxContainerGeneratie.cloneNode(true));
+
+        // Reatașăm evenimentele de filtrare la checkbox-urile copiate
+        attachFilterEvents(filterSidebar);
+    }
+    function attachFilterEvents(container) {
+        // Găsim toate checkbox-urile din meniul lateral
+        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+
+        // Adăugăm evenimentul 'change' pentru fiecare checkbox
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                // Codul tău de filtrare va fi aici
+                // Exemplu:
+                console.log(`Filtrare activată pentru: ${checkbox.name}`);
+                // Adaugă funcționalitatea de filtrare
+
+                //!!!  aici trebuie
+                handleMarcaChange(this, container);
+            });
+        });
+    }
+
+    filtreBtn.addEventListener('click', function () {
+        debugger;
+        copyFiltersToSidebar(); // Copiem filtrele în lateral
+        filterSidebar.style.display = 'block';
+        filtreBtn.style.display = 'none';  // Ascundem butonul "Filtre"
+        closeFilters.style.display = 'block';
+    });
+
+    // Închidem meniul lateral de filtre
+    closeFilters.addEventListener('click', function () {
+        filterSidebar.style.display = 'none';
+        filtreBtn.style.display = 'block';  // Afișăm din nou butonul "Filtre"
+        closeFilters.style.display = 'none';
+    });
+});
+
 
 
 
@@ -80,12 +166,11 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
  function populateShopGrid(data){
     const rezultateDiv = document.getElementById('rezultate');
     rezultateDiv.innerHTML = '';
-    debugger;
+    //debugger;
     //cristi testache
     
     data.piese.forEach(piesa => {
-        //debugger;
-       
+        debugger;       
         var imageSrc = piesa.imagini ? `${API_BASE_URL_IMG}/uploads/` + piesa.imagini[0] : 'images/placeholder.jpg';
         if(piesa.imagini != null && piesa.imagini.length == 0){
             imageSrc = 'images/placeholder.jpg';
@@ -116,9 +201,12 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
                            
                         </a>
                     </figure>
-                        <div class="block-4-text p-4 d-flex flex-column flex-grow-1" id="piesa-${piesa.id}">
-                        <h6>
-                            <a target='_blank' href="shop-single.html?id=${piesa.id}&masina=${piesa.masina}" id="piesaTitlu-${piesa.id}">${piesa.nume}, ${piesa.codPiesa}, ${piesa.masina}</a>
+                        <div class="block-4-text padding10 d-flex flex-column flex-grow-1" id="piesa-${piesa.id}">
+                        <h6 style="font-weight: bold;">
+                            <a target='_blank' href="shop-single.html?id=${piesa.id}&masina=${piesa.masina}" id="piesaTitlu-${piesa.id}">
+                                ${piesa.nume}${piesa.codPiesa ? `, ${piesa.codPiesa}` : ''}, ${piesa.masina}
+                            </a>
+
                         </h6>
                         <p class="mb-0"><strong style='font-weight: bold'>Masina: </strong> <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
                         <p class="mb-0"><strong style='font-weight: bold'>Disponibilitate: </strong> ${piesa.stoc > 0 ? `În stoc (${piesa.stoc})` : 'Fără stoc'}</p>
@@ -283,12 +371,15 @@ async function handleMenuClick(level, id, name) {
     debugger;
     if(level == 'tip'){
         Nivel = 1;
+        getDescriere("CategoriiTip",id)
     }
     else if(level == 'categorie'){
         Nivel = 2;
+        getDescriere("Categorii",id)
     }
     else if(level == 'subcategorie'){
         Nivel = 3
+        getDescriere("CategoriiSub",id)
     }
     IdSubCat = id;
  
@@ -311,19 +402,6 @@ async function handleMenuClick(level, id, name) {
 
     populateApiPath();      
 }
-
-
-document.addEventListener('DOMContentLoaded', async function () {
-    await generateDynamicMenu();
-
-    const hamburger = document.getElementById('hamburgerButton');
-    const menu = document.getElementById('dynamicMenu');
-
-    hamburger.addEventListener('click', function () {
-        this.classList.toggle('active');
-        menu.classList.toggle('active');
-    });
-});
 
 async function generateDynamicMenu() {
     try {
@@ -392,87 +470,6 @@ async function generateDynamicMenu() {
         console.error('Eroare la generarea meniului dinamic:', error);
     }
 }
-
-
-
-
-//logica
-
-document.addEventListener('DOMContentLoaded', function () {
-    debugger;
-    const filtreBtn = document.getElementById('filtreBtn');
-    const filterSidebar = document.getElementById('filterSidebar');
-    const closeFilters = document.getElementById('closeFilters');
-    const filtrare = document.getElementById('filtrare');
-
-    // Functia pentru a copia filtrele in meniul lateral
-    function copyFiltersToSidebar() {
-        const checkboxContainerMarca = document.getElementById('checkboxContainerMarca');
-        const checkboxContainerModel = document.getElementById('checkboxContainerModel');
-        const checkboxContainerGeneratie = document.getElementById('checkboxContainerGeneratie');
-        
-        // Găsim div-urile specifice din filterSidebar
-        const checkboxContainerMarcaSidebar = document.getElementById('checkboxContainerMarcaSidebar');
-        const checkboxContainerModelSidebar = document.getElementById('checkboxContainerModelSidebar');
-        const checkboxContainerGeneratieSidebar = document.getElementById('checkboxContainerGeneratieSidebar');
-
-        // Golim div-urile laterale înainte de a copia conținutul
-     /*    checkboxContainerMarcaSidebar.innerHTML = '';
-        checkboxContainerModelSidebar.innerHTML = '';
-        checkboxContainerGeneratieSidebar.innerHTML = ''; */
-
-
-         // Copiem conținutul din div-urile de filtre în div-urile specifice din sidebar
-         checkboxContainerMarcaSidebar.appendChild(checkboxContainerMarca.cloneNode(true));
-         checkboxContainerModelSidebar.appendChild(checkboxContainerModel.cloneNode(true));
-         checkboxContainerGeneratieSidebar.appendChild(checkboxContainerGeneratie.cloneNode(true));
-
-        // Reatașăm evenimentele de filtrare la checkbox-urile copiate
-        attachFilterEvents(filterSidebar);
-    }
-    function attachFilterEvents(container) {
-        // Găsim toate checkbox-urile din meniul lateral
-        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
-
-        // Adăugăm evenimentul 'change' pentru fiecare checkbox
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                // Codul tău de filtrare va fi aici
-                // Exemplu:
-                console.log(`Filtrare activată pentru: ${checkbox.name}`);
-                // Adaugă funcționalitatea de filtrare
-
-                //!!!  aici trebuie
-                handleMarcaChange(this, container);
-            });
-        });
-    }
-
-    filtreBtn.addEventListener('click', function () {
-        debugger;
-        copyFiltersToSidebar(); // Copiem filtrele în lateral
-        filterSidebar.style.display = 'block';
-        filtreBtn.style.display = 'none';  // Ascundem butonul "Filtre"
-        closeFilters.style.display = 'block';
-    });
-
-    // Închidem meniul lateral de filtre
-    closeFilters.addEventListener('click', function () {
-        filterSidebar.style.display = 'none';
-        filtreBtn.style.display = 'block';  // Afișăm din nou butonul "Filtre"
-        closeFilters.style.display = 'none';
-    });
-});
-
-
-
-
-
-
-
-
-
-
 
 
 

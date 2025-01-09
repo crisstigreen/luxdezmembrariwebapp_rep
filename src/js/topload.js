@@ -1,9 +1,12 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {    
+                
     updateCartCountDisplay(); 
-
     const path = window.location.pathname;
-    const page = path.split("/").pop();                     
+    const page = path.split("/").pop();     
+            
 });
+
+
 
 // Function to update the cart count display
 function updateCartCountDisplay() {

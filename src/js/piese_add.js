@@ -10,17 +10,10 @@ document.addEventListener('DOMContentLoaded', async  () => {
         await getPieseCompatAndGenerateHtml(piesaId);            
     }   
     else{
-        await sku_gen();
+        await sku_gen("tb_sku");
     }     
 });
 
-async function  sku_gen() {
-    let code = '';
-    for (let i = 0; i < 8; i++) {
-        code += Math.floor(Math.random() * 10);
-    }   
-    document.getElementById("tb_sku").value = code;         
-}
 
 //load imagini
 document.addEventListener('DOMContentLoaded', function() {
@@ -126,17 +119,20 @@ function verificare(){
 }
 
 function registerPiesa() {
-    //debugger;
+    debugger;
     if(verificare() == false){
         return;
     }
     //return;
     var marca = document.getElementById("ddd_cars");
     var marcaText= marca.options[marca.selectedIndex].text;
+    var marcaId= marca.options[marca.selectedIndex].value;
     var model = document.getElementById("ddd_models");
     var modelText= model.options[model.selectedIndex].text;
+    var modelId= model.options[model.selectedIndex].value;
     var gener = document.getElementById("ddd_generatii");
     var generText= gener.options[gener.selectedIndex].text;
+    var generatieId= gener.options[gener.selectedIndex].value;
     
     var nume = document.getElementById('tb_nume').value;
     var numeCar = marcaText + ' ' + modelText + ' ' + generText;  
@@ -157,10 +153,13 @@ function registerPiesa() {
     var vizibilText= vizibil.options[vizibil.selectedIndex].text;
     var skU_ID = document.getElementById('tb_sku').value || -1;       
     var utl = document.getElementById('tb_utl').value;       
-    var IdSubCat = getSelectedValue('ddd_subcateg');            
+    var IdSubCat = getSelectedValue('ddd_subcateg');    
+
+    debugger;
+    const piesaId = getQueryParam('id');
                   
     const piesa = {
-
+        id: piesaId,
         masina: numeCar,
         nume: nume,
         codPiesa: codPiesa,
@@ -177,11 +176,14 @@ function registerPiesa() {
         marca: marcaText,
         model: modelText,
         generatie: generText,               
-        IdSubCat
+        IdSubCat,
+        marcaId,
+        modelId,
+        generatieId
+
     };
 
-    debugger;
-    const piesaId = getQueryParam('id');
+ 
     if(piesaId != null){
        // updatePiesa(piesaId, piesa)      
         update(piesaId,piesa,`${API_BASE_URL}/Piese/${piesaId}`)  

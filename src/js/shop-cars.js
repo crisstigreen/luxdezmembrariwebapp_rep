@@ -50,17 +50,20 @@ document.addEventListener('DOMContentLoaded', async  () => {
         <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
             <div style="height: 500px" class="block-4 border d-flex flex-column">
                 <figure class="block-4-image">
-                    <a target='_blank' href="shop-singlecar.html?id=${masina.id}"">
+                    <a target='_blank' href="shop-singlecar.html?id=${masina.id}">
                         <img src="${imageSrc}" alt="Image placeholder" class="img-fluid">
                     </a>
                 </figure>
-                <div class="block-4-text p-4 flex-grow-1">
-                    <h3><a target='_blank' href="shop-singlecar.html?id=${masina.id}">${masina.nume}</a></h3>
+                <div class="block-4-text padding10 flex-grow-1">
+                    <h6 style="font-weight: bold;">
+                        <a target='_blank' href="shop-singlecar.html?id=${masina.id}">${masina.nume}</a>
+                    </h6>
                     <p class="mb-0">Numar identificare vehicul: ${masina.id}</p>
                     <p class="mb-0">Cod motor: ${masina.codMotor}</p>
                     <p class="mb-0">Combustibil: ${masina.combustibil}</p>
                     <p class="mb-0">An fabricatie: ${masina.an}</p>
                     <p class="mb-0">Capacitate cilindrica: ${masina.capacitCil}</p>
+                    ${masina.putereCP ? `<p class="mb-0">Putere[CP]: ${masina.putereCP}</p>` : ''}
                     <div class="mt-auto d-flex justify-content-between align-items-center button-container">
                         <button class="btn btn-warning btn-sm" type="button" onclick="veziPiese(${masina.id},${masina.totalPiese})">
                             ${masina.totalPiese > 0 ? `Vezi ${masina.totalPiese} piese` : 'Solicita piese auto din </br> dezmembrare nelistate'}
@@ -69,6 +72,7 @@ document.addEventListener('DOMContentLoaded', async  () => {
                 </div>
             </div>
         </div>`;
+    
     
     
     
