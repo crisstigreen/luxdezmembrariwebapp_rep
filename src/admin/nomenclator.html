@@ -59,19 +59,19 @@
                                     <option value="">---</option>                                                                           
                                 </select>                                                        
                             </div>     
-                              <div class="col-md-3 ddd">
-                                  <label for="html">Categorii</label>  
-                                  <select id="ddd_Categorii" class="form-control ddd" onclick="verifRemoveRed('ddd_Categorii')">
-                                      <option value="">---</option>                                                                           
-                                  </select>                                 
-                              </div>
+                            <div class="col-md-3 ddd">
+                                <label for="html">Categorii</label>  
+                                <select id="ddd_Categorii" class="form-control ddd" onclick="verifRemoveRed('ddd_Categorii')">
+                                    <option value="">---</option>                                                                           
+                                </select>                                 
+                            </div>
 
-                              <div class="col-md-3 ddd">
-                                  <label for="html">Subcategorii</label>  
-                                  <select id="ddd_subcateg" class="form-control ddd" onclick="verifRemoveRed('ddd_subcateg')">
-                                      <option value="">---</option>                                                                          
-                                  </select>
-                              </div>                                                
+                            <div class="col-md-3 ddd">
+                                <label for="html">Subcategorii</label>  
+                                <select id="ddd_subcateg" class="form-control ddd" onclick="verifRemoveRed('ddd_subcateg')">
+                                    <option value="">---</option>                                                                          
+                                </select>
+                            </div>                                                
                           </div>
                           <div class="form-group row">
                             <div class="col-md-2 ddd">
@@ -80,9 +80,7 @@
                             <div class="col-md-1 ddd">
                                 <button class="btn btn-warning" type="button" onclick="addEdit_Tip()"><i class="icon-add"></i><i class="icon-edit"></i></button>
                                 <button class="btn btn-danger" type="button" onclick="remove_Tip()"><i class="icon-remove"></i></button>
-                            </div>
-                         
-                            
+                            </div>                                                     
                             <div class="col-md-2 ddd">
                                 <input type="text" class="form-control" id="tb_numeCat" name="tb_numeCat" onclick="verifRemoveRed('tb_numeCat')">                                
                             </div>
@@ -99,16 +97,20 @@
                                 <button class="btn btn-danger" type="button" onclick="remove_subCateg()"><i class="icon-remove"></i></button>
                             </div>
                           </div>
-
-
-                    
-
-
-
-                 
                           
-                                               
-
+                          <!-- descriere -->  
+                          <div class="form-group row">
+                            <div class="col-md-3 ddd">
+                                <textarea class="form-control" id="ta_DescTip" name="ta_DescTip" placeholder="descriere"></textarea>                                
+                            </div>                                                                              
+                            <div class="col-md-3 ddd">
+                                <textarea class="form-control" id="ta_DescCat" name="ta_DescCat" placeholder="descriere"></textarea>                                
+                            </div>                            
+                            <div class="col-md-3 ddd">
+                                <textarea class="form-control" id="ta_DescSubCat" name="ta_DescSubCat" placeholder="descriere"></textarea>                                
+                            </div>                           
+                          </div>
+                                                                                                              
                       </div>
                   </form>
               </div>
@@ -176,6 +178,19 @@
                                   <button class="btn btn-danger" type="button" onclick="remove_Generatie()"><i class="icon-remove"></i></button>
                               </div>
                             </div>
+
+                             <!-- descriere -->  
+                          <div class="form-group row">
+                            <div class="col-md-3 ddd">
+                                <textarea class="form-control" id="ta_DescMarca" name="ta_DescMarca" placeholder="descriere"></textarea>                                
+                            </div>                                                                              
+                            <div class="col-md-3 ddd">
+                                <textarea class="form-control" id="ta_DescModel" name="ta_DescModel" placeholder="descriere"></textarea>                                
+                            </div>                            
+                            <div class="col-md-3 ddd">
+                                <textarea class="form-control" id="ta_DescGeneratie" name="ta_DescGeneratie" placeholder="descriere"></textarea>                                
+                            </div>                           
+                          </div>
                                                                                                                                   
                         </div>
                     </form>

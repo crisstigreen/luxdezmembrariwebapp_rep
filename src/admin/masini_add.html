@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">Numar ordine</label>
-                                        <input type="text" class="form-control ddd" id="tb_nrOrdine" placeholder="Nr. ordine" name="tb_nrOrdine">
+                                        <input type="text" class="form-control ddd" id="tb_nrOrdine" disabled="true" placeholder="Nr. ordine" name="tb_nrOrdine">
                                     </div>
 
                                     <div class="col-md-2 ddd">
@@ -120,9 +120,14 @@
                                         <input type="text" class="form-control ddd" id="tb_capCil" placeholder="Capacitate cilindrica" name="tb_capCil">
                                     </div>
 
-                                    <div class="col-md-2 ddd">
-                                        <label for="html">Putere</label>
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">Putere[kw]</label>
                                         <input type="text" class="form-control ddd" id="tb_putere" placeholder="Putere KW" name="tb_putere">
+                                    </div>
+
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">Putere[CP]</label>
+                                        <input type="text" class="form-control ddd" id="tb_puterecp" placeholder="Putere CP" name="tb_puterecp">
                                     </div>
 
                                     <div class="col-md-2 ddd">
@@ -168,7 +173,7 @@
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">SKU_ID</label>
-                                        <input type="text" class="form-control ddd" id="tb_sku" placeholder="SKU(ID)" name="tb_sku">
+                                        <input type="text" class="form-control ddd" id="tb_sku" disabled="true" placeholder="SKU(ID)" name="tb_sku">
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">Discount</label>
@@ -176,7 +181,7 @@
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">Numar piese</label>
-                                        <input type="text" class="form-control ddd" id="tb_nrPiese" placeholder="Numar piese" name="tb_nrPiese">
+                                        <input type="text" class="form-control ddd" id="tb_nrPiese" disabled="true" placeholder="Numar piese" name="tb_nrPiese">
                                     </div>                                                      
                                 </div>
 
@@ -190,7 +195,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-md-2 ddd">
+                                    <div class="col-md-2 ddd" style="display: none;">
                                         <label for="html">UTL</label>
                                         <input type="text" class="form-control ddd" id="tb_utl" placeholder="UTL" name="tb_utl">
                                     </div>
@@ -259,8 +264,8 @@
                                 <div class="form-group row">  
                                  
                                     <div class="col-md-2 ddd">
-                                        <label for="html">Nume piesa</label>
-                                        <input type="text" class="form-control ddd" id="tb_numePiesa" placeholder="Nume piesa" name="tb_numePiesa">
+                                        <label for="html">Nume piesa</label>                                        
+                                        <input type="text" class="form-control ddd" id="tb_nume" placeholder="Nume" name="tb_nume">
                                     </div>
 
                                     <div class="col-md-1 ddd">
@@ -301,26 +306,33 @@
                                     
                                     <div class="col-md-1 ddd">
                                         <label for="html">SKU_ID</label>
-                                        <input type="text" class="form-control ddd" id="tb_sku" placeholder="SKU(ID)" name="tb_sku">
-                                    </div>
-
-
+                                        <input type="text" class="form-control ddd" id="tb_skupiese"  disabled="true" placeholder="SKU(ID)" name="tb_skupiese">
+                                    </div>                                    
+                                </div>    
                                 
-                                 <!--    <div class="col-md-1 ddd">
-                                        <label for="html">Pret Vanzare</label>
-                                        <input type="text" class="form-control ddd" id="tb_pretVanzare" placeholder="..." name="tb_pretVanzare">
-                                    </div> -->
-                                  
-
-
-                                    
-                                </div>      
-                                  
-                                                        
-                                <div class="form-group row">                                                                       
-                                    <div class="col-md-1 ddd">
-                                        <button  class="btn btn-primary btn-sm ddd" id="adaugaBtn">Adauga</button>
-                                    </div>                            
+                                <div class="form-group row">
+                                    <div class="col-md-2 ddd">
+                                        <label for="html">Tip</label>  
+                                        <select id="ddd_Tip" class="form-control ddd" onclick="verifRemoveRed('ddd_Tip')">
+                                            <option value="">---</option>                                                                           
+                                        </select>                                                        
+                                    </div>     
+                                      <div class="col-md-2 ddd">
+                                          <label for="html">Categorii</label>  
+                                          <select id="ddd_Categorii" class="form-control ddd" onclick="verifRemoveRed('ddd_Categorii')">
+                                              <option value="">---</option>                                                                           
+                                          </select>                                 
+                                      </div>
+        
+                                      <div class="col-md-2 ddd">
+                                          <label for="html">Subcategorii</label>  
+                                          <select id="ddd_subcateg" class="form-control ddd" onclick="verifRemoveRed('ddd_subcateg')">
+                                              <option value="">---</option>                                                                          
+                                          </select>
+                                      </div>                                                
+                                </div>
+                                                                                          
+                                <div class="form-group row">                                                                                               
                                     <div class="col-md-1 ddd">
                                         <button class="btn btn-success btn-sm ddd" type="button" onclick="registerPiesaMasina()">Salveaza</button>
                                     </div>
@@ -379,6 +391,15 @@
     <script src="../js/main.js"></script>
     <script src="../js/admin.js"></script>
     <script src="../js/masini_add.js"></script>
+    <script src="../js/nomeclator.js"></script>
+
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+
     
 </body>
 </html>
