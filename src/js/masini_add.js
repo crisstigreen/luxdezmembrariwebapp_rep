@@ -542,7 +542,7 @@ document.addEventListener("DOMContentLoaded", function() {
 document.getElementById('fileInput').addEventListener('change', function(event) {
     debugger;
     const previewContainer = document.getElementById('preview');
-    previewContainer.innerHTML = '';
+    //previewContainer.innerHTML = '';
     const files = event.target.files;
 
     for (let i = 0; i < files.length; i++) {

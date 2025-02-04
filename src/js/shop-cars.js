@@ -50,13 +50,13 @@ document.addEventListener('DOMContentLoaded', async  () => {
         <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
             <div style="height: 500px" class="block-4 border d-flex flex-column">
                 <figure class="block-4-image">
-                    <a target='_blank' href="shop-singlecar.html?id=${masina.id}">
-                        <img src="${imageSrc}" alt="Image placeholder" class="img-fluid">
+                    <a href="shop-singlecar.html?id=${masina.id}">
+                        <img src="${imageSrc}" style='width: 100%; height: 165px; object-fit: contain;object-position: center;' alt="Image placeholder" alt="Image placeholder" class="img-fluid">
                     </a>
                 </figure>
                 <div class="block-4-text padding10 flex-grow-1">
                     <h6 style="font-weight: bold;">
-                        <a target='_blank' href="shop-singlecar.html?id=${masina.id}">${masina.nume}</a>
+                        <a href="shop-singlecar.html?id=${masina.id}">${masina.nume}</a>
                     </h6>
                     <p class="mb-0">Numar identificare vehicul: ${masina.id}</p>
                     <p class="mb-0">Cod motor: ${masina.codMotor}</p>
@@ -227,7 +227,7 @@ function  veziPiese(id,totalPiese){
     debugger; 
     if (id) {
         const url = totalPiese > 0 ? `shop.html?id=${id}` : `shop-singlecar.html?id=${id}`;
-        window.open(url, '_blank');
+        window.open(url, '_self');
     } else {
 
     }

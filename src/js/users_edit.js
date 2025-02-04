@@ -127,7 +127,7 @@ async function updateUser() {
                     try {
 
                         
-                        const editUser = {
+                 /*        const editUser = {
                             userId : userId,
                             username: username,
                             passwordHash: pass,
@@ -141,28 +141,67 @@ async function updateUser() {
                             isEmailConfirmed: JSON.parse(emailConfValue) ,   
                             LastPasswordChangeDate: lastPassChangedText,
                             LockoutEndDate:lockoutText,                        
-                            failedLoginAttempts: null                            
+                            failedLoginAttempts: 2,
+                            roleID: rolValue    
+                        }; */
+
+                        const editUser = {
+                            userId: userId,
+                            username: username,
+                            passwordHash: pass,
+                            email: email,
+                            firstName: nume,
+                            lastName: prenume,
+                            phoneNumber: phone,
+                            createdDate: createdText,
+                            lastLoginDate: lastLogText,
+                            isActive: JSON.parse(activValue),
+                            isEmailConfirmed: JSON.parse(emailConfValue),
+                            lastPasswordChangeDate: lastPassChangedText,
+                            failedLoginAttempts: 2,
+                            lockoutEndDate: lockoutText,
+                            roleID: rolValue
                         };
+
+                        
                         
                         if(userId != null){
                             const url = `${API_BASE_URL}/UsersEdit/${userId}?roleId=${rolValue}`;                        
-                            fetch(url, {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(editUser)
-                            })                       
-                            .then(result => {
-                                //debugger;                                
-                                const data = result.json();    
-                                showUpdateSuccessMessage();                                                                          
-
-                            })                          
+                           
+                            try {
+                                fetch(url, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(editUser)
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        // Dacă răspunsul nu este OK, extragem mesajul de eroare și aruncăm o eroare
+                                        return response.text().then(errorMessage => {
+                                            throw new Error(errorMessage);
+                                        });
+                                    }
+                                    else{
+                                        showUpdateSuccessMessage();
+                                    }     
+                                })
+                                .then(data => {
+                                    // Aici gestionăm succesul
+                                    showUpdateSuccessMessage();
+                                })
+                                .catch(error => {
+                                    // Gestionăm erorile aruncate în blocul then sau de rețea
+                                    showErrorMessage(error.message);
+                                });
+                            } catch (error) {
+                                // Gestionăm orice eroare care s-ar putea întâmpla în afara fetch-ului
+                                showErrorMessage(error.message);
+                            }                               
                         }
-                        else{
-
-                        }
+                       
+                        
                     
                             
                                 

@@ -124,6 +124,69 @@ document.getElementById('cautaBtn').addEventListener('click', () => {
     pieseApiCall(populateMainGrid); // Apelează funcția de căutare
 });
 
+document.getElementById('exportBtn').addEventListener('click', async () => {
+    debugger; 
+
+       // Afișează loaderul
+       Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait while we fetch the data.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+
+    const tip = document.getElementById('export_type').value; 
+    
+    const link = `${API_BASE_URL}/Piese/export?tip=${tip}`;
+
+    // Apelează funcția pentru descărcare
+    await downloadFile(link);
+
+    Swal.close(); 
+
+});
+
+async function downloadFile(link) {
+    try {
+        const response = await fetch(link, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // Creează un Blob din răspuns
+        const blob = await response.blob();
+
+        // Creează un link temporar pentru descărcare
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+
+        // Setează numele fișierului descărcat
+        const contentDisposition = response.headers.get('Content-Disposition');
+        const filename = contentDisposition
+            ? contentDisposition.split('filename=')[1]?.replace(/["']/g, '') || 'file'
+            : 'file';
+        a.download = filename;
+
+        // Adaugă linkul temporar în DOM și declanșează descărcarea
+        document.body.appendChild(a);
+        a.click();
+
+        // Curăță resursele temporare
+        a.remove();
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('A apărut o eroare la descărcarea fișierului:', error);
+    }
+}
+
+
 
 document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {

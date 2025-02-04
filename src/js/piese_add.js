@@ -153,7 +153,8 @@ function registerPiesa() {
     var vizibilText= vizibil.options[vizibil.selectedIndex].text;
     var skU_ID = document.getElementById('tb_sku').value || -1;       
     var utl = document.getElementById('tb_utl').value;       
-    var IdSubCat = getSelectedValue('ddd_subcateg');    
+    var IdSubCat = getSelectedValue('ddd_subcateg');   
+    var imagini = ""; 
 
     debugger;
     const piesaId = getQueryParam('id');
@@ -173,6 +174,7 @@ function registerPiesa() {
         vizibilitate: vizibilText,
         skU_Id: skU_ID,
         utl: utl,
+        imagini,
         marca: marcaText,
         model: modelText,
         generatie: generText,               
@@ -180,19 +182,19 @@ function registerPiesa() {
         marcaId,
         modelId,
         generatieId
-
+       
     };
 
  
     if(piesaId != null){
        // updatePiesa(piesaId, piesa)      
         update(piesaId,piesa,`${API_BASE_URL}/Piese/${piesaId}`)  
-        showUpdateSuccessMessage();
+        //showUpdateSuccessMessage();
     }  
     else{
-        //insertPiesa(piesa);   
+        piesa.id = 0;
         insert(piesa,`${API_BASE_URL}/Piese`);      
-        showInsertSuccessMessage();
+        //showInsertSuccessMessage();
     }
 
    

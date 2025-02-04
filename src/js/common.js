@@ -44,16 +44,16 @@ async function insert(data, link) {
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) {
-            // Extragem mesajul de eroare din răspuns
+        if (!response.ok) {  
             const errorMessage = await response.text();
+            showErrorMessage(errorMessage);
             return { success: false, error: errorMessage || 'Eroare la înregistrare' };
         }
 
         const result = await response.json();
-        return { success: true, data: result }; // Returnăm rezultatul cu un flag de succes
+        showInsertSuccessMessage();
+        return { success: true, data: result }; 
     } catch (error) {
-        // În caz de excepție, returnăm un obiect de eroare
         return { success: false, error: `Eroare: ${error.message}` };
     }
 }
@@ -75,10 +75,12 @@ async function update(id, data, link) {
         if (!response.ok) {
             // Extragem mesajul de eroare din răspuns
             const errorMessage = await response.text();
+            showErrorMessage(errorMessage);
             return { success: false, error: errorMessage || 'Eroare la actualizare' };
         }
 
         const result = await response.text(); // Dacă API-ul returnează NoContent, putem păstra acest pas
+        showUpdateSuccessMessage();
         return { success: true, data: result }; // Returnăm rezultatul cu un flag de succes
     } catch (error) {
         // În caz de excepție, returnăm un obiect de eroare
@@ -308,6 +310,26 @@ async function getCarsForDropdown(callback) {
         console.error('A apărut o eroare la apelarea API-ului:', error);
     }
 }
+async function getCarsPieseForDropdown(callback) {
+    //debugger;
+    try {
+        const url = `${API_BASE_URL}/Cars/getCarsPiese`;
+        const response = await fetch(url, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const cars = await response.json();
+        callback(cars)
+    } catch (error) {
+        console.error('A apărut o eroare la apelarea API-ului:', error);
+    }
+}
+
+
 async function getModelsForDropdown(marcaId, callback) {
     //debugger;        
         try {            

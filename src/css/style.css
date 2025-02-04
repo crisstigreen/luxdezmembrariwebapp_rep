@@ -805,6 +805,11 @@ a {
   height: auto; 
   font-size: 14px; 
 }
+#export_type.form-control  {
+  padding: 6px 6px; 
+  height: auto; 
+  font-size: 14px; 
+}
 
 
 .topDiv{

@@ -251,8 +251,7 @@ document.getElementById('btn_finalizeaza').addEventListener('click', () => {
 });
 
 document.getElementById('btn_continue').addEventListener('click', () => {
-    debugger;        
-    localStorage.clear(); 
+    debugger;            
     window.location='shop.html';
 });
 

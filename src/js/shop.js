@@ -26,7 +26,7 @@ let Nivel = "";
 //get cars
 document.addEventListener('DOMContentLoaded', function() {
     const containerMarca = document.getElementById('checkboxContainerMarca');
-    getCarsForDropdown(function(cars) {
+    getCarsPieseForDropdown(function(cars) {
         populateCheckboxesMarca(cars, containerMarca);
     });
 
@@ -196,14 +196,14 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
             <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                 <div class="block-4 border d-flex flex-column" style="height: 450px;">
                     <figure class="block-4-image">
-                        <a target='_blank' href="shop-single.html?id=${piesa.id}&masina=${piesa.masina}">                        
+                        <a  href="shop-single.html?id=${piesa.id}&masina=${piesa.masina}">                        
                             <img src="${imageSrc}" style='width: 100%; height: 165px; object-fit: contain;object-position: center;' alt="Image placeholder" class="img-fluid" id="piesaImagine-${piesa.id}">
                            
                         </a>
                     </figure>
                         <div class="block-4-text padding10 d-flex flex-column flex-grow-1" id="piesa-${piesa.id}">
                         <h6 style="font-weight: bold;">
-                            <a target='_blank' href="shop-single.html?id=${piesa.id}&masina=${piesa.masina}" id="piesaTitlu-${piesa.id}">
+                            <a  href="shop-single.html?id=${piesa.id}&masina=${piesa.masina}" id="piesaTitlu-${piesa.id}">
                                 ${piesa.nume}${piesa.codPiesa ? `, ${piesa.codPiesa}` : ''}, ${piesa.masina}
                             </a>
 
