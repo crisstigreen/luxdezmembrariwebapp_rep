@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Lux Dezmembrari &mdash; Colorlib e-Commerce Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    
+    
+  </head>
+  <body>
+
+      <div class="site-wrap">
+       
+        <div id="top-placeholder"></div>
+
+          <div class="bg-light py-3">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong id="piesaMeniu" class="text-black"></strong></div>
+                  </div>
+              </div>
+          </div>
+   
+       
+          <div id="detaliiPiesa"></div>
+          
+
+          <div class="site-section">
+              <div class="container">
+                <div class="row">
+                    <button class="btn btn-success btn-sm buttons" style="width: 50px;" type="button" onclick="list()"><<<</button>                    
+                </div>
+                  <div class="row">
+                                          
+                    <div class="col-md-4 divCarDetails">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner" id="carousel-inner" style="cursor: pointer;">
+                                <!-- Imaginile vor fi generate dinamic aici -->
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        <div class="carousel-indicators-container" id="carousel-indicators">
+                            <!-- Indicatorii vor fi generați dinamic aici -->
+                        </div>
+                    </div>                    
+                                                                                
+                    <div class="col-md-4 divCarDetails">
+                          <h2 id="piesaTitlu" style="color: #006b30"></h2>                                             
+                          <strong>Numar identificare vehicul:</strong> <p id="piesaIdentificator" style="display: inline;"></p><br />                                                    
+                          <strong>Cod motor:</strong> <p id="piesaCodMotor" style="display: inline;"></p><br />                                                    
+                          <strong>Combustibil:</strong> <p id="piesaCombustibil" style="display: inline;"></p><br />                                                    
+                          <strong>An fabricatie:</strong> <p id="piesaAn" style="display: inline;"></p><br />                                                    
+                          <strong>Capacitate cilindrica:</strong> <p id="piesaCapacitCil" style="display: inline;"></p><br /> 
+                          <strong>Putere[CP]:</strong> <p id="piesaPutereCP" style="display: inline;"></p><br />     
+                          <strong>Km:</strong> <p id="piesaKm" style="display: inline;"></p><br />  
+                          <strong>Numar locuri:</strong> <p id="piesaNrLoc" style="display: inline;"></p><br />  
+                          <strong>Transmisie:</strong> <p id="piesaTransmisie" style="display: inline;"></p><br />  
+                          <strong>Nr viteze:</strong> <p id="piesaNrViteze" style="display: inline;"></p><br />     
+                          <strong>Tractiune:</strong> <p id="piesaTranctiune" style="display: inline;"></p><br />    
+                          
+                          
+                    </div>
+
+                    <div class="col-md-3 divCarDetails">          
+                        
+                        <h6 class="labelCarsDet">Solicita o piesa nelistata</h6>
+                        <div class="form-group row marginImp">                           
+                            <div class="col-md-12">
+                                <p class="labelCarsDet">Nume</p>
+                                <input type="text" class="form-control tbHeight" id="tb_nume" onclick="verifRemoveRed('tb_nume')" name="tb_nume">
+                                <label id="user_error" class="error-message"></label>
+                            </div>                            
+                        </div>
+                        <div class="form-group row marginImp">                           
+                            <div class="col-md-12">
+                                <p class="labelCarsDet">Telefon</p>
+                                <input type="text" class="form-control tbHeight" id="tb_telefon" onclick="verifRemoveRed('tb_telefon')" name="tb_telefon">
+                                <label id="user_error" class="error-message"></label>
+                            </div>                            
+                        </div>
+                        <div class="form-group row marginImp">                           
+                            <div class="col-md-12">
+                                <p class="labelCarsDet">Email</p>
+                                <input type="text" class="form-control tbHeight" id="tb_email" onclick="verifRemoveRed('tb_email')" name="tb_email">
+                                <label id="user_error" class="error-message"></label>
+                            </div>                            
+                        </div>
+
+                       <!--  <div class="form-group row marginImp">                           
+                            <div class="col-md-12">
+                                <p class="labelCarsDet">Rezultatul adunarii</p>
+                                <input type="text" class="form-control tbHeight" id="tb_rez" onclick="verifRemoveRed('tb_rez')" name="tb_rez">
+                                <label id="user_error" class="error-message"></label>
+                            </div>                            
+                        </div> -->
+
+                        <div class="form-group row marginImp">                           
+                            <div class="col-md-12">
+                                <p class="labelCarsDet">Mesaj</p>
+                                <textarea  class="form-control" style="height: 50px;" id="tb_mesaj" onclick="verifRemoveRed('tb_mesaj')" name="tb_mesaj">
+                                    
+                                </textarea>
+                                <label id="user_error" class="error-message"></label> 
+                              
+
+                                                                                                                                                                                                                                    
+                            </div>                            
+                        </div>
+
+                        <div class="form-group row marginImp">                           
+                            <div class="col-md-8">
+                                <button class="btn btn-success btn-sm buttons" type="button" onclick="plaseazaComanda()">Plaseaza comanda</button>
+                            </div>                            
+                        </div>
+
+                    </div>
+                  </div>
+              </div>
+          </div>
+
+
+
+        <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">            
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img id="modalImage" src="" class="img-fluid" alt="Imagine mare" style="max-width: 100%; height: auto;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+
+
+          <!-- footer -->
+          <div class="site-section block-3 site-blocks-2 bg-light">
+              <div class="container">
+                  <div class="row justify-content-center">
+                      <div class="col-md-7 site-section-heading text-center pt-4">
+                          <h2>Featured Products</h2>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="nonloop-block-3 owl-carousel">
+                              <div class="item">
+                                  <div class="block-4 text-center">
+                                      <figure class="block-4-image">
+                                          <img src="images/cars.jpg" alt="Image placeholder" class="img-fluid">
+                                      </figure>
+                                      <div class="block-4-text p-4">
+                                          <h3><a href="#">Tank Top</a></h3>
+                                          <p class="mb-0">Finding perfect t-shirt</p>
+                                          <p class="text-primary font-weight-bold">$50</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="item">
+                                  <div class="block-4 text-center">
+                                      <figure class="block-4-image">
+                                          <img src="images/tires.jpg" alt="Image placeholder" class="img-fluid">
+                                      </figure>
+                                      <div class="block-4-text p-4">
+                                          <h3><a href="#">Corater</a></h3>
+                                          <p class="mb-0">Finding perfect products</p>
+                                          <p class="text-primary font-weight-bold">$50</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="item">
+                                  <div class="block-4 text-center">
+                                      <figure class="block-4-image">
+                                          <img src="images/parts.jpg" alt="Image placeholder" class="img-fluid">
+                                      </figure>
+                                      <div class="block-4-text p-4">
+                                          <h3><a href="#">Polo Shirt</a></h3>
+                                          <p class="mb-0">Finding perfect products</p>
+                                          <p class="text-primary font-weight-bold">$50</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="item">
+                                  <div class="block-4 text-center">
+                                      <figure class="block-4-image">
+                                          <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
+                                      </figure>
+                                      <div class="block-4-text p-4">
+                                          <h3><a href="#">T-Shirt Mockup</a></h3>
+                                          <p class="mb-0">Finding perfect products</p>
+                                          <p class="text-primary font-weight-bold">$50</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="item">
+                                  <div class="block-4 text-center">
+                                      <figure class="block-4-image">
+                                          <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                                      </figure>
+                                      <div class="block-4-text p-4">
+                                          <h3><a href="#">Corater</a></h3>
+                                          <p class="mb-0">Finding perfect products</p>
+                                          <p class="text-primary font-weight-bold">$50</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <footer class="site-footer border-top">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-lg-6 mb-5 mb-lg-0">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <h3 class="footer-heading mb-4">Navigations</h3>
+                              </div>
+                              <div class="col-md-6 col-lg-4">
+                                  <ul class="list-unstyled">
+                                      <li><a href="#">Sell online</a></li>
+                                      <li><a href="#">Features</a></li>
+                                      <li><a href="#">Shopping cart</a></li>
+                                      <li><a href="#">Store builder</a></li>
+                                  </ul>
+                              </div>
+                              <div class="col-md-6 col-lg-4">
+                                  <ul class="list-unstyled">
+                                      <li><a href="#">Mobile commerce</a></li>
+                                      <li><a href="#">Dropshipping</a></li>
+                                      <li><a href="#">Website development</a></li>
+                                  </ul>
+                              </div>
+                              <div class="col-md-6 col-lg-4">
+                                  <ul class="list-unstyled">
+                                      <li><a href="#">Point of sale</a></li>
+                                      <li><a href="#">Hardware</a></li>
+                                      <li><a href="#">Software</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+                          <h3 class="footer-heading mb-4">Promo</h3>
+                          <a href="#" class="block-6">
+                              <img src="images/tires.jpg" alt="Image placeholder" class="img-fluid rounded mb-4">
+                              <h3 class="font-weight-light  mb-0">Finding Your Perfect Shoes</h3>
+                              <p>Promo from  nuary 15 &mdash; 25, 2019</p>
+                          </a>
+                      </div>
+                      <div class="col-md-6 col-lg-3">
+                          <div class="block-5 mb-5">
+                              <h3 class="footer-heading mb-4">Contact Info</h3>
+                              <ul class="list-unstyled">
+                                  <li class="address">203 Fake St. Mountain View, San Francisco, California, USA</li>
+                                  <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
+                                  <li class="email">emailaddress@domain.com</li>
+                              </ul>
+                          </div>
+
+                          <div class="block-7">
+                              <form action="#" method="post">
+                                  <label for="email_subscribe" class="footer-heading">Subscribe</label>
+                                  <div class="form-group">
+                                      <input type="text" class="form-control py-4" id="email_subscribe" placeholder="Email">
+                                      <input type="submit" class="btn btn-sm btn-primary" value="Send">
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+
+                  
+              </div>
+          </footer>
+      </div>
+
+
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      <script src="js/jquery-3.3.1.min.js"></script>
+      <script src="js/jquery-ui.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/owl.carousel.min.js"></script>
+      <script src="js/jquery.magnific-popup.min.js"></script>
+      <script src="js/aos.js"></script>
+
+      <script src="js/common.js"></script>
+      <script src="js/config.js"></script>
+      <script src="js/main.js"></script>
+
+<!--       <script src="js/top.js"></script>
+      <script src="js/topload.js"></script>    -->   
+     
+
+      <script src="js/masini-details.js"></script>      
+      
+   
+
+  </body>
+</html>
+
+

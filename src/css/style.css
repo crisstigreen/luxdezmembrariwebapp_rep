@@ -1337,6 +1337,19 @@ a:hover {
 }
 
 
-
+.ql-size-small
+{
+  font-size: 9px !important; 
+}
+.ql-size-normal
+{
+  font-size: 12px !important; 
+}
+.ql-size-large {
+  font-size: 20px !important; 
+}
+.ql-size-huge {
+  font-size: 32px !important; 
+}
 
 

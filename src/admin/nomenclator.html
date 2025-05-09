@@ -21,12 +21,25 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/anvelope.css">
 
+
+<!--     Quill -->
+    <link href="/styles.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+
+
+                
 </head>
 <body>
 
-
     <div class="site-wrap">
-
         <div class="bg-light py-3">
             <div class="container">
                 <div class="row">
@@ -34,28 +47,21 @@
                 </div>
             </div>
         </div>
-
         <div id="menu-placeholder"></div>
-
         <div class="container_div">
+        <!--add form-->
+        <div id="edit_form" class="row">          
+            <div class="col-md-12 ml-auto">
 
-            <!--add form-->
-          <div id="edit_form" class="row">
-              <div class="col-md-12">
-                  
-              </div>
-              <div class="col-md-12 ml-auto">
+                <form action="#" method="post">
 
-                  <form action="#" method="post">
-
-                      <div class="p-3 p-lg-5 border">
-
-                       
-                        <h7 class="h4 mb-3 text-black">Nomenclator categorii piese</h7>
-                          <div class="form-group row">
+                    <div class="p-3 border" style="padding-left: 100px !important;">
+                        
+                        <h7 class="h5 mb-3 text-black">Nomenclator categorii piese</h7>
+                        <div class="form-group row">
                             <div class="col-md-3 ddd">
                                 <label for="html">Tip</label>  
-                                <select id="ddd_Tip" class="form-control ddd" onclick="verifRemoveRed('ddd_Tip')">
+                                <select id="ddd_Tip" class="form-control ddd"  onclick="verifRemoveRed('ddd_Tip')">  <!--  onclick="verifRemoveRed('ddd_Tip')" -->
                                     <option value="">---</option>                                                                           
                                 </select>                                                        
                             </div>     
@@ -72,8 +78,8 @@
                                     <option value="">---</option>                                                                          
                                 </select>
                             </div>                                                
-                          </div>
-                          <div class="form-group row">
+                            </div>
+                            <div class="form-group row">
                             <div class="col-md-2 ddd">
                                 <input type="text" class="form-control" id="tb_Tip" name="tb_Tip" onclick="verifRemoveRed('tb_Tip')">                                
                             </div>
@@ -96,124 +102,177 @@
                                 <button class="btn btn-success" type="button" onclick="addEdit_SubCateg()"><i class="icon-add"></i><i class="icon-edit"></i></button>
                                 <button class="btn btn-danger" type="button" onclick="remove_subCateg()"><i class="icon-remove"></i></button>
                             </div>
-                          </div>
-                          
-                          <!-- descriere -->  
-                          <div class="form-group row">
-                            <div class="col-md-3 ddd">
-                                <textarea class="form-control" id="ta_DescTip" name="ta_DescTip" placeholder="descriere"></textarea>                                
-                            </div>                                                                              
-                            <div class="col-md-3 ddd">
-                                <textarea class="form-control" id="ta_DescCat" name="ta_DescCat" placeholder="descriere"></textarea>                                
-                            </div>                            
-                            <div class="col-md-3 ddd">
-                                <textarea class="form-control" id="ta_DescSubCat" name="ta_DescSubCat" placeholder="descriere"></textarea>                                
-                            </div>                           
-                          </div>
-                                                                                                              
-                      </div>
-                  </form>
-              </div>
-
-
-          </div>
-
-            <!--add form-->
-            <div id="edit_form" class="row">
-                <div class="col-md-12">
-                    
-                </div>
-                <div class="col-md-12 ml-auto">
-  
-                    <form action="#" method="post">
-  
-                        <div class="p-3 p-lg-5 border">
-  
-                         
-                          <h7 class="h4 mb-3 text-black">Nomenclator tipuri masini</h7>
-                            <div class="form-group row">
-                              <div class="col-md-3 ddd">
-                                  <label for="html">Marca</label>  
-                                  <select id="ddd_cars" class="form-control ddd" onclick="verifRemoveRed('ddd_cars')">
-                                      <option value="">---</option>                                                                           
-                                  </select>                                                        
-                              </div>     
-                                <div class="col-md-3 ddd">
-                                    <label for="html">Model</label>  
-                                    <select id="ddd_models" class="form-control ddd" onclick="verifRemoveRed('ddd_models')">
-                                        <option value="">---</option>                                                                           
-                                    </select>                                 
-                                </div>
-  
-                                <div class="col-md-3 ddd">
-                                    <label for="html">Generatie</label>  
-                                    <select id="ddd_generatii" class="form-control ddd" onclick="verifRemoveRed('ddd_generatii')">
-                                        <option value="">---</option>                                                                          
-                                    </select>
-                                </div>                                                
-                            </div>
-                            <div class="form-group row">
-                              <div class="col-md-2 ddd">
-                                  <input type="text" class="form-control" id="tb_cars" name="tb_cars" onclick="verifRemoveRed('tb_cars')">                                
-                              </div>
-                              <div class="col-md-1 ddd">
-                                  <button class="btn btn-warning" type="button" onclick="addEdit_Car()"><i class="icon-add"></i><i class="icon-edit"></i></button>
-                                  <button class="btn btn-danger" type="button" onclick="remove_Car()"><i class="icon-remove"></i></button>
-                              </div>
-                           
-                              
-                              <div class="col-md-2 ddd">
-                                  <input type="text" class="form-control" id="tb_models" name="tb_models" onclick="verifRemoveRed('tb_models')">                                
-                              </div>
-                              <div class="col-md-1 ddd">
-                                  <button class="btn btn-primary" type="button" onclick="addEdit_Model()"><i class="icon-add"></i><i class="icon-edit"></i></button>
-                                  <button class="btn btn-danger" type="button" onclick="remove_Model()"><i class="icon-remove"></i></button>
-                              </div>
-  
-                              <div class="col-md-2 ddd">
-                                  <input type="text" class="form-control" id="tb_generatii" name="tb_generatii" onclick="verifRemoveRed('tb_generatii')">                                
-                              </div>
-                              <div class="col-md-1 ddd">
-                                  <button class="btn btn-success" type="button" onclick="addEdit_Generatie()"><i class="icon-add"></i><i class="icon-edit"></i></button>
-                                  <button class="btn btn-danger" type="button" onclick="remove_Generatie()"><i class="icon-remove"></i></button>
-                              </div>
-                            </div>
-
-                             <!-- descriere -->  
-                          <div class="form-group row">
-                            <div class="col-md-3 ddd">
-                                <textarea class="form-control" id="ta_DescMarca" name="ta_DescMarca" placeholder="descriere"></textarea>                                
-                            </div>                                                                              
-                            <div class="col-md-3 ddd">
-                                <textarea class="form-control" id="ta_DescModel" name="ta_DescModel" placeholder="descriere"></textarea>                                
-                            </div>                            
-                            <div class="col-md-3 ddd">
-                                <textarea class="form-control" id="ta_DescGeneratie" name="ta_DescGeneratie" placeholder="descriere"></textarea>                                
-                            </div>                           
-                          </div>
-                                                                                                                                  
-                        </div>
-                    </form>
-                </div>
-  
-  
+                            </div>                                                                                                                                                                                          
+                    </div>
+                </form>
             </div>
-          
-          
-      </div>
-        
 
 
+        </div>
+                                                      
+       
+        <div id="edit_form" class="row">     
+            <div class="col-md-12 ml-auto">
+
+                <form action="#" method="post">
+
+                    <div class="p-3 border" style="padding-left: 100px !important;">
+                        
+                        <h7 class="h5 mb-3 text-black">Nomenclator tipuri masini</h7>
+                        <div class="form-group row">
+                            <div class="col-md-3 ddd">
+                                <label for="html">Marca</label>  
+                                <select id="ddd_cars" class="form-control ddd" onclick="verifRemoveRed('ddd_cars')">
+                                    <option value="">---</option>                                                                           
+                                </select>                                                        
+                            </div>     
+                            <div class="col-md-3 ddd">
+                                <label for="html">Model</label>  
+                                <select id="ddd_models" class="form-control ddd" onclick="verifRemoveRed('ddd_models')">
+                                    <option value="">---</option>                                                                           
+                                </select>                                 
+                            </div>
+
+                            <div class="col-md-3 ddd">
+                                <label for="html">Generatie</label>  
+                                <select id="ddd_generatii" class="form-control ddd" onclick="verifRemoveRed('ddd_generatii')">
+                                    <option value="">---</option>                                                                          
+                                </select>
+                            </div>                                                
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-2 ddd">
+                                <input type="text" class="form-control" id="tb_cars" name="tb_cars" onclick="verifRemoveRed('tb_cars')">                                
+                            </div>
+                            <div class="col-md-1 ddd">
+                                <button class="btn btn-warning" type="button" onclick="addEdit_Car()"><i class="icon-add"></i><i class="icon-edit"></i></button>
+                                <button class="btn btn-danger" type="button" onclick="remove_Car()"><i class="icon-remove"></i></button>
+                            </div>
+                        
+                            
+                            <div class="col-md-2 ddd">
+                                <input type="text" class="form-control" id="tb_models" name="tb_models" onclick="verifRemoveRed('tb_models')">                                
+                            </div>
+                            <div class="col-md-1 ddd">
+                                <button class="btn btn-primary" type="button" onclick="addEdit_Model()"><i class="icon-add"></i><i class="icon-edit"></i></button>
+                                <button class="btn btn-danger" type="button" onclick="remove_Model()"><i class="icon-remove"></i></button>
+                            </div>
+
+                            <div class="col-md-2 ddd">
+                                <input type="text" class="form-control" id="tb_generatii" name="tb_generatii" onclick="verifRemoveRed('tb_generatii')">                                
+                            </div>
+                            <div class="col-md-1 ddd">
+                                <button class="btn btn-success" type="button" onclick="addEdit_Generatie()"><i class="icon-add"></i><i class="icon-edit"></i></button>
+                                <button class="btn btn-danger" type="button" onclick="remove_Generatie()"><i class="icon-remove"></i></button>
+                            </div>
+                        </div>                                                                                                                                                 
+                    </div>
+                </form>
+            </div>
+
+
+        </div>          
             
-
+            
+        <div id="edit_form" class="row">
+            <div class="col-md-12 ml-auto">
+                <form action="#" method="post">
+                    <div class="p-3 border" style="padding-left: 100px !important;">
+                         <!--  *********************************** TEXT AREA ******************************************** -->
+                                <div id="toolbar-container">
+                                    <span class="ql-formats">
+                                    <select class="ql-font">
+                                        <option value="sans-serif">Sans Serif</option>
+                                        <option value="serif">Serif</option>
+                                        <option value="monospace">Monospace</option>
+                                        <option value="arial">Arial</option>
+                                        <option value="courier-new">Courier New</option>
+                                        <option value="georgia">Georgia</option>
+                                        <option value="helvetica">Helvetica</option>
+                                        <option value="times-new-roman">Times New Roman</option>
+                                        <option value="verdana">Verdana</option>
+                                    </select>
+                                    <select class="ql-size">
+                                        <option value="small">Small</option>
+                                        <option selected>Normal</option>
+                                        <option value="large">Large</option>
+                                        <option value="huge">Huge</option>
+                                    </select>
+                                    </span>
+                                    <span class="ql-formats">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                    <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                    <select class="ql-color"></select>
+                                    <select class="ql-background"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                    <button class="ql-script" value="sub"></button>
+                                    <button class="ql-script" value="super"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                    <button class="ql-header" value="1"></button>
+                                    <button class="ql-header" value="2"></button>
+                                    <button class="ql-blockquote"></button>
+                                    <button class="ql-code-block"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                    <button class="ql-list" value="ordered"></button>
+                                    <button class="ql-list" value="bullet"></button>
+                                    <button class="ql-indent" value="-1"></button>
+                                    <button class="ql-indent" value="+1"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                    <button class="ql-direction" value="rtl"></button>
+                                    <select class="ql-align"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                    <button class="ql-link"></button>
+                                    <button class="ql-image"></button>
+                                    <button class="ql-video"></button>
+                                    <button class="ql-formula"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                    <button class="ql-clean"></button>
+                                    </span>
+                                </div>
+                                <div id="ta_editor" style="height: 100px;"></div>     
+                    </div>
+                </form>
+            </div>
+        </div>
+                   
+      </div>
+                      
         <footer class="site-footer border-top">
         </footer>
     </div>
 
+        <!-- Initialize Quill editor -->
+<script>
+    debugger;
+    const fonts = ['sans-serif', 'serif', 'monospace', 'arial', 'courier-new', 'georgia', 'helvetica', 'times-new-roman', 'verdana'];
+    const Font = Quill.import('formats/font');
+    Font.whitelist = fonts;
+    Quill.register(Font, true);
+  
+    var quill = new Quill('#ta_editor', {
+      modules: {
+        syntax: true,
+        toolbar: '#toolbar-container',
+      },
+      placeholder: 'Adaugati un text...',
+      theme: 'snow',
+    });
+  </script>
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>      
+  
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/popper.min.js"></script>
@@ -229,7 +288,10 @@
     <script src="../js/nomeclator.js"></script>
 
 
+
+
     
+
 
 
 </body>

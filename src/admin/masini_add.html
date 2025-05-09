@@ -50,9 +50,10 @@
                     <div class="tab-buttons">
                         <button class="tab-button" onclick="openTab(event, 'tab1')">General</button>
                         <button class="tab-button" onclick="openTab(event, 'tab2')">Piese listate</button>
+                        
                         <!-- <button class="tab-button" onclick="openTab(event, 'tab3')">Detalii masina</button> -->
                     </div>
-
+                    <button class="btn btn-success btn-sm buttons" style="width: 50px;" type="button" onclick="list()"><<<</button>
                     <div id="tab1" class="tab-content">                                               
                         <form action="#" method="post">
 
@@ -99,11 +100,11 @@
 
                                     <div class="col-md-2 ddd">
                                         <label for="html">An</label>
-                                        <input type="text" class="form-control ddd" id="tb_an" placeholder="An" name="tb_an">
+                                        <input type="number" min="0" class="form-control ddd" id="tb_an" placeholder="An" name="tb_an">
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">Km</label>
-                                        <input type="text" class="form-control ddd" id="tb_km" placeholder="Km" name="tb_km">
+                                        <input type="number" min="0" value="0"  class="form-control ddd" id="tb_km" placeholder="Km" name="tb_km">
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">Combustibil</label>
@@ -117,26 +118,26 @@
                                                                                             
                                     <div class="col-md-2 ddd">
                                         <label for="html">Capacitate cilindrica</label>
-                                        <input type="text" class="form-control ddd" id="tb_capCil" placeholder="Capacitate cilindrica" name="tb_capCil">
+                                        <input type="number" min="0"  class="form-control ddd" id="tb_capCil" placeholder="Capacitate cilindrica" name="tb_capCil">
                                     </div>
 
                                     <div class="col-md-1 ddd">
                                         <label for="html">Putere[kw]</label>
-                                        <input type="text" class="form-control ddd" id="tb_putere" placeholder="Putere KW" name="tb_putere">
+                                        <input type="number" min="0" class="form-control ddd" id="tb_putere" placeholder="Putere KW" name="tb_putere">
                                     </div>
 
                                     <div class="col-md-1 ddd">
                                         <label for="html">Putere[CP]</label>
-                                        <input type="text" class="form-control ddd" id="tb_puterecp" placeholder="Putere CP" name="tb_puterecp">
+                                        <input type="number" min="0" class="form-control ddd" id="tb_puterecp" placeholder="Putere CP" name="tb_puterecp">
                                     </div>
 
                                     <div class="col-md-2 ddd">
                                         <label for="html">Numar locuri</label>
-                                        <input type="text" class="form-control ddd" id="tb_nrLocuri" placeholder="Numar locuri" name="tb_nrLocuri">
+                                        <input type="number" min="0" class="form-control ddd" id="tb_nrLocuri" placeholder="Numar locuri" name="tb_nrLocuri">
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">Numar usi</label>
-                                        <input type="text" class="form-control ddd" id="tb_nrUsi" placeholder="Numar usi" name="tb_nrUsi">
+                                        <input type="number" min="0" class="form-control ddd" id="tb_nrUsi" placeholder="Numar usi" name="tb_nrUsi">
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">Tractiune</label>
@@ -157,7 +158,7 @@
                                 
                                     <div class="col-md-2 ddd">
                                         <label for="html">Numar viteze</label>
-                                        <input type="text" class="form-control ddd" id="tb_nrViteze" placeholder="Numar viteze" name="tb_nrViteze">
+                                        <input type="number" value="0" class="form-control ddd" id="tb_nrViteze" placeholder="Numar viteze"  min="0" name="tb_nrViteze">
                                     </div>
 
                                     <div class="col-md-2 ddd">
@@ -177,20 +178,19 @@
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">Discount</label>
-                                        <input type="text" class="form-control ddd" id="tb_discount" placeholder="Discount" name="tb_discount">
+                                        <input type="number" class="form-control ddd" value="0" id="tb_discount" min="0" placeholder="Discount" name="tb_discount">
                                     </div>
                                     <div class="col-md-2 ddd">
                                         <label for="html">Numar piese</label>
-                                        <input type="text" class="form-control ddd" id="tb_nrPiese" disabled="true" placeholder="Numar piese" name="tb_nrPiese">
+                                        <input type="number" class="form-control ddd" id="tb_nrPiese" disabled="true"  min="0" placeholder="Numar piese" name="tb_nrPiese">
                                     </div>                                                      
                                 </div>
 
                                 <div class="form-group row">                                                                                                                                                      
                                     <div class="col-md-2 ddd">
                                         <label for="html">Vizibilitate</label>
-                                        <select id="ddd_vizibil" class="form-control ddd">
-                                            <option value="">vizibil/ascuns</option>
-                                            <option value="">vizibil</option>
+                                        <select id="ddd_vizibil" class="form-control ddd">                                        
+                                            <option selected="true" value="">vizibil</option>
                                             <option value="">ascuns</option>
                                         </select>
                                     </div>
@@ -267,50 +267,6 @@
                                         <label for="html">Nume piesa</label>                                        
                                         <input type="text" class="form-control ddd" id="tb_nume" placeholder="Nume" name="tb_nume">
                                     </div>
-
-                                    <div class="col-md-1 ddd">
-                                        <label for="html">Cod piesa</label>
-                                        <input type="text"  class="form-control ddd" id="tb_codPiesa" placeholder="..." name="tb_codPiesa">
-                                    </div>
-
-                                    <div class="col-md-1 ddd">
-                                        <label for="html">Stoc</label>
-                                        <input type="number"  class="form-control ddd" id="tb_stoc" placeholder="..." name="tb_stoc">
-                                    </div>
-   
-                                    <div class="col-md-1 ddd">
-                                        <label for="html">Pret</label>
-                                        <input type="text" class="form-control ddd" id="tb_pret" placeholder="..." name="tb_pret">
-                                    </div>
-
-                                    <div class="col-md-1 ddd">
-                                        <label for="html">Valuta</label>
-                                        <select id="ddd_valuta" class="form-control ddd">
-                                            <option value="">...</option>
-                                            <option value="">RON</option>
-                                            <option value="">EUR</option>
-                                            <option value="">USD</option>
-                                            <option value="">GBP</option>
-                                        </select>
-                                    </div>
-                                                                        
-                                    <div class="col-md-1 ddd">
-                                        <label for="html">Discount</label>
-                                        <input type="number"  class="form-control ddd" id="tb_discount" placeholder="..." name="tb_discount">
-                                    </div>
-
-                                    <div class="col-md-1 ddd">
-                                        <label for="html">Locatie</label>
-                                        <input type="text" class="form-control ddd" id="tb_locatie" placeholder="..." name="tb_locatie">
-                                    </div>
-                                    
-                                    <div class="col-md-1 ddd">
-                                        <label for="html">SKU_ID</label>
-                                        <input type="text" class="form-control ddd" id="tb_skupiese"  disabled="true" placeholder="SKU(ID)" name="tb_skupiese">
-                                    </div>                                    
-                                </div>    
-                                
-                                <div class="form-group row">
                                     <div class="col-md-2 ddd">
                                         <label for="html">Tip</label>  
                                         <select id="ddd_Tip" class="form-control ddd" onclick="verifRemoveRed('ddd_Tip')">
@@ -329,7 +285,55 @@
                                           <select id="ddd_subcateg" class="form-control ddd" onclick="verifRemoveRed('ddd_subcateg')">
                                               <option value="">---</option>                                                                          
                                           </select>
-                                      </div>                                                
+                                      </div>   
+
+                                      <div class="col-md-1 ddd">
+                                        <label for="html">Cod piesa</label>
+                                        <input type="text"  class="form-control ddd" id="tb_codPiesa" placeholder="..." name="tb_codPiesa">
+                                    </div>
+
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">Stoc</label>
+                                        <input type="number" min="0" class="form-control ddd" id="tb_stoc" placeholder="..." name="tb_stoc">
+                                    </div>
+   
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">Pret</label>
+                                        <input type="number" class="form-control ddd" id="tb_pret" placeholder="..." name="tb_pret">
+                                    </div>
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">Valuta</label>
+                                        <select id="ddd_valuta" class="form-control ddd">                                            
+                                            <option selected="true" value="">RON</option>
+                                            <option value="">EUR</option>
+                                            <option value="">USD</option>
+                                            <option value="">GBP</option>
+                                        </select>
+                                    </div>
+
+                                                                 
+                                </div>    
+                                
+                                <div class="form-group row">
+                                                                                                            
+                                    
+
+                              
+                                                                        
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">Discount</label>
+                                        <input type="number"  class="form-control ddd" min="0" id="tb_discount" placeholder="..." name="tb_discount">
+                                    </div>
+
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">Locatie</label>
+                                        <input type="text" class="form-control ddd" id="tb_locatie" placeholder="..." name="tb_locatie">
+                                    </div>
+                                    
+                                    <div class="col-md-1 ddd">
+                                        <label for="html">SKU_ID</label>
+                                        <input type="text" class="form-control ddd" id="tb_skupiese"  disabled="true" placeholder="SKU(ID)" name="tb_skupiese">
+                                    </div>  
                                 </div>
                                                                                           
                                 <div class="form-group row">                                                                                               
@@ -393,7 +397,7 @@
     <script src="../js/masini_add.js"></script>
     <script src="../js/nomeclator.js"></script>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

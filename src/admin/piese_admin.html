@@ -24,25 +24,44 @@
 </head>
 <body>
 
+
     <div class="site-wrap">
-
-
 
         <div class="bg-light py-3">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 mb-0"><a href="../index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Comenzi piese </strong></div>
+                    
+                    <div class="col-lg-6">
+                        <div class="col-md-12 mb-0"><a href="../index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Piese</strong></div>   
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="navbar-menu">
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle"><span class="icon icon-person"></span></a>
+                              <ul class="dropdown-menu">
+                                <li onclick="logout()"><a href="login.html">Log out</a></li>
+                              </ul>
+                            </li>                                                   
+                          </ul> 
+                    </div>
+                    
+                    
+
+                   
+                 
+
+
                 </div>
             </div>
         </div>
 
+        
+
         <div id="menu-placeholder"></div>
 
-
-       
         <div class="container_div">
 
-         <!-- view -->
+              <!-- view -->
          <div class="row">
             <div class="col-md-1">                
                 <select id="page-size" class="form-control">
@@ -56,7 +75,7 @@
             <div class="col-md-1">
                 <button id="adaugaBtn" class="btn btn-primary btn-sm col">Adaugă</button>
             </div>
-
+           
             <div class="col-md-2">
                 <input type="text" class="form-control" style="height: 32px;" id="tb_cauta" placeholder="..." name="tb_cauta">
             </div>
@@ -67,53 +86,73 @@
 
             <div class="col-md-2">                
                 <select id="order_term" class="form-control">
-                    <option  value="DESC">Cele mai noi</option>
-                    <option selected value="ASC">Cele mai vechi</option>
-                </select>  
-               
+                    <option selected value="DESC">Cele mai noi</option>
+                    <option  value="ASC">Cele mai vechi</option>
+                </select>                 
             </div>
-           
+
+          
+            
+            <div class="col-md-1">                
+                <select id="export_type" class="form-control">
+                    <option selected value="csv">csv</option>
+                    <option  value="excel">excel</option>
+                </select>                 
+            </div>
+
+            <div class="col-md-1">
+
+                <button id="exportBtn" class="btn btn-info btn-sm col">Export</button>
+            </div>
+            
             
          </div>
-        <div class="row">            
-            <div class="col-md-12">                
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nume</th>
-                            <th>Telefon</th>
-                            <th>Email</th>                            
-                            <th>Mesaj</th>   
-                            <th>Data</th>
-                            <th></th>                                                                                                                               
-                        </tr>
-                    </thead>
-                    <tbody id="rezultate-tabel">
-                        <!-- Rândurile generate vor fi adăugate aici -->
-                    </tbody>
-                </table>
-                <!-- Pagination controls -->
+
+            <!--view-->
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Masina</th>
+                                <th>Nume</th>                                
+                                <th>TipCaroserie</th>
+                                <th>Pret</th>
+                                <th>Discount</th>
+                                <th>Edit</th> <!-- Coloana Edit -->
+                            </tr>
+                        </thead>
+                        <tbody id="rezultate-tabel">
+                            <!-- Rândurile generate vor fi adăugate aici -->
+                        </tbody>
+                    </table>
+                    <!-- Pagination controls -->
                 <div id="pagination-controls">
                     <button class="btn btn-success btn-sm" id="prev-page" disabled>Previous</button>
                     <strong id="page-info"></strong>
-                    <button class="btn btn-success btn-sm" id="next-page" disabled>Next</button>
-
-                    
+                    <button class="btn btn-success btn-sm" id="next-page" disabled>Next</button>                    
+                </div>
                 </div>
             </div>
-        </div>
-                                                               
-        </div>
-        
 
-    <footer class="site-footer border-top">
+     
+            
+
+
+        </div>
+
+        <footer class="site-footer border-top">
         </footer>
     </div>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+
+    <script src="../js/config.js"></script>
+    
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/popper.min.js"></script>
@@ -122,13 +161,18 @@
     <script src="../js/jquery.magnific-popup.min.js"></script>
     <script src="../js/aos.js"></script>
 
-    <script src="../js/config.js"></script>
+
+    <script src="../js/common.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/admin.js"></script>
-    <script src="../js/comenzi_piese_admin.js"></script>
-
 
     
+  
+    <script src="../js/piese_admin.js"></script>
+    
+
+    
+
 
 </body>
 </html>

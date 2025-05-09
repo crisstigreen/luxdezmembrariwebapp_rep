@@ -274,3 +274,8 @@ body, html {
     box-shadow: 2px 2px 5px #dfdfdf;
     background-color: white;
 }
+
+
+.ghost {
+    opacity: 0.4;
+}
