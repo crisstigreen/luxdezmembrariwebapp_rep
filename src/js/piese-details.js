@@ -73,23 +73,13 @@ function loadPiesa(piesaId) {
             carouselInner.innerHTML = '';
             carouselIndicatorsContainer.innerHTML = '';
 
-            if (carImages.length === 0) {
-
-
-            /*    var imageSrc = piesa.imagini ? `${API_BASE_URL_IMG}/` + piesa.imagini[0] : 'images/placeholder.jpg';
-                if(piesa.imagini != null && piesa.imagini.length == 0){
-                    imageSrc = '/images/placeholder.jpg';
-                } */
-
-                //testulea
+            if (carImages.length === 0) {                          
                 const placeholderSrc = `images/placeholder.jpg`;
                 carImages.push(placeholderSrc);
-                $("#carousel-indicators").hide();
-                
+                $("#carousel-indicators").hide();                
             }
-
-
             carImages.forEach((imgSrc, index) => {
+                const isPlaceholder = imgSrc.includes('placeholder.jpg');
                 // Creează elementele pentru imagini
                 const carouselItem = document.createElement('div');
                 carouselItem.classList.add('carousel-item');
@@ -98,8 +88,8 @@ function loadPiesa(piesaId) {
                 }
 
                 const imgElement = document.createElement('img');
-                imgElement.classList.add('d-block', 'w-100');                 
-                imgElement.src = `${API_BASE_URL_IMG}/${imgSrc}`;
+                imgElement.classList.add('d-block', 'w-100');                                 
+                imgElement.src = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
                 imgElement.alt = `Slide ${index + 1}`;
                 
                 // Adaugă evenimentul onclick pentru a deschide modalul
@@ -111,8 +101,8 @@ function loadPiesa(piesaId) {
                 document.getElementById('carousel-inner').appendChild(carouselItem);
 
                 // Creează indicatorii
-                const indicatorItem = document.createElement('img');
-                indicatorItem.src = `${API_BASE_URL_IMG}/${imgSrc}`;
+                const indicatorItem = document.createElement('img');                
+                indicatorItem.src = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
                 indicatorItem.alt = `Thumbnail ${index + 1}`;
                 indicatorItem.setAttribute('data-target', '#carouselExampleIndicators');
                 indicatorItem.setAttribute('data-slide-to', index);

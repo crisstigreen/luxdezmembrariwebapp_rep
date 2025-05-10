@@ -52,21 +52,21 @@ function loadPiesa(carId) {
                 carouselIndicatorsContainer.innerHTML = '';
 
                 if (carImages.length === 0) {                    
-                    const placeholderSrc = BASE_URL + '/images/placeholder.jpg';                            
+                    const placeholderSrc = `images/placeholder.jpg`;                           
                     carImages.push(placeholderSrc);
                     $("#carousel-indicators").hide();
                 }
                 carImages.forEach((imgSrc, index) => {
+                    const isPlaceholder = imgSrc.includes('placeholder.jpg');
                     // Creează elementele pentru imagini
                     const carouselItem = document.createElement('div');
                     carouselItem.classList.add('carousel-item');
                     if (index === 0) {
                         carouselItem.classList.add('active');
                     }
-
                     const imgElement = document.createElement('img');
                     imgElement.classList.add('d-block', 'w-100');
-                    imgElement.src = imgSrc.startsWith('http') ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
+                    imgElement.src = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
                     imgElement.alt = `Slide ${index + 1}`;
                     
                     // Adaugă evenimentul onclick pentru a deschide modalul
@@ -79,7 +79,7 @@ function loadPiesa(carId) {
 
                     // Creează indicatorii
                     const indicatorItem = document.createElement('img');
-                    indicatorItem.src = imgSrc.startsWith('http') ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
+                    indicatorItem.src = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
                     indicatorItem.alt = `Thumbnail ${index + 1}`;
                     indicatorItem.setAttribute('data-target', '#carouselExampleIndicators');
                     indicatorItem.setAttribute('data-slide-to', index);
