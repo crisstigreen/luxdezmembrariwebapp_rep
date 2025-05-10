@@ -866,3 +866,9 @@ function stergePiesa(){
     const popup = document.getElementById('popup');
     popup.style.display = 'none';                    
 }
+
+function list(){
+    debugger;
+    const url = `comenzi.html`;
+    window.location = url;
+}

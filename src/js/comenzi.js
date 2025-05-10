@@ -143,7 +143,7 @@ async function get_details(id) {
     if (id) {
 
         const url = `comenzi_edit.html?id=${id}`;
-        window.open(url, '_blank');                
+        window.location = url;            
     } else {
         //document.getElementById('detaliiPiesa').innerText = 'Piesa nu a fost găsită.';
     }
