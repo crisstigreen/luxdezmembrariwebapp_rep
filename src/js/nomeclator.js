@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', async  () => {
 
 //TIP
 const TipDropdown = document.getElementById('ddd_Tip');
+const CategDropdown = document.getElementById('ddd_Categorii');
+const tipSubCategDropdown = document.getElementById('ddd_subcateg');
+
+
 async function getTip(){
     //debugger;
     const link = `${API_BASE_URL}/CategoriiTip`;   
@@ -22,21 +26,109 @@ function populateTip(tip){
     });
 }
 TipDropdown.addEventListener('change', function() {
-    debugger;        
+    debugger;      
     const tipId = getSelectedValue('ddd_Tip');
     const tipText = getSelectedText('ddd_Tip');   
     if(document.getElementById("tb_Tip")){document.getElementById("tb_Tip").value = tipText;}    
     document.getElementById('ddd_Categorii').innerHTML = '<option value="">---</option>';
     if (tipId) {
         getCategorii(tipId);
-    } else {
-        // Curăță dropdown-ul        
+    } else {    
     }
 });
+
+
+
+async function getCategorii(tipId){  
+    const link = `${API_BASE_URL}/Categorii/GetCategByTipId?idTip=` + tipId;   
+    const categ = await get(link);
+    populateCategs(categ);
+    
+}
+function populateCategs(categ) {
+    var currentURL = window.location.href;	     
+    
+    categ.items.forEach(item => {        
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.text = item.categorie;
+        CategDropdown.add(option);
+    });
+
+    if(currentURL.includes("nomenclator")){              
+        if (quill) {  
+            setTimeout(() => {
+                quill.root.innerHTML = categ.descriere ? categ.descriere : '';        
+            }, 0);
+        }
+    }  
+
+
+   
+}
+CategDropdown.addEventListener('change', function() {
+    debugger;        
+    const catId = getSelectedValue('ddd_Categorii');
+    const catText = getSelectedText('ddd_Categorii');       
+    if(document.getElementById("tb_numeCat")){document.getElementById("tb_numeCat").value = catText;}   
+    if (catId) {
+        subCategorii();
+    } else {
+        clearddd('ddd_subcateg');
+    }
+});
+
+
+//SUBCATEGORII
+async function subCategorii(){
+    //debugger;
+    var x = getSelectedValue("ddd_Categorii");
+    const link = `${API_BASE_URL}/CategoriiSub/GetSubCategById?idCateg=` + x;  
+    const subcateg = await get(link); 
+    populateSubCategs(subcateg);
+}
+function populateSubCategs(subcateg){
+    //debugger;    
+    var currentURL = window.location.href;	
+    if(currentURL.includes("nomenclator")){              
+        if (quill) {  
+            setTimeout(() => {
+                quill.root.innerHTML = subcateg.descriere ? subcateg.descriere : '';        
+            }, 0);
+        }
+    }     
+    clearddd('ddd_subcateg');    
+    subcateg.items.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.text = item.numeSubCat; // Presupunem că acesta este câmpul pentru numele culorii
+        tipSubCategDropdown.add(option);
+    });
+}
+tipSubCategDropdown.addEventListener('change', async function() {
+    debugger;        
+    const subcatId = getSelectedValue('ddd_subcateg');
+    const subcatText = getSelectedText('ddd_subcateg');       
+    if(document.getElementById("tb_numeSubCat")){document.getElementById("tb_numeSubCat").value = subcatText;}     
+    const link = `${API_BASE_URL}/CategoriiSub/GetSubCategByIdDesc?id=` + subcatId;      
+    var subCat = await get(link);
+    var currentURL = window.location.href;	
+    if(currentURL.includes("nomenclator")){ 
+        if (quill) {  
+            setTimeout(() => {
+                quill.root.innerHTML = subCat.descriere ? subCat.descriere : '';        
+            }, 0);
+        }
+    }         
+});
+
+
+
+
+  
 async function addEdit_Tip(){
     debugger;         
-    const tipId = getSelectedValue('ddd_Tip');      
-
+    const tipId = getSelectedValue('ddd_Tip');       
     var tip = document.getElementById("tb_Tip");  
     if(tip.value == ""){        
         verifRed(tip.id);
@@ -45,8 +137,8 @@ async function addEdit_Tip(){
     
     const data = {
         Id: tipId,
-        tip:  document.getElementById("tb_Tip").value,
-        Descriere: document.getElementById("ta_DescTip").value         
+        tip:  document.getElementById("tb_Tip").value,            
+        Descriere: quill.root.innerHTML
     };   
     if(tipId == ""){//post
         data.Id = 0;
@@ -59,9 +151,9 @@ async function addEdit_Tip(){
         update(tipId,data,link );
         showUpdateSuccessMessage();
     }
-    clearddd('ddd_Tip');
+    //clearddd('ddd_Tip');
     cleartb('tb_Tip');
-    cleartb('ta_DescTip'); 
+    //cleartb('ta_editor'); 
     setTimeout(() => {
         getTip();  
     }, 500); 
@@ -103,39 +195,6 @@ async function remove_Tip(){
         showErrorMessage(err.message);
     }       
 }
-
-//CATEGORII
-async function getCategorii(tipId){
-    //debugger;    
-    const link = `${API_BASE_URL}/Categorii/GetCategByTipId?idTip=` + tipId;   
-    const categ = await get(link);
-    populateCategs(categ);
-}
-const CategDropdown = document.getElementById('ddd_Categorii');
-function populateCategs(categ){
-    //debugger;    
-    var currentURL = window.location.href;	
-    if(currentURL.includes("nomenclator")){ 
-        document.getElementById("ta_DescTip").value = categ.descriere;
-    }     
-    categ.items.forEach(item => {        
-        const option = document.createElement('option');
-        option.value = item.id;
-        option.text = item.categorie;
-        CategDropdown.add(option);
-    });
-}
-CategDropdown.addEventListener('change', function() {
-    debugger;        
-    const catId = getSelectedValue('ddd_Categorii');
-    const catText = getSelectedText('ddd_Categorii');       
-    if(document.getElementById("tb_numeCat")){document.getElementById("tb_numeCat").value = catText;}   
-    if (catId) {
-        subCategorii();
-    } else {
-        clearddd('ddd_subcateg');
-    }
-});
 async function addEdit_Categ(){
     debugger;   
     var categ = document.getElementById("tb_numeCat");  
@@ -149,7 +208,7 @@ async function addEdit_Categ(){
         Id: catId,
         Categorie:  document.getElementById("tb_numeCat").value,
         Tip: tipId,        
-        Descriere: document.getElementById("ta_DescCat").value 
+        Descriere: quill.root.innerHTML
     };   
     if(catId == ""){//post
         data.Id = 0;
@@ -206,42 +265,6 @@ async function remove_Categ(){
         showErrorMessage(err.message);
     }   
 }
-
-//SUBCATEGORII
-async function subCategorii(){
-    //debugger;
-    var x = getSelectedValue("ddd_Categorii");
-    const link = `${API_BASE_URL}/CategoriiSub/GetSubCategById?idCateg=` + x;  
-    const subcateg = await get(link); 
-    populateSubCategs(subcateg);
-}
-const tipSubCategDropdown = document.getElementById('ddd_subcateg');
-function populateSubCategs(subcateg){
-    //debugger;    
-    var currentURL = window.location.href;	
-    if(currentURL.includes("nomenclator")){ 
-        document.getElementById("ta_DescCat").value = subcateg.descriere;
-    }     
-    clearddd('ddd_subcateg');    
-    subcateg.items.forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.id;
-        option.text = item.numeSubCat; // Presupunem că acesta este câmpul pentru numele culorii
-        tipSubCategDropdown.add(option);
-    });
-}
-tipSubCategDropdown.addEventListener('change', async function() {
-    debugger;        
-    const subcatId = getSelectedValue('ddd_subcateg');
-    const subcatText = getSelectedText('ddd_subcateg');       
-    if(document.getElementById("tb_numeSubCat")){document.getElementById("tb_numeSubCat").value = subcatText;}     
-    const link = `${API_BASE_URL}/CategoriiSub/GetSubCategByIdDesc?id=` + subcatId;      
-    var subCat = await get(link);
-    var currentURL = window.location.href;	
-    if(currentURL.includes("nomenclator")){ 
-        document.getElementById('ta_DescSubCat').value = subCat.descriere;
-    }         
-});
 async function addEdit_SubCateg(){
     debugger;    
     const subcatId = getSelectedValue('ddd_subcateg');     
@@ -256,7 +279,7 @@ async function addEdit_SubCateg(){
         Id: subcatId,
         NumeSubCat:  document.getElementById("tb_numeSubCat").value,
         IdCateg: catId,
-        Descriere: document.getElementById("ta_DescSubCat").value          
+        Descriere: quill.root.innerHTML          
     };   
     if(subcatId == ""){//post
         data.Id = 0;
@@ -276,7 +299,6 @@ async function addEdit_SubCateg(){
         subCategorii();  
     }, 500);  
 }
-
 async function remove_subCateg(){
     debugger;
     const subcatId = getSelectedValue('ddd_subcateg');  
@@ -329,7 +351,7 @@ async function addEdit_Car(){
     const data = {
         marcaID: carId,
         marcaName:  document.getElementById("tb_cars").value,
-        descriere:  document.getElementById("ta_DescMarca").value,         
+        descriere:  quill.root.innerHTML       
     };   
     if(carId == ""){//post
         data.marcaID = 0;        
@@ -349,7 +371,6 @@ async function addEdit_Car(){
         getCars(`${API_BASE_URL}/Cars/getAll`);
     }, 500); 
 }
-
 async function remove_Car(){
     debugger;    
     const carId = getSelectedValue('ddd_cars');  
@@ -385,7 +406,6 @@ async function remove_Car(){
             showErrorMessage(err.message);
         }        
 }
-
 //MODEL
 async function addEdit_Model(){
     debugger;         
@@ -400,7 +420,7 @@ async function addEdit_Model(){
         modelID: modelId,
         marcaID: marcaId,
         modelName:  document.getElementById("tb_models").value,        
-        descriere:  document.getElementById("ta_DescModel").value,  
+        descriere:  quill.root.innerHTML
     };   
     if(modelId == ""){//post
         data.modelID = 0;        
@@ -420,7 +440,6 @@ async function addEdit_Model(){
         getModelsForDropdown(marcaId, populateModelsDropdown);
     }, 500); 
 }
-
 async function remove_Model(){     
     const modelId = getSelectedValue('ddd_models');  
     const marcaId = getSelectedValue('ddd_cars'); 
@@ -457,7 +476,6 @@ async function remove_Model(){
         showErrorMessage(err.message);
     }         
 }
-
 //GENERATIE
 async function addEdit_Generatie(){
     debugger;         
@@ -472,7 +490,7 @@ async function addEdit_Generatie(){
         generatieId: generatieId,
         modelId: modelId,
         generatieName:  document.getElementById("tb_generatii").value,
-        descriere: document.getElementById("ta_DescGeneratie").value       
+        descriere: quill.root.innerHTML      
     };   
     if(generatieId == ""){//post
         data.generatieId = 0;        
@@ -493,7 +511,6 @@ async function addEdit_Generatie(){
         getGeneratiiForDropdown(modelId, populateGeneratiiDropdown);
     }, 500); 
 }
-
 async function remove_Generatie(){     
     const generatieId = getSelectedValue('ddd_generatii');  
     const modelId = getSelectedValue('ddd_models');  

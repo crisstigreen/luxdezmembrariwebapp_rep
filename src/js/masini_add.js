@@ -1,4 +1,8 @@
-﻿//PAGE LOAD
+﻿let selectedFiles = null;
+
+
+
+//PAGE LOAD
 document.addEventListener('DOMContentLoaded', async  () => {
     //debugger;      
     await getCars(`${API_BASE_URL}/Cars/get`);  
@@ -6,8 +10,14 @@ document.addEventListener('DOMContentLoaded', async  () => {
     populatePieseMasiniTable()
 });
 
+
+//load imagini
 document.addEventListener('DOMContentLoaded', async function() {    
     const previewContainer = document.getElementById('preview');
+    new Sortable(previewContainer, {
+        animation: 150,
+        ghostClass: 'ghost', // opțional: clasa aplicată elementului în mișcare
+    });
     const piesaId = getQueryParam('id'); // Funcția getQueryParam definită anterior
 
     async function fetchImagini(itemId) {
@@ -35,9 +45,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             //debugger;
             const imageContainer = document.createElement('div');
             imageContainer.classList.add('image-container');
-    
+            imageContainer.setAttribute('data-id', image.denumireImagine); 
             const img = document.createElement('img');
-            img.src = `${API_BASE_URL_IMG}/uploads/${image.denumireImagine}`; // Aceasta este calea corecta                       
+            img.src = `${API_BASE_URL_IMG}/${image.denumireImagine}`; // Aceasta este calea corecta                       
     
             const removeBtn = document.createElement('button');
             removeBtn.classList.add('remove-btn');
@@ -162,6 +172,12 @@ async function get_details(id) {
     }
 }
 
+function list(){
+    debugger;
+    const url = `masini_admin.html`;
+    window.location = url;
+}
+
 function calculatePretVanzare(pret, discount) {
     if (!discount || discount === "0") {
         return pret;
@@ -230,14 +246,17 @@ async function populateOtherFields(data) {
       
     // Populează restul câmpurilor
     document.getElementById('tb_nrOrdine').value = data.nrOrdine || '';
-    document.getElementById('tb_an').value = data.an || '';      
+    document.getElementById('tb_an').value = data.an || 0;      
     await setSelectedValue('ddd_combustibil', data.combustibil);             
     await setSelectedValue('ddd_Tractiune', data.tractiune);   
     await setSelectedValue('ddd_tipCutie', data.transmisie);  
     await setSelectedValue('ddd_culoare', data.culoare);
     await setSelectedValue('ddd_vizibil', data.vizibilitate);
     document.getElementById('tb_sku').value = data.skU_ID || '';
-    document.getElementById('tb_discount').value = data.discount || '';
+    
+    
+    debugger;
+    document.getElementById('tb_discount').value = data.discount || 0;
     //document.getElementById('tb_nrPiese').value = data.nrPiese || '';    
     document.getElementById('tb_utl').value = data.utl || ''; 
     document.getElementById('tb_detalii').value = data.detalii || ''; 
@@ -371,27 +390,29 @@ async function registerCar() {
     var tipCutie = document.getElementById("ddd_tipCutie");
     var tipCutieText= tipCutie.options[tipCutie.selectedIndex].text;
     var nrOrdine = parseInt(document.getElementById('tb_nrOrdine').value, 10);
-    var an = parseInt(document.getElementById('tb_an').value, 10)  || -1;    
+    var an = parseInt(document.getElementById('tb_an').value, 10)  || 0;    
     var skU_ID = document.getElementById('tb_sku').value; 
-    var discount = document.getElementById('tb_discount').value  || -1;
-    var nrPiese = parseInt(document.getElementById('tb_nrPiese').value, 10)  || -1;
+    var discount = document.getElementById('tb_discount').value  || 0;
+    var nrPiese = parseInt(document.getElementById('tb_nrPiese').value, 10)  || 0;
     var utl = document.getElementById('tb_utl').value;
-    var km = document.getElementById('tb_km').value  || -1;
+    var km = document.getElementById('tb_km').value  || 0;
     var detalii = document.getElementById('tb_detalii').value;
     var codMotor = document.getElementById('tb_codMotor').value;
     var vin = document.getElementById('tb_vin').value;
-    var capCil = document.getElementById('tb_capCil').value  || -1;    
-    var putere = document.getElementById('tb_putere').value  || -1;
-    var nrLocuri = document.getElementById('tb_nrLocuri').value  || -1;
+    var capCil = document.getElementById('tb_capCil').value  || 0;    
+    var putere = document.getElementById('tb_putere').value  || 0;
+    var nrLocuri = document.getElementById('tb_nrLocuri').value  || 0;
     var nrUsi = document.getElementById('tb_nrUsi').value  || -1;
     var alteDetalii = document.getElementById('tb_alteDetalii').value;
     var culoare = document.getElementById("ddd_culoare");
     var culoareText= culoare.options[culoare.selectedIndex].text; 
-    var nrViteze = document.getElementById('tb_nrViteze').value  || -1;
+    var nrViteze = document.getElementById('tb_nrViteze').value  || 0;
     var vizibil= document.getElementById("ddd_vizibil");
     var vizibilText= vizibil.options[vizibil.selectedIndex].text;
-    var puterecp = document.getElementById('tb_puterecp').value  || -1;
+    var puterecp = document.getElementById('tb_puterecp').value  || 0;
 
+    debugger;
+    const carId = getQueryParam('id');
 
     const data = {
         nume: numeCar,
@@ -421,38 +442,21 @@ async function registerCar() {
         nrViteze: nrViteze,
         puterecp: puterecp
     };
-    debugger;
-    const carId = getQueryParam('id');
-    
-/*     if(carId != null){
-        update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`)    
-        showUpdateSuccessMessage();        
-    }  
-    else{
-        var x = await insert(data,`${API_BASE_URL}/CarsRegister`);    
-        debugger;
-        if (x.success) {
-            showInsertSuccessMessage();
-        } else {
-            showErrorMessage(x.error);            
-        }
-    }      */   
-
+ 
     if (carId != null) {
-        const updateResponse = await update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`);
-        if (updateResponse.success) {
-            showUpdateSuccessMessage();
-        } else {
-            showErrorMessage(updateResponse.error);
+        const updateResponse = 
+        await update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`);
+        if (selectedFiles && selectedFiles.length > 0) {
+            uploadImagini(selectedFiles, carId, 'masini');
         }
+        //ORDINE PIESA - ATENTIE
+        await salveazaOrdineaImaginilor(carId);       
     } else {
-        const insertResponse = await insert(data, `${API_BASE_URL}/CarsRegister`);
-        if (insertResponse.success) {
-            showInsertSuccessMessage();
-        } else {
-            showErrorMessage(insertResponse.error);
-        }
-    }
+        const insertResponse = await insert(data, `${API_BASE_URL}/CarsRegister`);            
+        if (selectedFiles && selectedFiles.length > 0) {
+            uploadImagini(selectedFiles, insertResponse.data.InsertedId, 'masini');
+        } 
+    }        
 }
 
 //Add masina
@@ -480,6 +484,7 @@ async function registerPiesaMasina() {
     var vizibilText = vizibil.options[vizibil.selectedIndex].text;
     var skU_ID = document.getElementById('tb_skupiese').value || -1;
     var IdSubCat = getSelectedValue('ddd_subcateg');  
+    var codMotor = document.getElementById('tb_codMotor').value;
 
     const data = {
         masina: numeCar,
@@ -498,7 +503,8 @@ async function registerPiesaMasina() {
         IdSubCat,
         marcaId,
         modelId,
-        generatieId        
+        generatieId,
+        codMotor        
     };
 
     try {
@@ -538,12 +544,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //**********  ALTELE ********************************************************************* */
 
-
+//change
 document.getElementById('fileInput').addEventListener('change', function(event) {
     debugger;
     const previewContainer = document.getElementById('preview');
     //previewContainer.innerHTML = '';
     const files = event.target.files;
+
+    selectedFiles = event.target.files; 
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -569,13 +577,4 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         };
         reader.readAsDataURL(file);
     }
-
-    // Obține ID-ul piesei din query string
-    const piesaId = getQueryParam('id');
-
-    // Tipul itemului
-    const tipItem = 'masini';
-
-    // Apelează funcția pentru a încărca imaginile
-    uploadImagini(files, piesaId, tipItem);
 });

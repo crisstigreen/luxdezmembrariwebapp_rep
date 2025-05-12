@@ -52,6 +52,7 @@ async function insert(data, link) {
 
         const result = await response.json();
         showInsertSuccessMessage();
+        debugger;
         return { success: true, data: result }; 
     } catch (error) {
         return { success: false, error: `Eroare: ${error.message}` };
@@ -126,7 +127,7 @@ async function getCars(link) {
     }
 }
 function pieseApiCall(callback) {
-    //debugger;
+    debugger;
     searchTerm = document.getElementById('tb_cauta').value.trim();
     var url = "";    
     if (/^\d+$/.test(searchTerm)) {   //cautare dupa sku        
@@ -458,9 +459,14 @@ function populateDropdown(cars) {
     const id = urlParams.get('id');
 }
 function populateModelsDropdown(models) {
+    debugger;
     var currentURL = window.location.href;
-    if(currentURL.includes("nomenclator")){ 
-        document.getElementById("ta_DescMarca").value = models.descriere;
+    if(currentURL.includes("nomenclator")){         
+        if (quill) {  
+            setTimeout(() => {
+                quill.root.innerHTML = models.descriere ? models.descriere : '';        
+            }, 0);
+        }
     }
    
     const dropdown = document.getElementById('ddd_models');
@@ -475,8 +481,12 @@ function populateModelsDropdown(models) {
 }
 function populateGeneratiiDropdown(generatii) {
     var currentURL = window.location.href;
-    if(currentURL.includes("nomenclator")){
-        document.getElementById("ta_DescModel").value = generatii.descriere;
+    if(currentURL.includes("nomenclator")){        
+        if (quill) {  
+            setTimeout(() => {
+                quill.root.innerHTML = generatii.descriere ? generatii.descriere : '';        
+            }, 0);
+        }
     }    
     const dropdown = document.getElementById('ddd_generatii');
     dropdown.innerHTML = '<option value="">Generație</option>'; // Resetare dropdown
@@ -541,8 +551,13 @@ if (dddModelsElement) {
         const link = `${API_BASE_URL}/Cars/GetGeneratiiByIdDesc?id=` + generId;  
         const generatie = await get(link);
         var currentURL = window.location.href;
-        if(currentURL.includes("nomenclator")){
-            document.getElementById('ta_DescGeneratie').value = generatie.descriere;
+        if(currentURL.includes("nomenclator")){            
+            if (quill) {  
+                setTimeout(() => {
+                    quill.root.innerHTML = generatie.descriere ? generatie.descriere : '';        
+                }, 0);
+            }
+            
         }                             
     });
 }
@@ -680,8 +695,55 @@ function populateTipCaroserieDropdown() {
 //**********  POPULATE CB, HANDKE, RESTORE ********************************************************************* */
 //**********  POPULATE CB, HANDKE, RESTORE ********************************************************************* */
 
+
+
+
+function ChangeLink(marca, model, generatie) { 
+    // Transformă valorile în format URL-friendly
+    let marcaUrl = marca.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+    let modelUrl = model ? model.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+    let generatieUrl = generatie ? generatie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+
+    // Construiește URL-ul nou
+    let newPath = marcaUrl;
+    if (modelUrl) {
+        newPath += '-' + modelUrl;
+    }
+    if (generatieUrl) {
+        newPath += '-' + generatieUrl;
+    }
+
+    let newUrl = `/${newPath}`;
+
+    // Actualizează URL-ul fără reîncărcare
+    history.pushState({}, '', newUrl);
+
+    console.log("URL actualizat:", newUrl);
+}
+
+function ChangeLinkCateg(tip, categorie, subcategorie) {
+    // Transformă valorile în format URL-friendly
+    let tipUrl = tip ? tip.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+    let categorieUrl = categorie ? categorie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+    let subcategorieUrl = subcategorie ? subcategorie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+
+    // Construiește URL-ul
+    let newPath = '';
+    if (tipUrl) newPath += `/${tipUrl}`;
+    if (categorieUrl) newPath += `/${categorieUrl}`;
+    if (subcategorieUrl) newPath += `/${subcategorieUrl}`;
+
+    // Actualizează URL-ul fără reîncărcare
+    history.pushState({}, '', newPath);
+
+    console.log("URL actualizat pentru categorie:", newPath);
+}
+
+
+
+
 function handleMarcaChange(checkbox) {  //container este container ul tot
-    debugger;    
+    debugger;
     currentPage = 1;
     marca = checkbox.checked ? checkbox.nextSibling.textContent : "";
     marcaId = checkbox.value;
@@ -717,7 +779,6 @@ function handleMarcaChange(checkbox) {  //container este container ul tot
     } else {
         restoreMarcaCheckboxes(marcaContainer);
     }
-    //debugger;
     model = "";
     generatie = "";
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
@@ -727,7 +788,18 @@ function handleMarcaChange(checkbox) {  //container este container ul tot
         .catch(error => {
             console.error('Eroare la obținerea datelor:', error);
         });
+
+
+    //COD LINK    
+    debugger;    
+
+    
+    ChangeLink(marca,model,generatie);
 }
+
+
+
+
 function restoreMarcaCheckboxes(container) {
     debugger;
     populateCheckboxesMarca(allMarci,container);
@@ -816,6 +888,9 @@ function handleModelChange(checkbox) {
         .catch(error => {
             console.error('Eroare la obținerea datelor:', error);
         });
+
+
+    ChangeLink(marca,model,generatie);
 }
 function restoreModelCheckboxes(container) {
     populateCheckboxesModel(allModels,container);
@@ -894,6 +969,8 @@ function handleGeneratieChange(checkbox,container) {
         .catch(error => {
             console.error('Eroare la obținerea datelor:', error);
         });
+
+    ChangeLink(marca,model,generatie);
 }
 function restoreGeneratieCheckboxes(container) {
     populateCheckboxesGeneratie(allGeneratii,container);
@@ -955,15 +1032,23 @@ function getSelectedText(dropdownId) {
 
 
 async function setSelectedValue(selectId, value) {
-    const selectElement = document.getElementById(selectId);
-    const options = selectElement.options;
 
-    for (let i = 0; i < options.length; i++) {
-        if (options[i].text === value) {
-            selectElement.selectedIndex = i;
-            break;
+
+    setTimeout(() => {
+            
+   
+
+        const selectElement = document.getElementById(selectId);
+        const options = selectElement.options;
+
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].text === value) {
+                selectElement.selectedIndex = i;
+                break;
+            }
         }
-    }
+
+    }, 100);
 }  
 
 async function setSelectedValueVal(selectId, value) {
@@ -1022,9 +1107,10 @@ function showErrorMessage(errorMessage) {
 //**********  IMAGES ********************************************************************* */
 //**********  IMAGES ********************************************************************* */
 //**********  IMAGES ********************************************************************* */
-
+/* 
 async function uploadImagini(files, itemId, tipItem) {
     debugger;
+    if(itemId == null) return;
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
         formData.append('files', files[i]);
@@ -1045,13 +1131,91 @@ async function uploadImagini(files, itemId, tipItem) {
             //alert('Imaginile au fost încărcate cu succes.');
         } else {
             console.error('Eroare la încărcarea imaginilor:', response.statusText);
-            alert('Eroare la încărcarea imaginilor.');
+            alert('Eroare la încărcarea imaginilor 123.');
         }
     } catch (error) {
         console.error('Eroare la încărcarea imaginilor:', error);
-        alert('Eroare la încărcarea imaginilor.');
+        alert('Eroare la încărcarea imaginilor 456.');
     }
-}
+} */
+
+async function uploadImagini(files, itemId, tipItem) {
+        if (itemId == null) return;
+    
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i]);
+        }
+        formData.append('itemId', itemId);
+        formData.append('tipItem', tipItem);
+    
+        try {
+            const url = `${API_BASE_URL}/Imagini/UploadImagini`;
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                console.log(result);
+    
+                // După încărcare, salvează ordinea imaginilor (din preview-ul actual)
+                await salveazaOrdineaImaginilor(itemId);
+            } else {
+                console.error('Eroare la încărcarea imaginilor:', response.statusText);
+                alert('Eroare la încărcarea imaginilor 123.');
+            }
+        } catch (error) {
+            console.error('Eroare la încărcarea imaginilor:', error);
+            alert('Eroare la încărcarea imaginilor 456.');
+        }
+    }
+    
+
+
+    async function salveazaOrdineaImaginilor(itemId) {
+        debugger;
+        const ordine = getOrdineImagini();
+    
+        if (ordine.length === 0) return;
+    
+        try {
+            const response = await fetch(`${API_BASE_URL}/Imagini/UpdateOrdine`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ itemId: itemId, ordine: ordine })
+            });
+    
+            if (response.ok) {
+                console.log("Ordinea imaginilor a fost salvată cu succes.");
+            } else {
+                console.error("Eroare la salvarea ordinii imaginilor.");
+            }
+        } catch (err) {
+            console.error("Eroare la salvarea ordinii:", err);
+        }
+    }
+
+    function getOrdineImagini() {
+        const containers = document.querySelectorAll('#preview .image-container');
+        const ordine = [];
+    
+        containers.forEach((container, index) => {
+            const id = container.getAttribute('data-id');
+            if (id) {
+                ordine.push({ id: id, ordine: index + 1 }); // index + 1 pentru a începe de la 1
+            }
+        });
+    
+        return ordine;
+    }
+    
+    
+    
+
 
 
 //**********  OTHERS ********************************************************************* */
@@ -1094,11 +1258,11 @@ function verifRemoveRed(controlId){
 
 
 async function getDescriere(numeTabel,id){   
-    debugger; 
+    //debugger; 
     const link = `${API_BASE_URL}/InfoCars/GetDescriere?numeTabel=` + numeTabel + `&id=` + id;
     const desc = await get(link);
     if(desc != null){
-        document.getElementById('p_descriere').textContent = desc.descriere;
+        document.getElementById('p_descriere').innerHTML = desc.descriere;
     }    
 }
 
@@ -1120,7 +1284,7 @@ async function  sku_gen(controlId) {
 
 //autocomplete
 $(document).ready(function () {
-    debugger;
+    //debugger;
     var currentURL = window.location.href;	
     if(currentURL.includes("masini_add") || currentURL.includes("piese_add")){ 
         $("#tb_nume").autocomplete({

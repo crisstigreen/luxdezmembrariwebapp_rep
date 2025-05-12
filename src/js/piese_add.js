@@ -1,8 +1,11 @@
 ﻿//**********  PAGE LOAD ********************************************************************* */
 
+let selectedFiles = null;
+
+
 //load piesa
 document.addEventListener('DOMContentLoaded', async  () => {  
-    debugger; 
+    //debugger; 
     const piesaId = getQueryParam('id');
     await getCars(`${API_BASE_URL}/Cars/get`);      
     await fetchAndPopulatePieseData();       
@@ -17,10 +20,14 @@ document.addEventListener('DOMContentLoaded', async  () => {
 
 //load imagini
 document.addEventListener('DOMContentLoaded', function() {
-    //debugger;
+    debugger;
     const previewContainer = document.getElementById('preview');
-    const piesaId = getQueryParam('id'); // Funcția getQueryParam definită anterior
+    new Sortable(previewContainer, {
+        animation: 150,
+        ghostClass: 'ghost', // opțional: clasa aplicată elementului în mișcare
+    });
 
+    const piesaId = getQueryParam('id'); // Funcția getQueryParam definită anterior
     async function fetchImagini(itemId) {
         try {            
             const response = await fetch(`${API_BASE_URL}/Imagini/ImaginiByItemId?itemId=${itemId}&&tipItem=piese`);
@@ -37,19 +44,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function populatePreview(images) {
-        //debugger;
+        debugger;
         const previewContainer = document.getElementById('preview');
         previewContainer.innerHTML = '';
         const piesaId = getQueryParam('id');
     
         images.forEach(image => {
-            //debugger;
+            debugger;
             const imageContainer = document.createElement('div');
-            imageContainer.classList.add('image-container');
-    
-            const img = document.createElement('img');
-            img.src = `${API_BASE_URL_IMG}/uploads/${image.denumireImagine}`; // Aceasta este calea corecta                       
-    
+            imageContainer.classList.add('image-container');    
+            imageContainer.setAttribute('data-id', image.denumireImagine); 
+            const img = document.createElement('img');  
+            img.src = `${API_BASE_URL_IMG}/${image.denumireImagine}`;               
             const removeBtn = document.createElement('button');
             removeBtn.classList.add('remove-btn');
             removeBtn.textContent = 'x';
@@ -71,8 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .catch(error => {
                     console.error('Eroare de rețea:', error);
                 });
-            });
-    
+            });    
             imageContainer.appendChild(img);
             imageContainer.appendChild(removeBtn);
             previewContainer.appendChild(imageContainer);
@@ -118,7 +123,7 @@ function verificare(){
     return verif;
 }
 
-function registerPiesa() {
+async function registerPiesa() {
     debugger;
     if(verificare() == false){
         return;
@@ -137,9 +142,6 @@ function registerPiesa() {
     var nume = document.getElementById('tb_nume').value;
     var numeCar = marcaText + ' ' + modelText + ' ' + generText;  
 
-    var tipCaroserie= document.getElementById("ddd_TipCaroserie");
-    var tipCaroserieText= tipCaroserie.options[tipCaroserie.selectedIndex].text;
-
     var codPiesa = document.getElementById('tb_codPiesa').value;
     var valuta = document.getElementById("ddd_valuta");
     var valutaText= valuta.options[valuta.selectedIndex].text; 
@@ -155,8 +157,10 @@ function registerPiesa() {
     var utl = document.getElementById('tb_utl').value;       
     var IdSubCat = getSelectedValue('ddd_subcateg');   
     var imagini = ""; 
+    var motorizare = document.getElementById("tb_motorizare").value;
+    var codMotor = document.getElementById("tb_codMotor").value;
 
-    debugger;
+    //debugger;
     const piesaId = getQueryParam('id');
                   
     const piesa = {
@@ -164,7 +168,6 @@ function registerPiesa() {
         masina: numeCar,
         nume: nume,
         codPiesa: codPiesa,
-        tipCaroserie: tipCaroserieText,
         pret: pret + " " + valutaText,
         um: um,
         discount: discount,
@@ -181,24 +184,41 @@ function registerPiesa() {
         IdSubCat,
         marcaId,
         modelId,
-        generatieId
-       
+        generatieId,
+        motorizare,
+        codMotor
     };
 
  
-    if(piesaId != null){
-       // updatePiesa(piesaId, piesa)      
-        update(piesaId,piesa,`${API_BASE_URL}/Piese/${piesaId}`)  
-        //showUpdateSuccessMessage();
+    if(piesaId != null){                
+        await update(piesaId, piesa, `${API_BASE_URL}/Piese/${piesaId}`);
+        if (selectedFiles && selectedFiles.length > 0) {
+            uploadImagini(selectedFiles, piesaId, 'piese');
+        }
+        //ORDINE PIESA - ATENTIE
+        await salveazaOrdineaImaginilor(piesaId);
     }  
     else{
-        piesa.id = 0;
-        insert(piesa,`${API_BASE_URL}/Piese`);      
-        //showInsertSuccessMessage();
+        piesa.id = 0;        
+        const result = await insert(piesa, `${API_BASE_URL}/Piese`);   
+        debugger;                  
+        if (result.success) {
+            const tipItem = 'piese';
+            const nouId = result.data.id;
+            if (selectedFiles && selectedFiles.length > 0) {
+                uploadImagini(selectedFiles, nouId, tipItem);
+            }
+        } else {
+            console.error("Insert a eșuat:", result.error);
+        }
     }
-
    
 }
+
+
+
+
+
 
 async function SetCategoriiStyff(id) {
     debugger;
@@ -213,6 +233,12 @@ async function SetCategoriiStyff(id) {
 
 }
 
+function list(){
+    debugger;
+    const url = `piese_admin.html`;
+    window.location = url;
+}
+
 async function fetchAndPopulatePieseData() {   
     //debugger;
     const piesaId = getQueryParam('id');
@@ -224,24 +250,27 @@ async function fetchAndPopulatePieseData() {
         document.getElementById("tb_stoc").disabled = true;
         document.getElementById("tb_vandut").disabled = true;   
     }    
-                
+        
+    
+ 
+    
+
     try {
+     
         const response = await fetch(`${API_BASE_URL}/Piese/${piesaId}`);
+        //cristi debugg
         debugger;
         if (!response.ok) {
             throw new Error('Eroare la obținerea datelor');
         }        
         const data = await response.json();   
-        SetCategoriiStyff(data.idSubCat);   
-        populateOtherFields(data);                
+                  
         const brandName = extractCarBrand(data.masina); // Extrage brand-ul                      
         const brandDropdown = document.getElementById('ddd_cars');
         const brandOption = Array.from(brandDropdown.options).find(option => option.text === brandName);
         const brandId = brandOption ? brandOption.value : null;                 
-        if (brandId) {
-            
-            await setSelectedValue('ddd_cars', brandName); // Setează brand-ul selectat      
-            
+        if (brandId) {                           
+            await setSelectedValue('ddd_cars', brandName); // Setează brand-ul selectat                  
             await getModelsForDropdown(brandId, populateModelsDropdown);                      
             
             var modelName = await extractCarModel(data.masina, brandName);          
@@ -264,7 +293,7 @@ async function fetchAndPopulatePieseData() {
                 if(generatieId){
                     await setSelectedValue('ddd_generatii', generatieName); // Setează brand-ul selectat  
                 }   
-                debugger; 
+                //debugger; 
                 const link = `${API_BASE_URL}/InfoCars/GetPieseMasiniByPiesaId?IdPiesa=${piesaId}`;
                 const cars = await get(link); // Așteaptă datele și le atribuie variabilei cars      
                 if(cars.length > 0){
@@ -276,6 +305,9 @@ async function fetchAndPopulatePieseData() {
             } else {
                 console.error('Modelul nu a fost găsit.');
             } 
+            SetCategoriiStyff(data.idSubCat);   
+            populateOtherFields(data);  
+                        
         }                
     } catch (error) {
         console.error('Eroare:', error);
@@ -284,24 +316,28 @@ async function fetchAndPopulatePieseData() {
 }
 //populeaza celelalte campurile
 async function populateOtherFields(data) {      
-    //debugger; 
+    debugger; 
     document.getElementById('tb_nume').value = data.nume || '';
     document.getElementById('tb_codPiesa').value = data.codPiesa || '';
     document.getElementById('tb_pret').value = data.pret.substring(0, data.pret.indexOf(' ')) || '';
     document.getElementById('tb_um').value = data.um || '';
-    document.getElementById('tb_discount').value = data.discount || '';
+    document.getElementById('tb_discount').value = data.discount || '0';
     document.getElementById('tb_locatie').value = data.locatie || '';
     document.getElementById('tb_stoc').value = data.stoc || '';    
     document.getElementById('tb_vandut').value = data.vandut || '';
     await setSelectedValue('ddd_vizibil', data.vizibilitate);    
     document.getElementById('tb_sku').value = data.skU_Id || '';
     document.getElementById('tb_utl').value = data.utl || '';
+
+    document.getElementById('tb_motorizare').value = data.motorizare || '';
+    document.getElementById('tb_codMotor').value = data.codMotor || '';
+
     
     var valuta = data.pret.substring(data.pret.indexOf(' ') + 1);
     await setSelectedValue('ddd_valuta', valuta);  
    
     await populateTipCaroserieDropdown(); // Populează tip Caroserie
-    await setSelectedValue('ddd_TipCaroserie', data.tipCaroserie);              
+    //await setSelectedValue('ddd_TipCaroserie', data.tipCaroserie);              
   
     
 }
@@ -309,17 +345,20 @@ async function populateOtherFields(data) {
 //**********  ALTELE ********************************************************************* */
 
 
+//change
 document.getElementById('fileInput').addEventListener('change', function(event) {
     debugger;
     const previewContainer = document.getElementById('preview');
-    previewContainer.innerHTML = '';
+    //previewContainer.innerHTML = '';
     const files = event.target.files;
+
+    selectedFiles = event.target.files; 
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const reader = new FileReader();
         reader.onload = function(e) {
-            debugger;
+            //debugger;
             const imageContainer = document.createElement('div');
             imageContainer.classList.add('image-container');
 
@@ -339,15 +378,6 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         };
         reader.readAsDataURL(file);
     }
-
-    // Obține ID-ul piesei din query string
-    const piesaId = getQueryParam('id');
-
-    // Tipul itemului
-    const tipItem = 'piese';
-
-    // Apelează funcția pentru a încărca imaginile
-    uploadImagini(files, piesaId, tipItem);
 });
 
 async function getPieseCompatAndGenerateHtml(piesaId) {
@@ -428,7 +458,7 @@ function generateHtml(compatData) {
         
         // Adaugă un eveniment click pentru butonul de ștergere
         deleteButton.addEventListener('click', () => {
-            debugger;
+            //debugger;
             event.preventDefault();
             const url = `${API_BASE_URL}/Compat/${encodeURIComponent(item.id)}`;           
             fetch(url, {
@@ -477,7 +507,7 @@ rowDiv.appendChild(IdDiv);
 }
 
 function adaugaPiesaCompat(){
-    debugger;
+    //debugger;
     const piesaId = getQueryParam('id');
     var marca = document.getElementById("ddd_cars");    
     var model = document.getElementById("ddd_models");    
@@ -500,7 +530,7 @@ function adaugaPiesaCompat(){
         body: JSON.stringify(compat)
     })
     .then(response => {
-        debugger;
+        //debugger;
         if (!response.ok) {
             throw new Error('Eroare la înregistrarea piesei');
         }

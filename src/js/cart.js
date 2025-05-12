@@ -22,7 +22,7 @@ function displayCartItems() {
                 <div class="col-md-6">
                     
                     <h5 class="card-title">
-                        <a href="shop-single.html?id=${item.id}" id="piesaTitlu-${item.id}">${item.name} ${item.masina}</a>
+                        <a href="piese-details.html?id=${item.id}" id="piesaTitlu-${item.id}">${item.name} ${item.masina}</a>
                     </h5>
                     <p class="card-text"><strong>Masina: </strong>${item.masina}</p>
                     <p class="card-text"><strong>Tip caroserie: </strong>${item.tipCaroserie}</p>
@@ -252,7 +252,7 @@ document.getElementById('btn_finalizeaza').addEventListener('click', () => {
 
 document.getElementById('btn_continue').addEventListener('click', () => {
     debugger;            
-    window.location='shop.html';
+    window.location='index.html';
 });
 
 

@@ -40,9 +40,9 @@ async function GetPretFaraTVA(pret) {
 
 
 //functii de populare campuri
-async function GetTVA() {    
-    const url = `${API_BASE_URL}/InfoCars/GetTVA`;
-    
+async function GetTVA() {   
+    debugger; 
+    const url = `${API_BASE_URL}/InfoCars/GetTVA`;    
     try {
         const response = await fetch(url); // Așteaptă răspunsul
         if (!response.ok) {
@@ -67,7 +67,7 @@ function populateOrderTable() {
     items.forEach(item => {
         const row = document.createElement('tr');
 
-        const imgSrc = item.imageUrl ? item.imageUrl : 'images/placeholder.jpg';
+        const imgSrc = item.imageUrl ? item.imageUrl : '/images/placeholder.jpg';
 
         row.innerHTML = `            
             <td>
@@ -391,7 +391,7 @@ function verifRemoveRed(controlId){
 
 function showUpdateSuccessMessage() {
         localStorage.clear(); 
-        window.location='shop.html';
+        window.location='index.html';
       window.location='thankyou.html';     
 }
 
