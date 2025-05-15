@@ -173,6 +173,32 @@ function generatePiesaUrl(piesa) {
     let final = categorie ? `/${categorie}-${masina}-${piesa.id}` : `/${masina}-${queryParam == null ? piesa.id : piesa.idPiesa}`;     
     return final;
 }
+function onImageClick(idPiesa) {
+    //debugger;
+    var pretText = document.getElementById(`piesaPret-${idPiesa}`).innerText;
+    var pret = parseInt(pretText.match(/\d+/)[0]); // Extrage doar numărul din text        
+    var imagini = document.getElementById(`piesaImagine-${idPiesa}`).src;
+    var masina = document.getElementById(`piesaMasina-${idPiesa}`).innerText;
+    var tipCaroserie = document.getElementById(`piesaTipCaroserie-${idPiesa}`).innerText;
+    var codIntern = document.getElementById(`piesaCodintern-${idPiesa}`).innerText;
+    var stoc = document.getElementById(`piesaStoc-${idPiesa}`).innerText;
+
+    if(idPiesa){
+        const product = {
+            id: idPiesa.toString(),
+            //name: document.getElementById(`piesaTitlu-${idPiesa}`).innerText,
+            name: "Ornament dreapta - hardcodat",
+            quantity: 1,
+            pret: pret,
+            pretTotal: pret,
+            imagini: imagini,
+            masina: masina,            
+            codIntern: codIntern,
+            stoc: stoc
+        };
+        addToCart(product);
+    }
+}
 
 //POPULATE Masini GRID
 function populateMasiniShopGrid(data){
@@ -236,16 +262,9 @@ function populateMasiniShopGrid(data){
             imageSrc = '/images/placeholder.jpg';
         }
         const inStock = piesa.stoc > 0;
-        const cartImageStyles = inStock 
-        ? "width: 34px; height: 34px; background: linear-gradient(to right, #1b78d1, #3098fa); padding: 8px; border-radius: 15%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: box-shadow 0.3s ease, transform 0.3s ease;"
-        : "width: 34px; height: 34px; background: grey; padding: 8px; border-radius: 15%;";
     
         const cartImageEvents = inStock 
         ? `
-            onmouseover="this.style.background='linear-gradient(to right, #368ddf, #4ca8ff)'" 
-            onmouseout="this.style.background='linear-gradient(to right, #1b78d1, #3098fa)'" 
-            onmousedown="this.style.boxShadow='none'; this.style.transform='scale(0.95)'" 
-            onmouseup="this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)'; this.style.transform='scale(1)'" 
             onclick="onImageClick(${piesa.id})"
         `
         : `
@@ -253,41 +272,29 @@ function populateMasiniShopGrid(data){
         `;
 
         const piesaHTML = `
-            <div class="col-sm-6 col-lg-4 mb-4">
-                <div class="block-4 border d-flex flex-column" style="height: 450px;">
-                    <figure class="block-4-image">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="link-piese">
                         <a  href="${generatePiesaUrl(piesa)}">                        
-                            <img src="${imageSrc}" style='width: 100%; height: 165px; object-fit: contain;object-position: center;' alt="Image placeholder" class="img-fluid" id="piesaImagine-${piesa.id}">
-                           
+                            <img src="${imageSrc}" alt="${piesa.nume}" id="piesaImagine-${piesa.id}">
                         </a>
                     </figure>
-
-
-                        <div class="block-4-text padding10 d-flex flex-column flex-grow-1" id="piesa-${piesa.id}">
-
-                        <h6 style="font-weight: bold;">
+                    <div class="card-body" id="piesa-${piesa.id}">
+                        <h3 style="font-weight: bold;">
                             <a href="${generatePiesaUrl(piesa)}">${piesa.nume}</a>
-                        </h6>
-
-
-
-                        <p class="mb-0"><strong style='font-weight: bold'>Masina: </strong> <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
-                        <p class="mb-0"><strong style='font-weight: bold'>Disponibilitate: </strong> ${piesa.stoc > 0 ? `În stoc (${piesa.stoc})` : 'Fără stoc'}</p>
-                        <p class="mb-0" style='display:none' id="piesaStoc-${piesa.id}">${piesa.stoc}</p>
-                        <p class="mb-0"><strong style='font-weight: bold; display:none'>Tip caroserie: </strong><span style='display:none' id="piesaTipCaroserie-${piesa.id}">${piesa.tipCaroserie}</span></p>
-                        
-                        <p class="mb-0"><strong style='font-weight: bold'>Cod intern: </strong><span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
-                        <p class="mb-0"><strong style='font-weight: bold'>SKU_ID: </strong><span id="piesasku_ID-${piesa.id}">${piesa.skU_Id}</span></p>
-                        <div class="mt-auto d-flex justify-content-between align-items-center">
-                            <h3 style="margin: 0;" id="piesaPret-${piesa.id}"><strong style='font-weight: bold; color:'>${piesa.pret}</strong></h3>
-                            <a href="cart.html" class="site-cart">
-                                <img 
-                                    src='images/add-to-cart.png' 
-                                    alt="Image placeholder" 
-                                    class="img-fluid" 
-                                    style="${cartImageStyles}"
-                                    ${cartImageEvents}
-                                > 
+                        </h3>
+                        <div class="card-desc-piese">
+                            <p>Masina: <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
+                            <p style='display:none' id="piesaStoc-${piesa.id}">${piesa.stoc}</p>
+                            <p>Cod intern: <span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
+                            <p>SKU_ID: <span id="piesasku_ID-${piesa.id}">${piesa.skU_Id}</span></p>
+                            <p>Disponibilitate: ${piesa.stoc > 0 ? `<span> <img src='images/CheckmarkCircle.svg' alt="Disponibil"/> În stoc (${piesa.stoc})` : '<span>Fără stoc</span>'}</p>
+                        </div>
+                        <div class="card-footer">
+                            <h4 id="piesaPret-${piesa.id}">${piesa.pret.replace('RON','').trim()}<span>RON</span></h4>
+                            <a href="cart.html" class="btn-primary">
+                                Cumpără
+                                <img src='images/ShoppingBagW.svg'  alt="Adauga in cos"  ${cartImageEvents} />
                             </a>
                         </div>
                     </div>

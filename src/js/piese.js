@@ -253,7 +253,6 @@ function generatePiesaUrl(piesa) {
                         <p class="mb-0"><strong style='font-weight: bold'>Disponibilitate: </strong> ${piesa.stoc > 0 ? `În stoc (${piesa.stoc})` : 'Fără stoc'}</p>
                         <p class="mb-0" style='display:none' id="piesaStoc-${piesa.id}">${piesa.stoc}</p>
                         <p class="mb-0"><strong style='font-weight: bold; display:none'>Tip caroserie: </strong><span style='display:none' id="piesaTipCaroserie-${piesa.id}">${piesa.tipCaroserie}</span></p>
-                        
                         <p class="mb-0"><strong style='font-weight: bold'>Cod intern: </strong><span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
                         <p class="mb-0"><strong style='font-weight: bold'>SKU_ID: </strong><span id="piesasku_ID-${piesa.id}">${piesa.skU_Id}</span></p>
                         <div class="mt-auto d-flex justify-content-between align-items-center">
