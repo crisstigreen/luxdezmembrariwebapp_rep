@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //populate grid
 document.addEventListener('DOMContentLoaded', async  () => {
-    debugger;        
+    //debugger;        
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
     document.getElementById('next-page').addEventListener('click', () => changePage(1));
     const carId = getQueryParam('id');
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     filtreBtn.addEventListener('click', function () {
-        debugger;
+        //debugger;
         copyFiltersToSidebar(); // Copiem filtrele în lateral
         filterSidebar.style.display = 'block';
         filtreBtn.style.display = 'none';  // Ascundem butonul "Filtre"
@@ -154,14 +154,14 @@ document.addEventListener('DOMContentLoaded', function () {
 //**********  CAUTARE ********************************************************************* */
 
 document.getElementById('cautaBtn').addEventListener('click', () => {
-    debugger;
+    //debugger;
     searchTerm = document.getElementById('tb_cauta').value.trim();
     currentPage = 1; // Resetăm la prima pagină
     pieseApiCall(populateShopGrid);       
 });
 document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
-        debugger;
+        //debugger;
         searchTerm = event.target.value.trim();
         currentPage = 1; // Resetăm la prima pagină
         pieseApiCall(populateShopGrid);
@@ -178,7 +178,7 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
 
 
 function generatePiesaUrl(piesa) {
-    debugger;
+    //debugger;
     let categorie = document.getElementById("numeCatSelectata").value.trim(); // Obține categoria selectată
     
     // Transformă categoria în format URL-friendly, dar păstrează spațiile
@@ -208,7 +208,7 @@ function generatePiesaUrl(piesa) {
     //cristi testache
     
     data.piese.forEach(piesa => {
-        debugger;       
+        //debugger;       
         var imageSrc = piesa.imagini ? `${API_BASE_URL_IMG}/` + piesa.imagini[0] : 'images/placeholder.jpg';
         if(piesa.imagini != null && piesa.imagini.length == 0){
             imageSrc = '/images/placeholder.jpg';
@@ -231,7 +231,7 @@ function generatePiesaUrl(piesa) {
         `;
 
         const piesaHTML = `
-            <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+            <div class="col-sm-6 col-lg-4 mb-4">
                 <div class="block-4 border d-flex flex-column" style="height: 450px;">
                     <figure class="block-4-image">
                         <a  href="${generatePiesaUrl(piesa)}">                        
@@ -282,21 +282,21 @@ function generatePiesaUrl(piesa) {
         button.addEventListener('click', function (event) {
             event.stopPropagation();
             const id = this.getAttribute('data-id');
-            debugger;
+           // debugger;
             get_details(id); // Apelează funcția pentru a obține detaliile
         });
     });
      // Întârzierea închiderii loader-ului
-     setTimeout(() => {
-        Swal.close(); // Închide loader-ul
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
+    //  setTimeout(() => {
+    //     Swal.close(); // Închide loader-ul
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
 }
 
 
 
 function onImageClick(idPiesa) {
-    debugger;
+    //debugger;
     var pretText = document.getElementById(`piesaPret-${idPiesa}`).innerText;
     var pret = parseInt(pretText.match(/\d+/)[0]); // Extrage doar numărul din text        
     var imagini = document.getElementById(`piesaImagine-${idPiesa}`).src;
@@ -330,14 +330,14 @@ function onImageClick(idPiesa) {
     const url = `${API_BASE_URL}/Piese/search_fields?Marca=${encodeURIComponent(marca)}&Model=${encodeURIComponent(model)}&Generatie=${encodeURIComponent(generatie)}&IdSubCat=${encodeURIComponent(IdSubCat)}&Nivel=${encodeURIComponent(Nivel)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
 
     // Afișează loaderul
-    Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait while we fetch the data.',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
+    // Swal.fire({
+    //     title: 'Loading...',
+    //     text: 'Please wait while we fetch the data.',
+    //     allowOutsideClick: false,
+    //     didOpen: () => {
+    //         Swal.showLoading();
+    //     }
+    // });
 
     return fetch(url)
         .then(response => {
@@ -348,12 +348,12 @@ function onImageClick(idPiesa) {
         })
         .then(data => {
             //debugger;
-            Swal.close(); // Ascunde loaderul la succes
+           // Swal.close(); // Ascunde loaderul la succes
             return data; // Returnează datele primite de la API
         })
         .catch(error => {            
             document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
-            Swal.close(); // Ascunde loaderul la eroare
+            //Swal.close(); // Ascunde loaderul la eroare
             throw error;
         });
 }
@@ -371,7 +371,7 @@ function updatePaginationControls() {
     document.getElementById('next-page').disabled = currentPage >= totalPages;
 }
 function changePage(delta) {
-   debugger;
+   //debugger;
     if ((delta === -1 && currentPage > 1) || (delta === 1 && currentPage < totalPages)) {
         currentPage += delta;        
         populateApiPath();
@@ -385,7 +385,7 @@ function changePageSize() {
 
 }
 function changeOrderBy() {
-    debugger;
+    //debugger;
     orderTerm = document.getElementById('order_term').value;  
     populateApiPath();
 

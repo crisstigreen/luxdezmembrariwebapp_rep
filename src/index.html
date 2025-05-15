@@ -1,35 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
   <head>
-    <title>Lux Dezmembrari &mdash; Colorlib e-Commerce Template</title>
+    <title>Piese Auto Dezmembrări | LuxDezmembrari.ro - Calitate Premium</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/aos.css">
-    <link rel="stylesheet" href="css/style.css">
-
-                            
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="LuxDezmembrari.ro oferă piese auto second-hand premium, livrare rapidă și garanție a calității pentru orice tip de vehicul. Comandă acum!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
+    <section id="hero">
+        <div class="filter-area">
+            <h2>Căutare rapidă</h2>
+            <p>zeci de producători și zeci de mii de piese auto din dezmebrari</p>
+            <div>
+                 <input type="text" id="tb_cauta" placeholder="Căutare piesa după serie OEM..." name="tb_cauta" class="form-input">
+                 <button id="cautaBtn"><img src="images/Search.svg" alt="Caută"></button>
+            </div>
+            <h2>Configurare filtre</h2>
+            <select id="SelectModelul" class="form-select">
+                <option value="0">Selectează modelul</option>
+            </select>
+            <select id="SelectMarca" class="form-select" disabled>
+                <option value="0">Selectează marca</option>
+            </select>
+            <select id="SelectGen" class="form-select" disabled>
+                <option value="0">Selectează generația</option>
+            </select>
+            <input type="text" id="InputDenumire" placeholder="Denumire piesă" name="InputDenumire" class="form-input" disabled>
+            <button id="ButtonFiltre" class="btn-primary">Caută <img src="images/Search.svg" alt="Caută"></button>
+        </div>
+        <div class="car-area">
+            <div>
+                <h1>Mașini nou intrate pe stoc</h1>
+                <p>Verifică ultimele mașini intrate — piese disponibile acum!</p>
+                <a href="masini.html" class="btn-primary">Vezi mai mult <img src="images/ArrowRight.svg" alt="Vezi mai mult"></a>
+            </div>
+        </div>
+        <div class="trust-area">
+            <div class="trust-item">
+                <img src="images/warranty.svg" alt="Garanție">
+                <div>
+                    <h2>Garanție</h2>
+                    <p>90 de zile de siguranță</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <img src="images/delivery.svg" alt="Livrare rapidă">
+                <div>
+                    <h2>Livrare rapidă</h2>
+                    <p>În 24/48 de ore</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <img src="images/return.svg" alt="Retur simplu">
+                <div>  
+                    <h2>Retur simplu</h2>
+                    <p>Primesti banii inapoi in 24h</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <img src="images/support.svg" alt="Asistență">
+                <div>    
+                    <h2>Asistență</h2>
+                    <p>Ajutor specializat</p>
+                 </div>
+            </div>
+        </div>
+    </section>
+   
+    <section id="masini">
+        <div class="title">
+         <h2><span>Mașini</span> pentru dezmembrat</h2>
+         <p>Alege din zeci de mașini intrate recent în parc. Ideal pentru piese rare sau proiecte auto.</p>
+        </div>
+        <div id="rezultateMasini" class="card-wrapper"></div>
+    </section>
+    <section id="piese">
+        <div class="title">
+         <h2><span>Piese auto</span> din dezmembrări</h2>
+         <p>Piese originale din dezmembrări, atent verificate, disponibile pentru o gamă largă de modele. Economisești fără să faci compromisuri la calitate.</p>
+        </div>
+        <div id="rezultatePiese" class="card-wrapper"></div>
+    </section>
+
       <div class="site-wrap">
-         
-        <div id="top-placeholder"></div>
 
           <div class="bg-light py-3">
               <div class="container">
                   <div class="row">
-                      <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
                       
                   </div>
                   <!-- meniu dinamic -->
                   <div class="row">                   
-                        <nav class="menu" id="dynamicMenu">                        
+                        <nav class="menu" id="dynamicMenu" style="display: none;">                        
                         </nav>                                                                          
                   </div>                  
                   <table style="width: 100%;">
@@ -61,16 +127,16 @@
                           <table style="width: 100%">
                               <tr>
                                   <td>                                    
-                                      <input type="text" id="tb_cauta" placeholder="Cautare rapida" name="tb_cauta" class="form-control">
+                                     
                                   </td>
 
                                   <td style="vertical-align:middle">
-                                      <button id="cautaBtn" class="btn btn-success">Caută</button>
+                                     
                                   </td>
                               </tr>
                           </table>
                           <br />                                             
-                          <div id="rezultate" class="row mb-5">
+                         
                           </div>                 
                           <div id="pagination-controls">
                             <button class="btn btn-success btn-sm" id="prev-page" disabled>Previous</button>
@@ -119,7 +185,7 @@
                                   </div>
                               </div>
                               <div class="row">                                                       
-                                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
+                                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
                                     <a class="block-2-item" href="#">
                                         <figure class="image">
                                             <img src="images/parts.jpg" alt="" class="img-fluid">
@@ -129,7 +195,7 @@
                                         </div>
                                     </a>
                                 </div>
-                                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
+                                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
                                       <a class="block-2-item" href="#">
                                           <figure class="image">
                                               <img src="images/cars.jpg" alt="" class="img-fluid">
@@ -139,7 +205,7 @@
                                           </div>
                                       </a>
                                   </div>
-                                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
+                                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" >
                                       <a class="block-2-item" href="#">
                                           <figure class="image">
                                               <img src="images/tires.jpg" alt="" class="img-fluid">
@@ -237,24 +303,15 @@
           <input type="hidden" id="numeCatSelectata" name="custId" value="">
       </div>
 
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     
 
-      <script src="js/jquery-3.3.1.min.js"></script>
-      <script src="js/jquery-ui.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-      <script src="js/owl.carousel.min.js"></script>
-      <script src="js/jquery.magnific-popup.min.js"></script>
-      <script src="js/aos.js"></script>
+    
       <script src="js/main.js"></script>
-
       <script src="js/config.js"></script>
       <script src="js/common.js"></script>
       <script src="js/top.js"></script>
       <script src="js/topload.js"></script> 
 
-      <script src="js/piese.js"></script> 
-
+   
   </body>
 </html>

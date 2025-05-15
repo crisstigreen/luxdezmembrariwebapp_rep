@@ -1,145 +1,60 @@
-﻿
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
-<link rel="stylesheet" href="../fonts/icomoon/style.css">
-
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/magnific-popup.css">
-<link rel="stylesheet" href="../css/jquery-ui.css">
-<link rel="stylesheet" href="../css/owl.carousel.min.css">
-<link rel="stylesheet" href="../css/owl.theme.default.min.css">
-
-
-<link rel="stylesheet" href="../css/aos.css">
-
-<link rel="stylesheet" href="../css/style.css">
-
-
-
-
-
-      
-<header class="site-navbar" role="banner">
-<div class="topDiv">
-  <div class="responsive-div">    
-    <div class="row">    
-          
-      <img src="images/phone-call.png" width="25px" height="25px" alt="Image placeholder">
-      <div>
-        <strong>+40371783184</strong>    
-      </div>
-      <div>
-        <img src="images/clock.png" width="25px" height="25px" alt="Image placeholder">
-        <strong>L-V: 08-17:30 | S: 08-13:30</strong>
-      </div>
-      
-      <div>        
-      </div>                    
-    </div>            
-  </div>  
+﻿<header>
+<div class="top-bar">
+   <div class="top-bar-left">
+      <a href="tel:+40371783184"><img src="images/Phone.svg" alt="Telefon"> +40371783184</a>
+      <div><img src="images/Clock.svg">Luni -Vineri 08:00-17:30 | Sambata 08:00-13:30</div>
+   </div>
+   <div class="top-bar-right">
+     <a href="https://www.waze.com/location?ll=46.9243392,26.9810409" target="_blank"><img src="images/waze.svg" alt="Waze">Waze</a>
+     <a href="https://www.google.com/maps?q=46.924333,26.981056" target="_blank"><img src="images/googlemaps.svg" alt="Google Maps"> Google Maps</a>
+   </div>
 </div>
-
-  <div class="site-navbar-top">
-    <div class="container">
-      <div class="row">
-
-        <!-- logo -->
-        <div class="col-8">
-          <a href="/index.html">
-            <img src="images/logo-lux-dezmembrari.webp" class="logo_img" alt="Image placeholder">
-          </a>   
-        </div>   
-         
-        <!-- menu -->  
-        <div class="col-4">
-           
-            <div>  
-              <div class="site-top-icons">            
-               <ul class="navbar-menu">
-                 
-                 <li class="dropdown">
-                   <a href="#" class="dropdown-toggle"><span class="icon icon-person"></span></a>
-                   <ul class="dropdown-menu">
-                     <li><a href="admin/login.html">Autentificare</a></li>
-                     <li><a href="admin/register.html">Inregistrare</a></li>
-                     <li><a href="myaccount.html">Contul meu</a></li>
-                     <li onclick="logout()"><a href="admin/login.html">Log out</a></li>
-                   </ul>
-                 </li>
-                 <li>
-                   <a href="cart.html" class="site-cart">
-                     <span class="icon icon-shopping_cart"></span>
-                     <span class="count" id="cart-count">0</span>
-                   </a>
-                 </li>
-  
-  
-                 <!-- hamburger -->
-                 <li class="d-inline-block d-md-none ml-md-0">
-                   <a href="#" class="site-menu-toggle js-menu-toggle">
-                       <span class="icon-menu"></span>
-                   </a>
-                 </li>
-  
-               </ul>                          
-             </div>          
-            </div>
-        </div>
-      
-      </div>
-      <div class="row">                                                                   
-          <!-- col meniu + hamburger -->
-            <div class="col-12">
-                  <!-- menu -->
-                  <nav class="site-navigation text-md-center" role="navigation">
-                    <ul id="main-menu" class="site-menu js-clone-nav d-none d-md-block text-left">
-                        <li><a href="/index.html">Prima pagina</a></li>                      
-                        <li><a href="/masini.html">Masini</a></li>                       
-                        <li id="adminMenu"><a href="admin/piese_admin.html">Admin</a></li>
-                        <li id="userOrdersMenu"><a href="user-orders.html">Comenzile mele</a></li>
-                        <li><a href="/contact.html">Despre noi</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                  </nav>
-                  <!-- hamburger-->
-                <div id="hamburger-menu-container" class="hamburger-menu-container d-md-none text-right">
-                  <ul id="hamburger-menu"></ul>
-                </div>        
-            </div>                                        
-      </div>
-      <table>
-        <tr>
-          <td><span id="userName" style="margin-left: 30px;" class="topMenu">User: </span></td>
-          <td><span id="userId" style="margin-left: 30px;" class="topMenu">UserId: </span></td>
-        </tr>
-      </table>  
-    
-        
-     
-                            
-      </div>
-    
-  </div> 
-
+<div class="middle-bar">
+   <div class="middle-bar-left">
+      <a href="/index.html">
+          <img src="images/logo.svg" alt="LuxDezmembrari Logo">
+      </a>  
+   </div>
+   <div class="middle-bar-center">
+      <input type="text" id="search" placeholder="Căutare piesa după serie OEM..."  class="search-input">
+      <button id="searchBtn" class="search-button"><img src="images/search.svg" alt="Search"></button>
+  </div>
+    <div class="middle-bar-right">
+     <div>
+      <a href="admin/login.html" class="dropdown-toggle">Contul meu <img src="images/ArrowCircleUp.svg"></a>
+        <ul class="dropdown-menu">
+          <li><a href="myaccount.html">Contul meu</a></li>
+          <li onclick="logout()"><a href="admin/login.html">Log out</a></li>
+        </ul>
+     </div>
+     <div>
+       <a href="cart.html" class="site-cart">Coșul meu <img src="images/ShoppingBag.svg" alt="Cos de cumparaturi">
+            <span class="count" id="cart-count">0</span>
+       </a>
+     </div>
+  </div>
+</div>
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="index.html"><img src="images/Home.svg" alt="Acasa"/></a>
+    <a href="#"><img src="images/burger.svg" alt="Burger Meniu"></a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="masini.html">Mașini</a>
+    <a href="piese.html">Piese Auto</a>
+    <a href="desprenoi.html">Piese Auto</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
 
 
 </header>
 
 
 
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
 
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/config.js"></script>
 
 
   

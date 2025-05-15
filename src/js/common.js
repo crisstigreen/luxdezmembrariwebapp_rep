@@ -52,7 +52,7 @@ async function insert(data, link) {
 
         const result = await response.json();
         showInsertSuccessMessage();
-        debugger;
+        //debugger;
         return { success: true, data: result }; 
     } catch (error) {
         return { success: false, error: `Eroare: ${error.message}` };
@@ -106,7 +106,7 @@ async function del(id, link) {
         return response.text(); // API-ul returnează NoContent, deci nu va fi JSON
     })
     .then(result => {
-        debugger;   
+        //debugger;   
     })     
 }
 async function getCars(link) {
@@ -119,7 +119,7 @@ async function getCars(link) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        debugger;
+        //debugger;
         const cars = await response.json();
         populateDropdown(cars);
     } catch (error) {
@@ -127,7 +127,7 @@ async function getCars(link) {
     }
 }
 function pieseApiCall(callback) {
-    debugger;
+    //debugger;
     searchTerm = document.getElementById('tb_cauta').value.trim();
     var url = "";    
     if (/^\d+$/.test(searchTerm)) {   //cautare dupa sku        
@@ -142,14 +142,14 @@ function pieseApiCall(callback) {
     //const url = `${API_BASE_URL}/Piese/search?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
     
     // Afișează loaderul
-    Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait while we fetch the data.',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
+    // Swal.fire({
+    //     title: 'Loading...',
+    //     text: 'Please wait while we fetch the data.',
+    //     allowOutsideClick: false,
+    //     didOpen: () => {
+    //         Swal.showLoading();
+    //     }
+    // });
 
     fetch(url)
         .then(response => {
@@ -215,9 +215,9 @@ function populatePieseMasiniTable() {
 
 
             // Întârzierea închiderii loader-ului
-            setTimeout(() => {
-                Swal.close(); // Închide loader-ul
-            }, 200); // Rămâne deschis pentru 200 ms
+            // setTimeout(() => {
+            //     Swal.close(); // Închide loader-ul
+            // }, 200); // Rămâne deschis pentru 200 ms
 
         })
         .catch(error => {
@@ -232,14 +232,14 @@ function pieseMasiniApiCall(callback) {
     const url =   `${API_BASE_URL}/InfoCars/GetById?IdMasina=` +  carId; 
     
     // Afișează loaderul
-    Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait while we fetch the data.',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
+    // Swal.fire({
+    //     title: 'Loading...',
+    //     text: 'Please wait while we fetch the data.',
+    //     allowOutsideClick: false,
+    //     didOpen: () => {
+    //         Swal.showLoading();
+    //     }
+    // });
 
     fetch(url)
         .then(response => {
@@ -258,18 +258,18 @@ function pieseMasiniApiCall(callback) {
 }
 
 function carsApiCall(callback) {
-    debugger;
+    //debugger;
     const url = `${API_BASE_URL}/CarsRegister/searchMasiniReg?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
     
     // Afișează loaderul
-    Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait while we fetch the data.',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
+    // Swal.fire({
+    //     title: 'Loading...',
+    //     text: 'Please wait while we fetch the data.',
+    //     allowOutsideClick: false,
+    //     didOpen: () => {
+    //         Swal.showLoading();
+    //     }
+    // });
 
     fetch(url)
         .then(response => {
@@ -294,7 +294,7 @@ function carsApiCall(callback) {
 //**********  GET WITH CALL BACK ********************************************************************* */
 //**********  GET WITH CALL BACK ********************************************************************* */
 async function getCarsForDropdown(callback) {
-    //debugger;
+    ////debugger;
     try {
         const url = `${API_BASE_URL}/Cars/get`;
         const response = await fetch(url, {
@@ -312,7 +312,7 @@ async function getCarsForDropdown(callback) {
     }
 }
 async function getCarsPieseForDropdown(callback) {
-    //debugger;
+    ////debugger;
     try {
         const url = `${API_BASE_URL}/Cars/getCarsPiese`;
         const response = await fetch(url, {
@@ -332,7 +332,7 @@ async function getCarsPieseForDropdown(callback) {
 
 
 async function getModelsForDropdown(marcaId, callback) {
-    //debugger;        
+    ////debugger;        
         try {            
             const link = `${API_BASE_URL}/Cars/getAllModels?marcaId=` + marcaId;  
                 var models = await get(link);              
@@ -398,7 +398,7 @@ function extractCarBrand(fullName) {
     return 'Unknown Brand'; // Dacă nu se găsește niciun brand
 }
 async function extractCarModel(fullName, brand) {
-    //debugger;
+    ////debugger;
     const brandEndIndex = fullName.indexOf(brand) + brand.length;
     let rest = fullName.substring(brandEndIndex).trim();
     
@@ -446,7 +446,7 @@ async function extractCarGeneratie(fullName, model) {
 //**********  POPULATE DD ********************************************************************* */
 //**********  POPULATE DD ********************************************************************* */
 function populateDropdown(cars) {
-    debugger;
+    //debugger;
     const dropdown = document.getElementById('ddd_cars');
     dropdown.innerHTML = '<option value="">Marca</option>';
     cars.forEach(car => {
@@ -459,7 +459,7 @@ function populateDropdown(cars) {
     const id = urlParams.get('id');
 }
 function populateModelsDropdown(models) {
-    debugger;
+    //debugger;
     var currentURL = window.location.href;
     if(currentURL.includes("nomenclator")){         
         if (quill) {  
@@ -507,7 +507,7 @@ function populateGeneratiiDropdown(generatii) {
 const dddCarsElement = document.getElementById('ddd_cars');
 if (dddCarsElement) {
     dddCarsElement.addEventListener('change', function() {
-        debugger;
+        //debugger;
         const marcaId = this.value;
         var tbMarca = document.getElementById("tb_cars");
         if(tbMarca){
@@ -524,7 +524,7 @@ if (dddCarsElement) {
 const dddModelsElement = document.getElementById('ddd_models');
 if (dddModelsElement) {
     document.getElementById('ddd_models').addEventListener('change', function() {
-        debugger;
+        //debugger;
         const modelId = this.value;
         var tbModel = document.getElementById("tb_models");
         if(tbModel){
@@ -542,7 +542,7 @@ if (dddModelsElement) {
 const dddGeneratiiElement = document.getElementById('ddd_generatii');
 if (dddModelsElement) {
     document.getElementById('ddd_generatii').addEventListener('change', async function() {
-        debugger;        
+        //debugger;        
         var tbGeneratii = document.getElementById("tb_generatii");
         if(tbGeneratii){
             tbGeneratii.value = getSelectedText('ddd_generatii');  
@@ -591,7 +591,7 @@ function populateCombustibilDropdown() {
         });
 }
 function populateTractiuneDropdown() {
-    //debugger;
+    ////debugger;
     const url =  `${API_BASE_URL}/InfoCars/GetTractiune`; 
     
     return fetch(url) // Returnează promisiunea
@@ -640,7 +640,7 @@ function populateTipCutieDropdown() {
         });
 }
 function populateCuloareDropdown() {
-    //debugger;
+    ////debugger;
     const url = `${API_BASE_URL}/InfoCars/GetCuloare`;
     
     return fetch(url)
@@ -665,7 +665,7 @@ function populateCuloareDropdown() {
         });
 }
 function populateTipCaroserieDropdown() {
-    //debugger;
+    ////debugger;
     const url = `${API_BASE_URL}/InfoCars/GetTipCaroserie`;
     
     return fetch(url)
@@ -743,7 +743,7 @@ function ChangeLinkCateg(tip, categorie, subcategorie) {
 
 
 function handleMarcaChange(checkbox) {  //container este container ul tot
-    debugger;
+    //debugger;
     currentPage = 1;
     marca = checkbox.checked ? checkbox.nextSibling.textContent : "";
     marcaId = checkbox.value;
@@ -791,7 +791,7 @@ function handleMarcaChange(checkbox) {  //container este container ul tot
 
 
     //COD LINK    
-    debugger;    
+    //debugger;    
 
     
     ChangeLink(marca,model,generatie);
@@ -801,11 +801,11 @@ function handleMarcaChange(checkbox) {  //container este container ul tot
 
 
 function restoreMarcaCheckboxes(container) {
-    debugger;
+    //debugger;
     populateCheckboxesMarca(allMarci,container);
 }
 function populateCheckboxesMarca(cars, container) {
-    //debugger;
+    ////debugger;
     allMarci = cars;
     cars.forEach(car => {
         const checkboxWrapper = document.createElement('div');
@@ -837,7 +837,7 @@ function populateCheckboxesMarca(cars, container) {
 //------------------------------------------------
 
 function handleModelChange(checkbox) {
-    debugger;
+    //debugger;
     currentPage = 1;
     model = checkbox.checked ? checkbox.nextSibling.textContent : "";
     modelId = checkbox.value;
@@ -879,7 +879,7 @@ function handleModelChange(checkbox) {
         // Restaurează lista completă de modele
         restoreModelCheckboxes(modelContainer);
     }
-    debugger;
+    //debugger;
     generatie = "";
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {                
@@ -896,7 +896,7 @@ function restoreModelCheckboxes(container) {
     populateCheckboxesModel(allModels,container);
 }
 function populateCheckboxesModel(models, container) {
-    debugger;
+    //debugger;
     allModels = models;
     models.items.forEach(model => {
         const checkboxWrapper = document.createElement('div');
@@ -961,7 +961,7 @@ function handleGeneratieChange(checkbox,container) {
         restoreGeneratieCheckboxes(generatieContainer);
     }
     //cristi fields
-    debugger;
+    //debugger;
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {                
             populateShopGrid(data);
@@ -976,7 +976,7 @@ function restoreGeneratieCheckboxes(container) {
     populateCheckboxesGeneratie(allGeneratii,container);
 }
 function populateCheckboxesGeneratie(generatii,container) {
-    debugger;
+    //debugger;
     allGeneratii = generatii;    
 
     generatii.items.forEach(generatie => {
@@ -1068,38 +1068,38 @@ async function setSelectedValueVal(selectId, value) {
 //**********  MESSAGES ********************************************************************* */
 //**********  MESSAGES ********************************************************************* */
 function showInsertSuccessMessage() {
-    Swal.fire({
-        title: 'Success!',
-        text: 'Insert operation completed successfully.',
-        icon: 'success',
-        confirmButtonText: 'OK'
-    });
+    // Swal.fire({
+    //     title: 'Success!',
+    //     text: 'Insert operation completed successfully.',
+    //     icon: 'success',
+    //     confirmButtonText: 'OK'
+    // });
 }
 function showUpdateSuccessMessage() {
 
-    Swal.fire({
-        title: 'Success!',
-        text: 'Update operation completed successfully.',
-        icon: 'success',
-        confirmButtonText: 'OK'
-    });
+    // Swal.fire({
+    //     title: 'Success!',
+    //     text: 'Update operation completed successfully.',
+    //     icon: 'success',
+    //     confirmButtonText: 'OK'
+    // });
 }
 function showDeleteSuccessMessage() {
 
-    Swal.fire({
-        title: 'Success!',
-        text: 'Delete operation completed successfully.',
-        icon: 'success',
-        confirmButtonText: 'OK'
-    });
+    // Swal.fire({
+    //     title: 'Success!',
+    //     text: 'Delete operation completed successfully.',
+    //     icon: 'success',
+    //     confirmButtonText: 'OK'
+    // });
 }
 function showErrorMessage(errorMessage) {
-    Swal.fire({
-        title: 'Error!',
-        text: errorMessage,
-        icon: 'error',
-        confirmButtonText: 'OK'
-    });
+    // Swal.fire({
+    //     title: 'Error!',
+    //     text: errorMessage,
+    //     icon: 'error',
+    //     confirmButtonText: 'OK'
+    // });
 }
 
 
@@ -1109,7 +1109,7 @@ function showErrorMessage(errorMessage) {
 //**********  IMAGES ********************************************************************* */
 /* 
 async function uploadImagini(files, itemId, tipItem) {
-    debugger;
+    //debugger;
     if(itemId == null) return;
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
@@ -1175,7 +1175,7 @@ async function uploadImagini(files, itemId, tipItem) {
 
 
     async function salveazaOrdineaImaginilor(itemId) {
-        debugger;
+        //debugger;
         const ordine = getOrdineImagini();
     
         if (ordine.length === 0) return;
@@ -1238,7 +1238,7 @@ function cleartb(tb){
 
 
 function verifRed(controlId) {
-    debugger;
+    //debugger;
     var control = document.getElementById(controlId);    
     if (control) {        
         control.classList.add('red-box-shadow');
@@ -1247,7 +1247,7 @@ function verifRed(controlId) {
     }
 }
 function verifRemoveRed(controlId){
-    //debugger;
+    ////debugger;
     var control = document.getElementById(controlId);    
     if (control) {        
         control.classList.remove('red-box-shadow');
@@ -1258,7 +1258,7 @@ function verifRemoveRed(controlId){
 
 
 async function getDescriere(numeTabel,id){   
-    //debugger; 
+    ////debugger; 
     const link = `${API_BASE_URL}/InfoCars/GetDescriere?numeTabel=` + numeTabel + `&id=` + id;
     const desc = await get(link);
     if(desc != null){
@@ -1283,49 +1283,49 @@ async function  sku_gen(controlId) {
 }   */
 
 //autocomplete
-$(document).ready(function () {
-    //debugger;
-    var currentURL = window.location.href;	
-    if(currentURL.includes("masini_add") || currentURL.includes("piese_add")){ 
-        $("#tb_nume").autocomplete({
-            source: function (request, response) {
-                const url = `${API_BASE_URL}/Piese/get_autocomplete?searchTerm=${request.term}`;
-                $.ajax({
-                    url: url,
-                    method: "GET",
-                    success: function (data) {
-                        const results = data.map(item => ({
-                            label: item.numeSubCat, 
-                            value: item.id         
-                        }));
-                        response(results); 
-                    },
-                    error: function () {
-                        console.error("Nu am putut obține rezultatele pentru autocomplete.");
-                    }
-                });
-            },
-            minLength: 2, 
-            delay: 300, 
+document.addEventListener('DOMContentLoaded', function () {
+    ////debugger;
+    // var currentURL = window.location.href;	
+    // if(currentURL.includes("masini_add") || currentURL.includes("piese_add")){ 
+    //     $("#tb_nume").autocomplete({
+    //         source: function (request, response) {
+    //             const url = `${API_BASE_URL}/Piese/get_autocomplete?searchTerm=${request.term}`;
+    //             $.ajax({
+    //                 url: url,
+    //                 method: "GET",
+    //                 success: function (data) {
+    //                     const results = data.map(item => ({
+    //                         label: item.numeSubCat, 
+    //                         value: item.id         
+    //                     }));
+    //                     response(results); 
+    //                 },
+    //                 error: function () {
+    //                     console.error("Nu am putut obține rezultatele pentru autocomplete.");
+    //                 }
+    //             });
+    //         },
+    //         minLength: 2, 
+    //         delay: 300, 
     
-            select: function (event, ui) {
-                debugger;
-                event.preventDefault();
-                $(this).val(ui.item.label);
-                console.log("ID selectat:", ui.item.value);
-                setCategoriiAutocomplete(ui.item.value);
-            },
-            focus: function (event, ui) {
-                event.preventDefault();
-                $(this).val(ui.item.label);
-            }
-        });
-    }  
+    //         select: function (event, ui) {
+    //             //debugger;
+    //             event.preventDefault();
+    //             $(this).val(ui.item.label);
+    //             console.log("ID selectat:", ui.item.value);
+    //             setCategoriiAutocomplete(ui.item.value);
+    //         },
+    //         focus: function (event, ui) {
+    //             event.preventDefault();
+    //             $(this).val(ui.item.label);
+    //         }
+    //     });
+    // }  
    
 });
 
 async function setCategoriiAutocomplete(id) {
-    debugger;
+    //debugger;
     const link = `${API_BASE_URL}/Piese/get_categorii_autocomplete?idSubCat=` + id;
     const things = await get(link);
 

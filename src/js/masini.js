@@ -58,7 +58,7 @@ function generateCarUrl(masina) {
 
  //POPULATE GRID
  function populateShopGrid(data){
-    const rezultateDiv = document.getElementById('rezultate');
+    const rezultateDiv = document.getElementById('rezultatePiese');
     rezultateDiv.innerHTML = '';
     //debugger;
     data.masiniReg.forEach(masina => {
@@ -66,7 +66,7 @@ function generateCarUrl(masina) {
         const imageSrc = masina.imagini[0] ? `${API_BASE_URL_IMG}/` + masina.imagini[0] : 'images/placeholder.jpg';
                   
         const piesaHTML = `
-        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+        <div class="col-sm-6 col-lg-4 mb-4">
             <div style="height: 500px" class="block-4 border d-flex flex-column">
                 <figure class="block-4-image">
                     <a href="${generateCarUrl(masina)}">
