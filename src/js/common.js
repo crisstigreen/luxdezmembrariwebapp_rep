@@ -92,7 +92,8 @@ async function update(id, data, link) {
 
 async function del(id, link) {
     const url = link;
-    fetch(url, {
+
+    return fetch(url, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -101,14 +102,14 @@ async function del(id, link) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Eroare la actualizarea mașinii');
-        }        
-        return response.text(); // API-ul returnează NoContent, deci nu va fi JSON
-    })
-    .then(result => {
-        //debugger;   
-    })     
+            throw new Error('Eroare la ștergere');
+        }
+        return response.text(); // sau response.json() dacă API-ul returnează JSON
+    });
 }
+
+
+
 async function getCars(link) {
     
     try {
@@ -1107,39 +1108,11 @@ function showErrorMessage(errorMessage) {
 //**********  IMAGES ********************************************************************* */
 //**********  IMAGES ********************************************************************* */
 //**********  IMAGES ********************************************************************* */
-/* 
-async function uploadImagini(files, itemId, tipItem) {
-    //debugger;
-    if(itemId == null) return;
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i]);
-    }
-    formData.append('itemId', itemId);
-    formData.append('tipItem', tipItem);
 
-    try {        
-        const url = `${API_BASE_URL}/Imagini/UploadImagini`;
-        const response = await fetch(url, {
-            method: 'POST',
-            body: formData
-        });
 
-        if (response.ok) {
-            const result = await response.json();
-            console.log(result);
-            //alert('Imaginile au fost încărcate cu succes.');
-        } else {
-            console.error('Eroare la încărcarea imaginilor:', response.statusText);
-            alert('Eroare la încărcarea imaginilor 123.');
-        }
-    } catch (error) {
-        console.error('Eroare la încărcarea imaginilor:', error);
-        alert('Eroare la încărcarea imaginilor 456.');
-    }
-} */
 
 async function uploadImagini(files, itemId, tipItem) {
+        debugger;
         if (itemId == null) return;
     
         const formData = new FormData();
@@ -1164,7 +1137,7 @@ async function uploadImagini(files, itemId, tipItem) {
                 await salveazaOrdineaImaginilor(itemId);
             } else {
                 console.error('Eroare la încărcarea imaginilor:', response.statusText);
-                alert('Eroare la încărcarea imaginilor 123.');
+                alert('Eroare la încărcarea imaginilor 12334.');
             }
         } catch (error) {
             console.error('Eroare la încărcarea imaginilor:', error);

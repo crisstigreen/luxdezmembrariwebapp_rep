@@ -60,6 +60,17 @@ function loadPiesa(piesaId) {
             document.getElementById('piesaMasina').textContent = piesa.masina;
             document.getElementById('piesaCodPiesa').textContent = piesa.codPiesa;
             document.getElementById('piesaBucati').textContent = piesa.stoc;
+            if(piesa.stoc == 0){                
+                document.getElementById('addToCart').classList.add('disabled');
+                document.getElementById('addToCart').style.pointerEvents = 'none';
+            }
+            else{
+                 const btn = document.getElementById('addToCart');
+                btn.classList.remove('disabled');
+                btn.style.pointerEvents = 'auto';
+            }    
+
+
             document.getElementById('piesaPret').textContent = piesa.pret;
             document.getElementById('piesaSku').textContent = piesa.skU_Id;
             document.getElementById('piesaCodMotor').textContent = piesa.codMotor;

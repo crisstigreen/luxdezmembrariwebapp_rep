@@ -206,8 +206,13 @@ async function registerPiesa() {
             const tipItem = 'piese';
             const nouId = result.data.id;
             if (selectedFiles && selectedFiles.length > 0) {
-                uploadImagini(selectedFiles, nouId, tipItem);
+                await uploadImagini(selectedFiles, nouId, tipItem);
+                //window.location='piese_admin.html';
             }
+            else{
+                window.location='piese_admin.html';
+            }
+             
         } else {
             console.error("Insert a eșuat:", result.error);
         }

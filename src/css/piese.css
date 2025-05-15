@@ -35,9 +35,23 @@
     cursor: pointer !important; /* Asigură-te că stilul cursorului este aplicat */
 }
 
-    .edit-button:hover {
-        background-color: #0056b3;       
-    }
+.edit-button:hover {
+    background-color: #0056b3;       
+}
+
+/* style.css */
+.delete-button {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 3px 7px;    
+    border-radius: 4px;
+    cursor: pointer !important; /* Asigură-te că stilul cursorului este aplicat */
+}
+
+.delete-button:hover {
+    background-color: #ae0000;       
+}
 
 .visibleForm {
     display: none;
