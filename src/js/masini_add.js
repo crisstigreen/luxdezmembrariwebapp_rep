@@ -445,17 +445,20 @@ async function registerCar() {
  
     if (carId != null) {
         const updateResponse = 
-        await update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`);
-        if (selectedFiles && selectedFiles.length > 0) {
-            uploadImagini(selectedFiles, carId, 'masini');
-        }
+        await update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`);        
+        await uploadImagini(selectedFiles, carId, 'masini');
+                                    
         //ORDINE PIESA - ATENTIE
         await salveazaOrdineaImaginilor(carId);       
     } else {
         const insertResponse = await insert(data, `${API_BASE_URL}/CarsRegister`);            
         if (selectedFiles && selectedFiles.length > 0) {
-            uploadImagini(selectedFiles, insertResponse.data.InsertedId, 'masini');
+            await uploadImagini(selectedFiles, insertResponse.data.InsertedId, 'masini');
+            //window.location='masini_admin.html';
         } 
+        else{
+            window.location='masini_admin.html';
+        }
     }        
 }
 

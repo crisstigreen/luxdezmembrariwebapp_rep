@@ -7,12 +7,19 @@ let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
 //PAGE LOAD 
 document.addEventListener('DOMContentLoaded', () => {
-    debugger;
-    if(sessionStorage.getItem('userId') == null){
-        window.location='../index.html';   
-    }
-    pieseApiCall(populateMainGrid);
+   initializePage();
+});
 
+
+function initializePage() {
+    if (sessionStorage.getItem('userId') == null) {
+        window.location = '../index.html';
+        return;
+    }
+
+    pieseApiCall(populateMainGrid); // Refresh grid
+
+    // Reatașează evenimentele dacă trebuie (optional, vezi mai jos)
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
     document.getElementById('next-page').addEventListener('click', () => changePage(1));
     document.getElementById('page-size').addEventListener('change', () => changePageSize());
@@ -23,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             document.getElementById('menu-placeholder').innerHTML = data;
         });
-});
+}
 
 
 function populateMainGrid(data){
@@ -41,6 +48,9 @@ function populateMainGrid(data){
                 <td>
                     <button class="edit-button" data-id="${piese.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
                 </td>
+                <td>
+                    <button class="delete-button" data-id="${piese.id}"><i class="fas fa-remove" style="font-size:14px"></i></button>
+                </td>
             </tr>
         `;
         rezultateTable.innerHTML += piesaRow;
@@ -57,6 +67,45 @@ function populateMainGrid(data){
             get_details(id); // Apelează funcția pentru a obține detaliile
         });
     });
+        // Adaugă eveniment pentru butoanele de delete
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const id = this.getAttribute('data-id');
+            const link = `${API_BASE_URL}/Piese/` + id;  
+
+
+            Swal.fire({
+            title: 'Sunteți sigur?',
+            text: 'Această acțiune va șterge elementul definitiv.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Da, șterge!',
+            cancelButtonText: 'Anulează',
+            reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        debugger;
+                        //del(id, link);
+                        //showDeleteSuccessMessage();
+                        //initializePage();
+
+                        
+                         del(id, link).then(() => {
+                            showDeleteSuccessMessage();
+                            initializePage();
+                        }).catch((error) => {
+                            console.error('Eroare la ștergere:', error);
+                            Swal.fire('Eroare!', 'A apărut o eroare la ștergere.', 'error');
+                        });    
+
+
+
+                    }
+                });
+            });
+    });
+
 
 
 
@@ -99,7 +148,6 @@ function changeOrderBy() {
 async function get_details(id) {
     debugger;    
     if (id) {
-
         const url = `piese_add.html?id=${id}`;
         window.location = url;
 
