@@ -7,6 +7,7 @@
     --color-black: #0A0708;
     --color-white: #FFFFFF;
     --color-grey: #EEEEEE;
+    --color-red: #F21B3F;
     --color-dark-white:#FCFDFF;
     --space-0: 0rem;
     --space-1: 0.5rem;   /* 8px */
@@ -110,7 +111,7 @@ a{
     outline: none;
     border:none;
     width: 100%;
-    padding: var(--space-1) var(--space-2);
+    padding: var(--space-1) var(--space-1);
     align-items: center;
     justify-content: center;
     gap:var(--space-1);
@@ -338,6 +339,9 @@ footer a, footer p{
     font-size: 0.875rem;
     font-weight: 400;
 }
+footer img{
+    width: 100%;
+}
 /* Footer END */
 
 /* Layout */
@@ -540,7 +544,7 @@ section{
     justify-content: space-between;
 }
 .card-footer a{
-     width: calc(50% - var(--space-1));
+     width:50%;
 }
 .card-footer h4{
     font-size: clamp(2rem, 3vw, 3rem);
@@ -550,56 +554,7 @@ section{
       font-size: 0.875rem;
       font-weight: 500;
 }
-#banners{
-    margin-top:var(--space-8);
-}
-.banner-reduceri{
-    grid-column: span 6;
-    background: var(--color-blue) url('../images/BannerPieseReducere.svg') no-repeat right center;
-    background-size: 55%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding: var(--space-5);
-    border-radius: var(--space-1);
 
-}
-.banner-reduceri h2{
-    font-size: clamp(2rem, 4vw, 4.188rem);
-    color: var(--color-white);
-    font-weight: 900;
-}
-.banner-reduceri p {
-    color:var(--color-white);
-    margin-top:var(--space-2);
-}
-.banner-piese{
-    grid-column: span 6;
-    border-radius: var(--space-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:url('../images/BannerPiese.jpg') no-repeat center center;
-    background-size: cover;
-    padding: var(--space-2);
-}
-.banner-piese div{
-    background: transparent;
-    border:2px solid var(--color-yellow);
-    border-radius: var(--space-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-   
-}
-.banner-piese h2{
-   color:var(--color-white);
-    font-size: clamp(2rem, 4vw, 4.188rem);
-    font-weight: 500;
-    text-align: center;
-}
 .categorii-wrapper{
     grid-column: span 12;
     display: grid;
@@ -645,7 +600,266 @@ section{
 .col-2{
     grid-column: span 2;
 }
+#title h1{
+    grid-column: span 12;
+    font-size: clamp(2rem, 4vw, 4.188rem);
+    color: var(--color-black);
+    font-weight: 500;
+    text-align: center;
+    margin-top:var(--space-10);
+    margin-bottom: var(--space-3);
+}
+#title h1 span {
+    color: var(--color-yellow);
+    font-weight: 900;
+}
+#shop-container{
+ margin-top:var(--space-8);
+}
+.breadcrumb{
+    grid-column: span 12;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+}
+.breadcrumb-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    background-color: var(--color-white);
+    border-radius: var(--space-1);
+    padding: var(--space-1);
+}
+.breadcrumb-wrapper a{
+    color:var(--color-black);
+    font-size: 0.875rem;
+    font-weight: 500;
+    opacity: 0.6;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.breadcrumb-wrapper a:last-of-type{
+    opacity: 1;
+}
+.side-bar{
+    grid-column: span 3;
+}
+.filtre{
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    background-color: var(--color-white);
+    border-radius: var(--space-1);
+    padding: var(--space-5);
+}
+.filtre label{
+    font-weight: 500;
+}
+.filtre select{
+    margin-top:var(--space-1);
+}
+.rezultateMasini{
+    grid-column: span 9;
+}
+.rezultateMasini .card-wrapper{
+    margin-top:0;
+}
+.rezultateMasini .card-wrapper > .card{
+    grid-column: span 4;
+}
+#pagination-controls{
+    margin-top:var(--space-5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#pagination-controls button{
+    border:1px solid var(--color-black);
+    background-color: var(--color-white);
+    border-radius: var(--space-1);
+    width:2.875rem; 
+    height:2.875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+#pagination-controls button:hover{
+    background-color: var(--color-yellow);
+    scale: 0.9;
+}
+#page-info{
+    font-weight: 500;
+}
+.masini-details{
+    grid-column: span 7;
+    display: flex;
+    gap: var(--space-5);
+    background-color: var(--color-white);
+    border-radius: var(--space-1);
+    padding: var(--space-5);
+}
+.details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.details p {
+    margin-bottom: var(--space-1);
+}
+.details p span{
+    color: var(--color-blue);
+    font-weight: 600;
+}
+.solicita-form{
+    grid-column: span 5;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+    background-color: var(--color-white);
+    border-radius: var(--space-1);
+    padding: var(--space-5);
+}
+.solicita-form .col-6{
+    grid-column: span 6;
+}
+.solicita-form .col-12{
+    grid-column: span 12;
+}
+.solicita-form p{
+    margin-bottom: var(--space-1);
+}
+.solicita-form p span{
+    color: var(--color-red);
+}
+.solicita-form textarea{
+   height: 10rem;
+}
+#trust, #piese-masina{
+    margin-top:var(--space-3);
+}
+#intrebari .banner-reduceri-vertical{
+    grid-column: span 3;
+}
 /* Layout END*/
+
+/* Banners */
+#banners{
+    margin-top:var(--space-8);
+}
+.banner-reduceri{
+    grid-column: span 6;
+    background: var(--color-blue) url('../images/BannerPieseReducere.svg') no-repeat right center;
+    background-size: 55%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: var(--space-5);
+    border-radius: var(--space-1);
+    background-position-x: 117%;
+
+}
+.banner-reduceri h2{
+    font-size: clamp(2rem, 4vw, 4.188rem);
+    color: var(--color-white);
+    font-weight: 900;
+}
+.banner-reduceri p {
+    color:var(--color-white);
+    margin-top:var(--space-2);
+}
+.banner-piese{
+    grid-column: span 6;
+    border-radius: var(--space-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:url('../images/BannerPiese.jpg') no-repeat center center;
+    background-size: cover;
+    padding: var(--space-2);
+}
+.banner-piese div{
+    background: transparent;
+    border:2px solid var(--color-yellow);
+    border-radius: var(--space-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+   
+}
+.banner-piese h2{
+   color:var(--color-white);
+    font-size: clamp(2rem, 4vw, 4.188rem);
+    font-weight: 500;
+    text-align: center;
+}
+.banners{
+    display: flex;
+    gap: var(--space-2);
+    flex-direction: column;
+    margin-top:var(--space-3);
+}
+.banner-piese-vertical{
+    border-radius: var(--space-1);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:url('../images/BannerPieseVertical.jpg') no-repeat center center;
+    background-size: cover;
+    padding: var(--space-2);
+    min-height: 38rem;
+    flex-direction: column;
+    flex:1;
+}
+.masini-vertical{
+     background:url('../images/BannerMasiniVertical.jpg') no-repeat center center;
+}
+.banner-piese-vertical div{
+    background: transparent;
+    border:2px solid var(--color-yellow);
+    border-radius: var(--space-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex:1;
+}
+.banner-piese-vertical h2{
+    color:var(--color-white);
+    font-size: clamp(2rem, 4vw, 3.188rem);
+    font-weight: 500;
+    text-align: center;
+}
+.banner-reduceri-vertical{
+    background: var(--color-blue) url(../images/BannerPieseReducere.svg) no-repeat;
+    background-size: 120%;
+    background-position: 0 -90%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--space-3);
+    gap: var(--space-2);
+    border-radius: var(--space-1);
+     min-height: 38rem;
+}
+.banner-reduceri-vertical h2{
+    font-size: clamp(2rem, 4vw, 3.188rem);
+    color: var(--color-white);
+    font-weight: 900;
+}
+.banner-reduceri-vertical p {
+    color:var(--color-white);
+    margin-top:var(--space-2);
+}
+/* Banners END*/
 
 /* Testimonials */
 .testimonial-slider {
@@ -706,7 +920,7 @@ section{
 }
 .dots {
     position: absolute;
-    bottom: 10px;
+    bottom: var(--space-3);
     width: 100%;
     text-align: center;
     z-index: 3;
@@ -727,3 +941,157 @@ section{
     opacity: 1;
 }
 /* Testimonials END*/
+
+/* Carousel */
+#carousel-inner {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+}
+.carousel-item {
+  flex: 0 0 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30rem;
+  height: 100%;
+}
+.carousel-item.active {
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+.carousel-item img.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1rem;
+  overflow-x: auto;
+  padding: 8px;
+}
+.carousel-thumb {
+  width: 5rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: var(--space-1);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+.carousel-thumb.active {
+  border: 2px solid var(--color-yellow, #f5c518);
+  opacity: 1;
+}
+.carousel-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 8px 12px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  user-select: none;
+  border-radius: 4px;
+}
+#carousel-prev {
+  left: 10px;
+}
+#carousel-next {
+  right: 10px;
+}
+#imageModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+}
+#imageModal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+}
+
+#imageModal.closeable {
+  cursor: pointer;
+}
+/* Carousel END*/
+
+/* Accordions */
+.accordion {
+  grid-column: span 9;
+  margin: auto;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.accordion-item {
+ position: relative;
+}
+
+.accordion-header {
+  background: #f9f9f9;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-2);
+  font-size: clamp(1.5rem, 2vw, 1.75rem);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.accordion-header::after {
+  content: "";
+  position: absolute;
+  right: var(--space-2);
+  width: var(--space-6);
+    height: var(--space-6);
+  background: url('../images/ChevronCircle.svg') no-repeat center center;
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.accordion-header.active::after {
+  transform: rotate(180deg);
+}
+
+
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 var(--space-2);
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  font-size: 1rem;
+  color: var(--color-black);
+  font-weight: 500;
+}
+
+.accordion-body.show {
+  padding: var(--space-2);
+  max-height: 500px; /* enough to show content */
+}
+/* Accordions END*/

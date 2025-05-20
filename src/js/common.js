@@ -128,46 +128,41 @@ async function getCars(link) {
     }
 }
 function pieseApiCall(callback) {
-    //debugger;
-    searchTerm = document.getElementById('tb_cauta').value.trim();
-    var url = "";    
-    if (/^\d+$/.test(searchTerm)) {   //cautare dupa sku        
-        url = `${API_BASE_URL}/Piese/search_sku?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
-    } else {
-        url = `${API_BASE_URL}/Piese/search?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
-    }
+    window.topHtmlLoaded.then(() => {
+        const input = document.getElementById('tb_cauta');
+        if (!input) {
+            console.warn('#tb_cauta not found yet');
+            return;
+        }
 
+        const searchTerm = input.value.trim(); // can be empty string
 
+        let url = "";
+        if (/^\d+$/.test(searchTerm) && searchTerm !== "") {
+            // Numeric + not empty = search by SKU
+            url = `${API_BASE_URL}/Piese/search_sku?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
+        } else {
+            // Fallback to general search (even with empty string)
+            url = `${API_BASE_URL}/Piese/search?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
+        }
 
-
-    //const url = `${API_BASE_URL}/Piese/search?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
-    
-    // Afișează loaderul
-    // Swal.fire({
-    //     title: 'Loading...',
-    //     text: 'Please wait while we fetch the data.',
-    //     allowOutsideClick: false,
-    //     didOpen: () => {
-    //         Swal.showLoading();
-    //     }
-    // });
-
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Eroare la obținerea datelor');
-            }
-            return response.json();
-        })
-        .then(data => {
-            //populateMainGrid(data);
-            callback(data);
-        })
-        .catch(error => {
-            console.error('Eroare:', error);
-            document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
-        });
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Eroare la obținerea datelor');
+                }
+                return response.json();
+            })
+            .then(data => {
+                callback(data);
+            })
+            .catch(error => {
+                console.error('Eroare:', error);
+                document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
+            });
+    });
 }
+
 
 function populatePieseMasiniTable() {
     const carId = getQueryParam('id');
@@ -232,15 +227,26 @@ function pieseMasiniApiCall(callback) {
     const carId = getQueryParam('id');
     const url =   `${API_BASE_URL}/InfoCars/GetById?IdMasina=` +  carId; 
     
-    // Afișează loaderul
-    // Swal.fire({
-    //     title: 'Loading...',
-    //     text: 'Please wait while we fetch the data.',
-    //     allowOutsideClick: false,
-    //     didOpen: () => {
-    //         Swal.showLoading();
-    //     }
-    // });
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Eroare la obținerea datelor');
+            }
+            return response.json();
+        })
+        .then(data => {            
+            callback(data);
+        })
+        .catch(error => {
+            console.error('Eroare:', error);
+            document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
+        });
+}
+
+function pieseMasinaApiCall(carId,callback) {
+    
+   
+    const url =   `${API_BASE_URL}/InfoCars/GetById?IdMasina=` +  carId; 
 
     fetch(url)
         .then(response => {
@@ -805,35 +811,35 @@ function restoreMarcaCheckboxes(container) {
     //debugger;
     populateCheckboxesMarca(allMarci,container);
 }
-function populateCheckboxesMarca(cars, container) {
-    ////debugger;
-    allMarci = cars;
-    cars.forEach(car => {
-        const checkboxWrapper = document.createElement('div');
-        checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
+// function populateCheckboxesMarca(cars, container) {
+//     ////debugger;
+//     allMarci = cars;
+//     cars.forEach(car => {
+//         const checkboxWrapper = document.createElement('div');
+//         checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = `marca_${car.marcaID}`; // Asigură-te că fiecare checkbox are un ID unic
-        checkbox.value = car.marcaID; // ID-ul mărcii
-        checkbox.addEventListener('change', function() {
-            handleMarcaChange(this);
-        });
+//         const checkbox = document.createElement('input');
+//         checkbox.type = 'checkbox';
+//         checkbox.id = `marca_${car.marcaID}`; // Asigură-te că fiecare checkbox are un ID unic
+//         checkbox.value = car.marcaID; // ID-ul mărcii
+//         checkbox.addEventListener('change', function() {
+//             handleMarcaChange(this);
+//         });
 
-        const label = document.createElement('label');
-        label.htmlFor = `marca_${car.marcaID}`;
-        label.textContent = car.marcaName;
-        label.style.fontWeight = 'bold'; 
-        label.style.color = '#007bff'; 
-        label.style.marginLeft = '5px';                     
-        label.style.fontSize = '15px';
+//         const label = document.createElement('label');
+//         label.htmlFor = `marca_${car.marcaID}`;
+//         label.textContent = car.marcaName;
+//         label.style.fontWeight = 'bold'; 
+//         label.style.color = '#007bff'; 
+//         label.style.marginLeft = '5px';                     
+//         label.style.fontSize = '15px';
 
-        checkboxWrapper.appendChild(checkbox);
-        checkboxWrapper.appendChild(label);
+//         checkboxWrapper.appendChild(checkbox);
+//         checkboxWrapper.appendChild(label);
 
-        container.appendChild(checkboxWrapper);
-    });
-}
+//         container.appendChild(checkboxWrapper);
+//     });
+// }
 
 //------------------------------------------------
 

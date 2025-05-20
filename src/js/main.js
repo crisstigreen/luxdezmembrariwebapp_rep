@@ -258,6 +258,7 @@ function populateMasiniShopGrid(data){
     data.piese.forEach(piesa => {
         //debugger;       
         var imageSrc = piesa.imagini ? `${API_BASE_URL_IMG}/` + piesa.imagini[0] : 'images/placeholder.jpg';
+      
         if(piesa.imagini != null && piesa.imagini.length == 0){
             imageSrc = '/images/placeholder.jpg';
         }

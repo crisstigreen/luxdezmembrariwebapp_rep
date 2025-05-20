@@ -4,7 +4,7 @@
 //**********  PAGE LOAD ********************************************************************* */
 let currentPage = 1;
 let totalPages = 1;
-let pageSize = 24; // Valoarea implicită
+let pageSize = 12; // Valoarea implicită
 let orderTerm = 'DESC'; // Implicit
 let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 let marca = "";
@@ -17,13 +17,13 @@ let generatie = "";
 
 
 document.addEventListener('DOMContentLoaded', async function () {
-    const containerMarca = document.getElementById('checkboxContainerMarca');
-    getCarsForDropdown(cars => populateCheckboxesMarca(cars, containerMarca));
+    //const containerMarca = document.getElementById('checkboxContainerMarca');
+    // getCarsForDropdown(cars => populateCheckboxesMarca(cars, containerMarca));
 
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
     document.getElementById('next-page').addEventListener('click', () => changePage(1));
 
-    await carsApiCall(populateShopGrid);
+    await carsApiCall(populateMasiniShopGrid);
 
     document.querySelectorAll(".block-4-text a, .block-4-image a").forEach(link => {
         link.addEventListener("click", function (event) {
@@ -57,8 +57,9 @@ function generateCarUrl(masina) {
     
 
  //POPULATE GRID
- function populateShopGrid(data){
-    const rezultateDiv = document.getElementById('rezultatePiese');
+//POPULATE Masini GRID
+function populateMasiniShopGrid(data){
+    const rezultateDiv = document.getElementById('rezultateMasini');
     rezultateDiv.innerHTML = '';
     //debugger;
     data.masiniReg.forEach(masina => {
@@ -66,30 +67,31 @@ function generateCarUrl(masina) {
         const imageSrc = masina.imagini[0] ? `${API_BASE_URL_IMG}/` + masina.imagini[0] : 'images/placeholder.jpg';
                   
         const piesaHTML = `
-        <div class="col-sm-6 col-lg-4 mb-4">
-            <div style="height: 500px" class="block-4 border d-flex flex-column">
-                <figure class="block-4-image">
-                    <a href="${generateCarUrl(masina)}">
-                        <img src="${imageSrc}" style='width: 100%; height: 165px; object-fit: contain; object-position: center;' alt="Image placeholder" class="img-fluid">
-                    </a>
-                </figure>
-                <div class="block-4-text padding10 flex-grow-1">
-                    <h6 style="font-weight: bold;">
-                        <a href="${generateCarUrl(masina)}">${masina.nume}</a>
-                    </h6>
-                    <p class="mb-0">Numar identificare vehicul: ${masina.id}</p>
-                    <p class="mb-0">Cod motor: ${masina.codMotor}</p>
-                    <p class="mb-0">Combustibil: ${masina.combustibil}</p>
-                    <p class="mb-0">An fabricatie: ${masina.an}</p>
-                    <p class="mb-0">Capacitate cilindrica: ${masina.capacitCil}</p>
-                    ${masina.putereCP ? `<p class="mb-0">Putere[CP]: ${masina.putereCP}</p>` : ''}
-                    <div class="mt-auto d-flex justify-content-between align-items-center button-container">
-                        <button class="btn btn-warning btn-sm" type="button" onclick="veziPiese(${masina.id},${masina.totalPiese})">
-                            ${masina.totalPiese > 0 ? `Vezi ${masina.totalPiese} piese` : 'Solicita piese auto din </br> dezmembrare nelistate'}
-                        </button>
+        <div class="card">
+               <div class="card-image">
+                    <figure>
+                        <a class="link-masini" href="${generateCarUrl(masina)}">
+                            <img src="${imageSrc}" alt="${masina.nume}">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-body">
+                    <h3>
+                        <a class="link-masini" href="${generateCarUrl(masina)}">${masina.nume}</a>
+                    </h3>
+                    <div class="card-desc">
+                          <p>Cod motor: <span>${masina.codMotor} </span></p>
+                           <p>Capacitate cilindrică: <span>${masina.capacitCil}</span></p>
+                           <p>Combustibil: <span>${masina.combustibil} </span></p>
+                            ${masina.putereCP ? `<p class="mb-0">Cai putere: <span>${masina.putereCP}<span></p>` : ''}
+                            <p>An fabricație: <span>${masina.an}</span></p>
+                            <p>ID vehicul: <span>${masina.id}</span></p>
                     </div>
                 </div>
-            </div>
+                <div class="card-footer">
+                            ${masina.totalPiese > 0 ? ` <a href="${generateCarUrl(masina)}" class="btn-outline">Vezi ${masina.totalPiese} piese <img src='../images/Eye.svg' alt='Solicita piesa'></a>` : ''}
+                          <a href="${generateCarUrl(masina)}" class="btn-primary">Solicită piesa <img src='../images/Chat.svg' alt='Solicita piesa'></a>
+                </div>
         </div>`;
 
     
@@ -98,67 +100,51 @@ function generateCarUrl(masina) {
          rezultateDiv.innerHTML += piesaHTML;
 
      });             
+  
     totalPages = data.totalPages; // Actualizează totalPages
     updatePaginationControls(); // Actualizează controalele de paginare
-
-    // Adaugă eveniment pentru butoanele de editare
-    document.querySelectorAll('.edit-button').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.stopPropagation();
-            const id = this.getAttribute('data-id');
-            get_details(id); // Apelează funcția pentru a obține detaliile
-        });
-    });
-
-
-
-    //Swal.close();
-
-     // Întârzierea închiderii loader-ului
-     setTimeout(() => {
-        Swal.close(); // Închide loader-ul
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
 
 
 }
 
+
+
 //**********  CAUTARE ********************************************************************* */
 //**********  CAUTARE ********************************************************************* */
 //**********  CAUTARE ********************************************************************* */
 //**********  CAUTARE ********************************************************************* */
 
-document.getElementById('cautaBtn').addEventListener('click', () => {
-    //debugger;
-    searchTerm = document.getElementById('tb_cauta').value.trim();
-    currentPage = 1; // Resetăm la prima pagină
+// document.getElementById('cautaBtn').addEventListener('click', () => {
+//     //debugger;
+//     searchTerm = document.getElementById('tb_cauta').value.trim();
+//     currentPage = 1; // Resetăm la prima pagină
 
-    const selMarca = document.getElementById("ddd_cars");
-    selMarca.value = "";
-    const selModel = document.getElementById("ddd_models");
-    selModel.value = "";
-    const selGeneratie = document.getElementById("ddd_generatii");
-    selGeneratie.value = "";
+//     const selMarca = document.getElementById("ddd_cars");
+//     selMarca.value = "";
+//     const selModel = document.getElementById("ddd_models");
+//     selModel.value = "";
+//     const selGeneratie = document.getElementById("ddd_generatii");
+//     selGeneratie.value = "";
 
-    carsApiCall(populateShopGrid);
+//     carsApiCall(populateShopGrid);
        
-});
-document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        searchTerm = event.target.value.trim();
-        currentPage = 1; // Resetăm la prima pagină
+// });
+// document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
+//     if (event.key === 'Enter') {
+//         searchTerm = event.target.value.trim();
+//         currentPage = 1; // Resetăm la prima pagină
 
-        const selMarca = document.getElementById("ddd_cars");
-        selMarca.value = "";
-        const selModel = document.getElementById("ddd_models");
-        selModel.value = "";
-        const selGeneratie = document.getElementById("ddd_generatii");
-        selGeneratie.value = "";
+//         const selMarca = document.getElementById("ddd_cars");
+//         selMarca.value = "";
+//         const selModel = document.getElementById("ddd_models");
+//         selModel.value = "";
+//         const selGeneratie = document.getElementById("ddd_generatii");
+//         selGeneratie.value = "";
     
 
-        carsApiCall(populateShopGrid);
-    }
-});
+//         carsApiCall(populateShopGrid);
+//     }
+// });
 
 
 
@@ -173,14 +159,14 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
     const url = `${API_BASE_URL}/CarsRegister/searchMasiniReg?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
     
     // Afișează loaderul
-    Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait while we fetch the data.',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
+    // Swal.fire({
+    //     title: 'Loading...',
+    //     text: 'Please wait while we fetch the data.',
+    //     allowOutsideClick: false,
+    //     didOpen: () => {
+    //         Swal.showLoading();
+    //     }
+    // });
 
     return fetch(url)
         .then(response => {
@@ -191,12 +177,12 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
         })
         .then(data => {
             //debugger;
-            Swal.close(); // Ascunde loaderul la succes
+            // Swal.close(); // Ascunde loaderul la succes
             return data; // Returnează datele primite de la API
         })
         .catch(error => {
             console.error('Eroare:', error);
-            Swal.close(); // Ascunde loaderul la eroare
+            // Swal.close(); // Ascunde loaderul la eroare
             document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
         });
     }
@@ -208,7 +194,7 @@ document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
 //**********  PAGINATION ********************************************************************* */
 
 function updatePaginationControls() {
-    document.getElementById('page-info').innerText = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('page-info').innerText = `Pagina ${currentPage} din ${totalPages}`;
     document.getElementById('prev-page').disabled = currentPage <= 1;
     document.getElementById('next-page').disabled = currentPage >= totalPages;
 }
@@ -217,8 +203,8 @@ function changePage(delta) {
     if ((delta === -1 && currentPage > 1) || (delta === 1 && currentPage < totalPages)) {
         currentPage += delta;
         
-        carsApiCall(populateShopGrid);
-      
+        carsApiCall(populateMasiniShopGrid);
+       window.scrollTo({ top: 0, behavior: 'smooth' });
         
         
                  
@@ -227,13 +213,13 @@ function changePage(delta) {
 function changePageSize() {
     pageSize = parseInt(document.getElementById('page-size').value);
     currentPage = 1; // Resetăm la prima pagină
-    carsApiCall(populateShopGrid);
+    carsApiCall(populateMasiniShopGrid);
 
 }
 function changeOrderBy() {
     debugger;
     orderTerm = document.getElementById('order_term').value;  
-    carsApiCall(populateShopGrid);
+    carsApiCall(populateMasiniShopGrid);
 
 }
 
@@ -256,68 +242,68 @@ function  veziPiese(id,totalPiese){
 
 document.addEventListener('DOMContentLoaded', function () {
     //debugger;
-    const filtreBtn = document.getElementById('filtreBtn');
-    const filterSidebar = document.getElementById('filterSidebar');
-    const closeFilters = document.getElementById('closeFilters');
-    const filtrare = document.getElementById('filtrare');
+    // const filtreBtn = document.getElementById('filtreBtn');
+    // const filterSidebar = document.getElementById('filterSidebar');
+    // const closeFilters = document.getElementById('closeFilters');
+    // const filtrare = document.getElementById('filtrare');
 
     // Functia pentru a copia filtrele in meniul lateral
-    function copyFiltersToSidebar() {
-        const checkboxContainerMarca = document.getElementById('checkboxContainerMarca');
-        const checkboxContainerModel = document.getElementById('checkboxContainerModel');
-        const checkboxContainerGeneratie = document.getElementById('checkboxContainerGeneratie');
+    // function copyFiltersToSidebar() {
+    //     const checkboxContainerMarca = document.getElementById('checkboxContainerMarca');
+    //     const checkboxContainerModel = document.getElementById('checkboxContainerModel');
+    //     const checkboxContainerGeneratie = document.getElementById('checkboxContainerGeneratie');
         
-        // Găsim div-urile specifice din filterSidebar
-        const checkboxContainerMarcaSidebar = document.getElementById('checkboxContainerMarcaSidebar');
-        const checkboxContainerModelSidebar = document.getElementById('checkboxContainerModelSidebar');
-        const checkboxContainerGeneratieSidebar = document.getElementById('checkboxContainerGeneratieSidebar');
+    //     // Găsim div-urile specifice din filterSidebar
+    //     const checkboxContainerMarcaSidebar = document.getElementById('checkboxContainerMarcaSidebar');
+    //     const checkboxContainerModelSidebar = document.getElementById('checkboxContainerModelSidebar');
+    //     const checkboxContainerGeneratieSidebar = document.getElementById('checkboxContainerGeneratieSidebar');
 
-        // Golim div-urile laterale înainte de a copia conținutul
-     /*    checkboxContainerMarcaSidebar.innerHTML = '';
-        checkboxContainerModelSidebar.innerHTML = '';
-        checkboxContainerGeneratieSidebar.innerHTML = ''; */
+    //     // Golim div-urile laterale înainte de a copia conținutul
+    //  /*    checkboxContainerMarcaSidebar.innerHTML = '';
+    //     checkboxContainerModelSidebar.innerHTML = '';
+    //     checkboxContainerGeneratieSidebar.innerHTML = ''; */
 
 
-         // Copiem conținutul din div-urile de filtre în div-urile specifice din sidebar
-         checkboxContainerMarcaSidebar.appendChild(checkboxContainerMarca.cloneNode(true));
-         checkboxContainerModelSidebar.appendChild(checkboxContainerModel.cloneNode(true));
-         checkboxContainerGeneratieSidebar.appendChild(checkboxContainerGeneratie.cloneNode(true));
+    //      // Copiem conținutul din div-urile de filtre în div-urile specifice din sidebar
+    //      checkboxContainerMarcaSidebar.appendChild(checkboxContainerMarca.cloneNode(true));
+    //      checkboxContainerModelSidebar.appendChild(checkboxContainerModel.cloneNode(true));
+    //      checkboxContainerGeneratieSidebar.appendChild(checkboxContainerGeneratie.cloneNode(true));
 
-        // Reatașăm evenimentele de filtrare la checkbox-urile copiate
-        attachFilterEvents(filterSidebar);
-    }
-    function attachFilterEvents(container) {
-        // Găsim toate checkbox-urile din meniul lateral
-        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    //     // Reatașăm evenimentele de filtrare la checkbox-urile copiate
+    //     attachFilterEvents(filterSidebar);
+    // }
+    // function attachFilterEvents(container) {
+    //     // Găsim toate checkbox-urile din meniul lateral
+    //     const checkboxes = container.querySelectorAll('input[type="checkbox"]');
 
-        // Adăugăm evenimentul 'change' pentru fiecare checkbox
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                // Codul tău de filtrare va fi aici
-                // Exemplu:
-                console.log(`Filtrare activată pentru: ${checkbox.name}`);
-                // Adaugă funcționalitatea de filtrare
+    //     // Adăugăm evenimentul 'change' pentru fiecare checkbox
+    //     checkboxes.forEach(checkbox => {
+    //         checkbox.addEventListener('change', function () {
+    //             // Codul tău de filtrare va fi aici
+    //             // Exemplu:
+    //             console.log(`Filtrare activată pentru: ${checkbox.name}`);
+    //             // Adaugă funcționalitatea de filtrare
 
-                //!!!  aici trebuie
-                handleMarcaChange(this, container);
-            });
-        });
-    }
+    //             //!!!  aici trebuie
+    //             handleMarcaChange(this, container);
+    //         });
+    //     });
+    // }
 
-    filtreBtn.addEventListener('click', function () {
-        debugger;
-        copyFiltersToSidebar(); // Copiem filtrele în lateral
-        filterSidebar.style.display = 'block';
-        filtreBtn.style.display = 'none';  // Ascundem butonul "Filtre"
-        closeFilters.style.display = 'block';
-    });
+    // filtreBtn.addEventListener('click', function () {
+    //     debugger;
+    //     copyFiltersToSidebar(); // Copiem filtrele în lateral
+    //     filterSidebar.style.display = 'block';
+    //     filtreBtn.style.display = 'none';  // Ascundem butonul "Filtre"
+    //     closeFilters.style.display = 'block';
+    // });
 
     // Închidem meniul lateral de filtre
-    closeFilters.addEventListener('click', function () {
-        filterSidebar.style.display = 'none';
-        filtreBtn.style.display = 'block';  // Afișăm din nou butonul "Filtre"
-        closeFilters.style.display = 'none';
-    });
+    // closeFilters.addEventListener('click', function () {
+    //     filterSidebar.style.display = 'none';
+    //     filtreBtn.style.display = 'block';  // Afișăm din nou butonul "Filtre"
+    //     closeFilters.style.display = 'none';
+    // });
 });
 
 
