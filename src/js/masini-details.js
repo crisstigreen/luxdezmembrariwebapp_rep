@@ -1,6 +1,7 @@
 ﻿//PAGE LOAD
 window.onload = function() {
-    debugger;
+    //debugger;
+    document.getElementById('link-Masini').classList.add('active');
     let pathname = window.location.pathname.substring(1); // Elimină primul "/"
     let regex = /(.+)-(\d+)$/; // Capturăm numele și ID-ul
     let match = pathname.match(regex);
@@ -14,6 +15,7 @@ window.onload = function() {
         document.getElementById('detaliiPiesa').innerText = 'Masina nu a fost găsită.';
     }
 };
+
 
 //cod nou
 function loadMasina(carId) {

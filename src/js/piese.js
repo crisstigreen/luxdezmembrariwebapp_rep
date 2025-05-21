@@ -26,6 +26,9 @@ let selectedTip = '';
 let selectedCategorie = '';
 let selectedSubcategorie = '';
 
+window.onload = function() {
+ document.getElementById('link-Piese').classList.add('active');
+}
 
 window.addEventListener('DOMContentLoaded', () => {
     const pathSegments = window.location.pathname.split('/').filter(segment => segment);
@@ -34,6 +37,12 @@ window.addEventListener('DOMContentLoaded', () => {
     if (pathSegments.length > 1) {
         window.location.href = '/index.html';
     }
+   
+
+    document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
+    document.getElementById('next-page').addEventListener('click', () => changePage(1));
+
+    pieseApiCall(populatePieseShopGrid);   
 });
 
 //get cars
@@ -46,19 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
 //     getDescriere('test',0);
 // });
 
-//populate grid
-document.addEventListener('DOMContentLoaded', async  () => {
-    //debugger;        
-    document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
-    document.getElementById('next-page').addEventListener('click', () => changePage(1));
 
-    pieseApiCall(populatePieseShopGrid);   
- 
-
-
-
-       
-});
 
 //hamburger
 // document.addEventListener('DOMContentLoaded', async function () {
@@ -335,7 +332,7 @@ function changePage(delta) {
     if ((delta === -1 && currentPage > 1) || (delta === 1 && currentPage < totalPages)) {
         currentPage += delta;        
         populateApiPath();
-                                       
+       window.scrollTo({ top: 0, behavior: 'smooth' });                              
     }
 }
 function changePageSize() {

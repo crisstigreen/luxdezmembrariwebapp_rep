@@ -1,269 +1,276 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Lux Dezmembrari &mdash; Colorlib e-Commerce Template</title>
+ <html lang="ro">
+   <head>
+    <title>Piese Auto Dezmembrări | LuxDezmembrari.ro - Calitate Premium</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
-
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-
-    <link rel="stylesheet" href="css/aos.css">
-
-    <link rel="stylesheet" href="css/style.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="LuxDezmembrari.ro oferă piese auto second-hand premium, livrare rapidă și garanție a calității pentru orice tip de vehicul. Comandă acum!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-
-      <div class="site-wrap">
-       
-        <div id="top-placeholder"></div>
-
-          <div class="bg-light py-3">
-              <div class="container">
-                  <div class="row">
-                      <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong id="piesaMeniu" class="text-black"></strong></div>
-                  </div>
-              </div>
-          </div>   
-          <div id="detaliiPiesa"></div>
-
-          <div class="site-section">
-              <div class="container">
-                <div class="row">
-                    <button class="btn btn-success btn-sm buttons" style="width: 50px;" type="button" onclick="list()"><<<</button>
+    <section id="title">
+      <h1><span>Piese auto</span> din dezmembrări</h1>
+      <div class="breadcrumb">
+        <div class="breadcrumb-wrapper">
+          <a href="index.html">Acasă</a>
+          <img src="images/ArrowRightB.svg" alt="Sageata Dreapta">
+          <a href="piese.html">Piese</a>
+          <img src="images/ArrowRightB.svg" alt="Sageata Dreapta">
+          <a id="piesaMeniu" href="masini-details.html">Detalii</a>
+        </div>
+      </div>
+   </section>
+   <section id="shop-container">
+       <div class="piese-details">
+            <div class="carousel">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" id="carousel-inner">
+                      <!-- Imaginile vor fi generate dinamic aici -->
+                 </div>
+                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                 </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                 </a>
+                 </div>
+                 <div class="carousel-indicators-container" id="carousel-indicators">
+                    <!-- Indicatorii vor fi generați dinamic aici -->
+                 </div>
+            </div>                    
+            <div class="details">
+                <div>
+                    <h2 id="piesaTitlu"></h2>  
+                    <p class="disponibilitate">Disponibiliate <span> <img src='images/CheckmarkCircle.svg' alt="Disponibil"/> În stoc (<span id="piesaBucati"></span>)</p> 
                 </div>
-                <div class="row">   
-                 <div class="col-md-4 divCarDetails">
-                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner" id="carousel-inner" style="cursor: pointer;">
-                            <!-- Imaginile vor fi generate dinamic aici -->
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                    <div class="carousel-indicators-container" id="carousel-indicators">
-                        <!-- Indicatorii vor fi generați dinamic aici -->
-                    </div>
-                </div>
-
-
-
-                      <div class="col-md-6">
-                          <h2 id="piesaTitlu" style="color: #006b30"></h2>                          
-                          <strong>Masina: </strong> <p id="piesaMasina" style="display: inline;"></p><br />                                                                                                   
-                          <strong>Motorizare: </strong> <p id="piesaMotorizare" style="display: inline;"></p><br />      
-                          <strong>Cod intern:</strong> <p id="piesaCodPiesa" style="display: inline;"></p><br />                                                    
-                          <strong>Bucati: </strong> <p id="piesaBucati" style="display: inline;"></p><br />      
-                          <strong>Cod Sku: </strong> <p id="piesaSku" style="display: inline;"></p><br />                                                                                                                         
-                          <strong>Cod Motor: </strong> <p id="piesaCodMotor" style="display: inline;"></p><br />      
-                          <p><strong id="piesaPret" style="color: red !important; font-weight: bold;" class="text-primary h4"></strong></p>                                           
-                          <p><a href="cart.html" class="buy-now btn btn-sm btn-primary" id="addToCart">Adauga in cos</a></p> 
-                                                   
+               
+                <div class="piese-info">      
+                <p>Număr identificare: <span id="piesaCodPiesa"></span></p> 
+                <p>Cod Sku: <span id="piesaSku"></span></p> 
+                <p>Perioadă fabricație: <span id="pieseFabricatie"></span></p>  
+                <p>Tip: <span id="piesaMotorizare"></span>  </p>      
+                <p>Marcă <span id="piesaMarca"></span></p>  
+                <p>Cod Motor: <span id="piesaCodMotor"></span></p>    
+                <p>Modelul: <span id="piesaMasina"></span></p>
+                <p>Combustibil: <span id="piesaCombustibil"></span></p>   
+                <p>Generația: <span id="piesaGeneratia"></span></p>                                            
+                <p>Locație: <span id="piesaLocatie"></span></p>
+            
+                                                             
+                                                          
+                                                          
+                                                  
+                </div>                                        
+            </div>
+       </div>
+       <div class="cumpara-form">
+                     <div class="col-12">
+                       <div class="tag" id="piesaReducere"></div>
+                       <h4 id="piesaPret"></h4>
+                       <div class="info"><img src="images/Info.svg" alt="Pretul include TVA">Prețul include TVA</div>                                        
+                     </div>
+                   
+                      <div class="col-12">
+                            <div class="group-price-qty">
+                                <div class="quantity">
+                                    <button class="btn-quantity" type="button" onclick="decrease()"  data-action="minus" >-</button>
+                                    <input id="quantity-input" type="text" class="form-input quantity-input" value="1" readonly>
+                                    <button class="btn-quantity" type="button" onclick="increase()"  data-action="plus" >+</button>
+                                </div>
+                                <a href="cart.html" class="buy-now btn btn-sm btn-primary" id="addToCart">Cumpară <img src='images/ShoppingBagW.svg'  alt="Adauga in cos" /></a>
+                          </div>
+                      </div>                      
+                      
+                      <div class="col-12">
+                        <h5>Plata</h5>
+                        <hr/>
+                         <div class="info-outline"><img src="images/MoneyHand.svg" alt="Plata cash (la ridicarea comenzii)">Plata cash (la ridicarea comenzii)</div>   
+                          <div class="info-outline"><img src="images/Money.svg" alt="Ramburs (la livrare prin curier)">Ramburs (la livrare prin curier)</div>                                        
+                           <div class="info-outline"><img src="images/BuildingBank.svg" alt="Transfer bancar (in avans)">Transfer bancar (in avans)</div>                                                                             
                       </div>
+                   
+       </div>
+   </section>
+   <section id="trust">
+     <div class="trust-area">
+            <div class="trust-item">
+                <img src="images/warranty.svg" alt="Garanție">
+                <div>
+                    <h2>Garanție</h2>
+                    <p>90 de zile de siguranță</p>
                 </div>
             </div>
+            <div class="trust-item">
+                <img src="images/delivery.svg" alt="Livrare rapidă">
+                <div>
+                    <h2>Livrare rapidă</h2>
+                    <p>În 24/48 de ore</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <img src="images/return.svg" alt="Retur simplu">
+                <div>  
+                    <h2>Retur simplu</h2>
+                    <p>Primesti banii inapoi in 24h</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <img src="images/support.svg" alt="Asistență">
+                <div>    
+                    <h2>Asistență</h2>
+                    <p>Ajutor specializat</p>
+                 </div>
+            </div>
         </div>
+   </section>
+    <section id="intrebari"> 
+        <div class="title">
+            <h2><span>Întrebări </span> frecvente</h2>
+        </div>
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header">Aveți garanție ?</button>
+                <div class="accordion-body">Da, oferim garanție pentru fiecare piesă conform politicii noastre.</div>
+            </div>
 
-          <div class="site-section block-3 site-blocks-2 bg-light">
-              <div class="container">
-                  <div class="row justify-content-center">
-                      <div class="col-md-7 site-section-heading text-center pt-4">
-                          <h2>Featured Products</h2>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-12">
-                          <div class="nonloop-block-3 owl-carousel">
-                              <div class="item">
-                                  <div class="block-4 text-center">
-                                      <figure class="block-4-image">
-                                          <img src="images/cars.jpg" alt="Image placeholder" class="img-fluid">
-                                      </figure>
-                                      <div class="block-4-text p-4">
-                                          <h3><a href="#">Tank Top</a></h3>
-                                          <p class="mb-0">Finding perfect t-shirt</p>
-                                          <p class="text-primary font-weight-bold">$50</p>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="item">
-                                  <div class="block-4 text-center">
-                                      <figure class="block-4-image">
-                                          <img src="images/tires.jpg" alt="Image placeholder" class="img-fluid">
-                                      </figure>
-                                      <div class="block-4-text p-4">
-                                          <h3><a href="#">Corater</a></h3>
-                                          <p class="mb-0">Finding perfect products</p>
-                                          <p class="text-primary font-weight-bold">$50</p>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="item">
-                                  <div class="block-4 text-center">
-                                      <figure class="block-4-image">
-                                          <img src="images/parts.jpg" alt="Image placeholder" class="img-fluid">
-                                      </figure>
-                                      <div class="block-4-text p-4">
-                                          <h3><a href="#">Polo Shirt</a></h3>
-                                          <p class="mb-0">Finding perfect products</p>
-                                          <p class="text-primary font-weight-bold">$50</p>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="item">
-                                  <div class="block-4 text-center">
-                                      <figure class="block-4-image">
-                                          <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
-                                      </figure>
-                                      <div class="block-4-text p-4">
-                                          <h3><a href="#">T-Shirt Mockup</a></h3>
-                                          <p class="mb-0">Finding perfect products</p>
-                                          <p class="text-primary font-weight-bold">$50</p>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="item">
-                                  <div class="block-4 text-center">
-                                      <figure class="block-4-image">
-                                          <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                                      </figure>
-                                      <div class="block-4-text p-4">
-                                          <h3><a href="#">Corater</a></h3>
-                                          <p class="mb-0">Finding perfect products</p>
-                                          <p class="text-primary font-weight-bold">$50</p>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+            <div class="accordion-item">
+                <button class="accordion-header">Aveți mai multe poze ?</button>
+                <div class="accordion-body">La cerere, putem trimite mai multe poze ale piesei prin WhatsApp sau e-mail.</div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Se potrivește pe mașina mea ?</button>
+                <div class="accordion-body">
+                Pentru a ne asigura că piesa se potrivește perfect pe mașina dvs., vă rugăm să furnizați informații specifice
+                despre mașină dvs. precum marca, modelul și anul de fabricație, astfel încât să putem verifica compatibilitatea.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Nu știu dacă mașina mea este facelift sau nonfacelift. Contează ?</button>
+                <div class="accordion-body">Da, facelift-ul poate însemna modificări vizuale sau tehnice importante. E important să știm.</div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Este funcțională piesa ?</button>
+                <div class="accordion-body">Toate piesele sunt testate înainte de a fi puse în vânzare.</div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Unde pot veni dacă vreau să ridic piesa personal ?</button>
+                <div class="accordion-body">Puteți ridica piesa din depozitul nostru din Str. Bogdan Dragos,
+                        Nr. 350, Oras Roman, Jud. Neamt. Vezi detalii pe pagina de contact.</div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Sunt originale piesele ?</button>
+                <div class="accordion-body">Da, oferim doar piese originale sau echivalente omologate.</div>
+            </div>
+        </div>
+         <div class="banner-piese-vertical masini-vertical">
+              <div>
+                    <a href="masini.html"><h2>descopera cele mai noi mașini</h2></a>
               </div>
           </div>
-
-          <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">            
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img id="modalImage" src="" class="img-fluid" alt="Imagine mare" style="max-width: 100%; height: auto;">
-                    </div>
-                </div>
+   </section>
+    <section id="testimoniale">
+        <div class="title">
+         <h2><span>Ce spun clienții</span> despre noi</h2>
+         <p>Părerile clienților noștri reflectă angajamentul pentru calitate, seriozitate și servicii rapide. Vezi ce spun cei care au ales LuxDezmembrări.</p>
+        </div>
+        <div class="testimonial-slider">
+        <div class="testimonial-slide active">
+        <div class="testimonial-content">
+            <img src="images/UserImage1.jpg" alt="Rosu Mira" class="user-avatar">
+            <div class="user-info">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                    Profesionalism, promptitudine și ajutor în alegerea pieselor potrivite pentru mașina ta! Super! Recomand! 👏👏👏
+                </p>
             </div>
         </div>
+        </div>
+        <div class="testimonial-slide">
+        <div class="testimonial-content">
+            <img src="images/UserImage2.jpg" alt="Andrei PT" class="user-avatar">
+            <div class="user-info">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                  Am comandat o valva regulator de presiune egr, înainte de a o trimite mi-au oferit toate detaliile cerute, iar piesa a fost in stare buna de funcționare.
+                  <br/>Multumesc mult!
+                </p>
+            </div>
+        </div>
+        
+        </div>
+        <div class="testimonial-slide">
+        <div class="testimonial-content">
+            <img src="images/UserImage3.jpg" alt="Razvan Ionut David" class="user-avatar">
+            <div class="user-info">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                👆👇👉👈 Lux Dezmembrări Auto este un loc foarte tare! Vă doresc tuturor o zi, o săptămână și o primăvară minunată, pline de fericire și belșug! 🇩🇪🇪🇺🇫🇷🇮🇹🇷🇴🇺🇲
+                </p>
+            </div>
+        </div>
+        
+        </div>
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+    </section>
+      <section id="categorii">
+        <div class="title">
+           <h2><span>Categorii</span> populare</h2>
+        </div>
+        <div class="categorii-wrapper">
+             <div class="categorii-item">
+            <img src="images/Caroserie.jpg" alt="Caroserie">
+            <div>
+                   <h3>Caroserie</h3>
+                   <a href="">Uși</a>
+                   <a href="">Oglinda</a>
+                   <a href="">Aripa</a>
+                   <a href="">Ornamente</a>
+                   <a href="" class="btn-outline">Vezi tot <img src="images/ArrowRightBl.svg" alt="Vezi tot"></a>
+            </div>
+             </div>
+             <div class="categorii-item">
+            <img src="images/Motoare.jpg" alt="Caroserie">
+            <div>
+                   <h3>Motoare</h3>
+                   <a href="">Furtune conducte</a>
+                   <a href="">Sisteme evacuare</a>
+                   <a href="">Sistem incarcare</a>
+                   <a href="">Sistem pornire</a>
+                   <a href="" class="btn-outline">Vezi tot <img src="images/ArrowRightBl.svg" alt="Vezi tot"></a>
+            </div>
+             </div>
+             <div class="categorii-item">
+            <img src="images/Electrice.jpg" alt="Caroserie">
+            <div>
+                   <h3>Electrice</h3>
+                   <a href="">Sisteme transmise</a>
+                   <a href="">Sisteme audio</a>
+                   <a href="">Alternatoare</a>
+                   <a href="">Instalație electrică</a>
+                   <a href="" class="btn-outline">Vezi tot <img src="images/ArrowRightBl.svg" alt="Vezi tot"></a>
+            </div>
+             </div>
+        </div>
+    </section>
 
-          <footer class="site-footer border-top">
-              <div class="container">
-                  <div class="row">
-                      <div class="col-lg-6 mb-5 mb-lg-0">
-                          <div class="row">
-                              <div class="col-md-12">
-                                  <h3 class="footer-heading mb-4">Navigations</h3>
-                              </div>
-                              <div class="col-md-6 col-lg-4">
-                                  <ul class="list-unstyled">
-                                      <li><a href="#">Sell online</a></li>
-                                      <li><a href="#">Features</a></li>
-                                      <li><a href="#">Shopping cart</a></li>
-                                      <li><a href="#">Store builder</a></li>
-                                  </ul>
-                              </div>
-                              <div class="col-md-6 col-lg-4">
-                                  <ul class="list-unstyled">
-                                      <li><a href="#">Mobile commerce</a></li>
-                                      <li><a href="#">Dropshipping</a></li>
-                                      <li><a href="#">Website development</a></li>
-                                  </ul>
-                              </div>
-                              <div class="col-md-6 col-lg-4">
-                                  <ul class="list-unstyled">
-                                      <li><a href="#">Point of sale</a></li>
-                                      <li><a href="#">Hardware</a></li>
-                                      <li><a href="#">Software</a></li>
-                                  </ul>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
-                          <h3 class="footer-heading mb-4">Promo</h3>
-                          <a href="#" class="block-6">
-                              <img src="images/tires.jpg" alt="Image placeholder" class="img-fluid rounded mb-4">
-                              <h3 class="font-weight-light  mb-0">Finding Your Perfect Shoes</h3>
-                              <p>Promo from  nuary 15 &mdash; 25, 2019</p>
-                          </a>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                          <div class="block-5 mb-5">
-                              <h3 class="footer-heading mb-4">Contact Info</h3>
-                              <ul class="list-unstyled">
-                                  <li class="address">203 Fake St. Mountain View, San Francisco, California, USA</li>
-                                  <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
-                                  <li class="email">emailaddress@domain.com</li>
-                              </ul>
-                          </div>
-
-                          <div class="block-7">
-                              <form action="#" method="post">
-                                  <label for="email_subscribe" class="footer-heading">Subscribe</label>
-                                  <div class="form-group">
-                                      <input type="text" class="form-control py-4" id="email_subscribe" placeholder="Email">
-                                      <input type="submit" class="btn btn-sm btn-primary" value="Send">
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row pt-5 mt-5 text-center">
-                      <div class="col-md-12">
-                          <p>
-                              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                              Copyright &copy;
-                              <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-                              <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-                              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                          </p>
-                      </div>
-
-                  </div>
-              </div>
-          </footer>
-      </div>
-
-      <script src="js/jquery-3.3.1.min.js"></script>
-      <script src="js/jquery-ui.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-      <script src="js/owl.carousel.min.js"></script>
-      <script src="js/jquery.magnific-popup.min.js"></script>
-      <script src="js/aos.js"></script>
-
+  
       <script src="js/top.js"></script>
-
       <script src="js/config.js"></script>
-      <script src="js/main.js"></script>
-      
-     
       <script src="js/topload.js"></script>      
-
       <script src="js/common.js"></script>  
-      <script src="js/piese-details.js"></script>      
+      <script src="js/piese-details.js"></script> 
+      <script src="js/footer.js"></script>     
       
    
 

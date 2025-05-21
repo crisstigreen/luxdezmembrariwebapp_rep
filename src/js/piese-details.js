@@ -1,7 +1,8 @@
 ﻿// PAGE LOAD
 
 window.onload = function() {
-    debugger;
+    //debugger;
+    document.getElementById('link-Piese').classList.add('active');
     let pathname = window.location.pathname.substring(1); 
 
     pathname = pathname.replace(/%20/g, '-'); 
@@ -37,143 +38,133 @@ var piesaId = urlParams.get('id');
 const masina = urlParams.get('masina');
 
 
+function setupManualCarousel(totalSlides) {
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+
+    if (!prevBtn || !nextBtn) return;
+
+    prevBtn.onclick = () => navigateCarousel(-1, totalSlides);
+    nextBtn.onclick = () => navigateCarousel(1, totalSlides);
+}
+
+function navigateCarousel(direction, total) {
+    const current = document.querySelector('.carousel-item.active');
+    const items = document.querySelectorAll('.carousel-item');
+    const thumbs = document.querySelectorAll('.carousel-thumb');
+
+    let index = Array.from(items).indexOf(current);
+    current.classList.remove('active');
+    thumbs[index].classList.remove('active');
+
+    index = (index + direction + total) % total;
+
+    items[index].classList.add('active');
+    thumbs[index].classList.add('active');
+}
+
 function loadPiesa(piesaId) {
-    debugger;    
-    const urlSearch = `${API_BASE_URL}/Piese/` + piesaId;
+    const urlSearch = `${API_BASE_URL}/Piese/${piesaId}`;
 
     fetch(urlSearch)
         .then(response => {
-            debugger;
             if (!response.ok) {
                 throw new Error('Eroare la căutarea ID-ului piesei');
             }
             return response.json();
+           
         })
         .then(piesa => {
             if (!piesa || !piesa.id) {
                 document.getElementById('detaliiPiesa').innerText = 'Piesa nu a fost găsită.';
                 return;
             }
-
+                console.log('Piesa:', piesa);  
             // Afișează detaliile piesei
+            document.getElementById('piesaMeniu').innerText = piesa.nume;
             document.getElementById('piesaTitlu').textContent = piesa.nume;
             document.getElementById('piesaMasina').textContent = piesa.masina;
             document.getElementById('piesaCodPiesa').textContent = piesa.codPiesa;
             document.getElementById('piesaBucati').textContent = piesa.stoc;
-            if(piesa.stoc == 0){                
-                document.getElementById('addToCart').classList.add('disabled');
-                document.getElementById('addToCart').style.pointerEvents = 'none';
+            if(piesa.discount > 0){
+                document.getElementById('piesaReducere').textContent = piesa.discount + '%';
+            }else{
+                 document.getElementById('piesaReducere').style.display = 'none';
             }
-            else{
-                 const btn = document.getElementById('addToCart');
-                btn.classList.remove('disabled');
-                btn.style.pointerEvents = 'auto';
-            }    
+            const addToCartBtn = document.getElementById('addToCart');
+            if (piesa.stoc === 0) {
+                addToCartBtn.classList.add('disabled');
+                addToCartBtn.style.pointerEvents = 'none';
+            } else {
+                addToCartBtn.classList.remove('disabled');
+                addToCartBtn.style.pointerEvents = 'auto';
+            }
 
-
-            document.getElementById('piesaPret').textContent = piesa.pret;
+            const pretFaraRON = piesa.pret.replace('RON', '').trim();
+            document.getElementById('piesaPret').innerHTML = `${pretFaraRON}<span>RON/buc</span>`;
             document.getElementById('piesaSku').textContent = piesa.skU_Id;
             document.getElementById('piesaCodMotor').textContent = piesa.codMotor;
             document.getElementById('piesaMotorizare').textContent = piesa.motorizare;
 
-            const carImages = piesa.imagini;   
+            const carImages = piesa.imagini || [];
             const carouselInner = document.getElementById('carousel-inner');
             const carouselIndicatorsContainer = document.getElementById('carousel-indicators');
 
-            // Golește conținutul existent
             carouselInner.innerHTML = '';
             carouselIndicatorsContainer.innerHTML = '';
 
-            if (carImages.length === 0) {                          
-                const placeholderSrc = `images/placeholder.jpg`;
-                carImages.push(placeholderSrc);
-                $("#carousel-indicators").hide();                
+            if (carImages.length === 0) {
+                carImages.push('images/placeholder.jpg');
+                carouselIndicatorsContainer.style.display = 'none';
+            } else {
+                carouselIndicatorsContainer.style.display = 'flex';
             }
+
             carImages.forEach((imgSrc, index) => {
                 const isPlaceholder = imgSrc.includes('placeholder.jpg');
-                // Creează elementele pentru imagini
+                const fullSrc = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
+
+                // Create carousel item
                 const carouselItem = document.createElement('div');
-                carouselItem.classList.add('carousel-item');
-                if (index === 0) {
-                    carouselItem.classList.add('active');
-                }
+                carouselItem.className = 'carousel-item';
+                if (index === 0) carouselItem.classList.add('active');
 
-                const imgElement = document.createElement('img');
-                imgElement.classList.add('d-block', 'w-100');                                 
-                imgElement.src = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
-                imgElement.alt = `Slide ${index + 1}`;
-                
-                // Adaugă evenimentul onclick pentru a deschide modalul
-                imgElement.onclick = function() {
-                    openImageModal(imgElement.src);
-                };
+                const img = document.createElement('img');
+                img.src = fullSrc;
+                img.alt = `Slide ${index + 1}`;
+                img.classList.add('carousel-img');
+                img.onclick = () => openImageModal(fullSrc);
 
-                carouselItem.appendChild(imgElement);
-                document.getElementById('carousel-inner').appendChild(carouselItem);
+                carouselItem.appendChild(img);
+                carouselInner.appendChild(carouselItem);
 
-                // Creează indicatorii
-                const indicatorItem = document.createElement('img');                
-                indicatorItem.src = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
-                indicatorItem.alt = `Thumbnail ${index + 1}`;
-                indicatorItem.setAttribute('data-target', '#carouselExampleIndicators');
-                indicatorItem.setAttribute('data-slide-to', index);
+                // Create thumbnail indicator
+                const indicator = document.createElement('img');
+                indicator.src = fullSrc;
+                indicator.alt = `Thumbnail ${index + 1}`;
+                indicator.classList.add('carousel-thumb');
+                if (index === 0) indicator.classList.add('active');
 
-                // Adaugă clasa activă pe primul indicator
-                if (index === 0) {
-                    indicatorItem.classList.add('active');
-                }
+                indicator.addEventListener('click', () => {
+                    document.querySelector('.carousel-item.active')?.classList.remove('active');
+                    carouselInner.children[index].classList.add('active');
 
-                // Adaugă eveniment pentru a seta indicatorul activ
-                indicatorItem.addEventListener('click', function () {
-                    const activeIndicator = document.querySelector('.carousel-indicators-container img.active');
-                    if (activeIndicator) {
-                        activeIndicator.classList.remove('active');
-                    }
-                    // Aplică clasa activă la indicatorul pe care s-a dat clic
-                    this.classList.add('active');
+                    document.querySelector('.carousel-thumb.active')?.classList.remove('active');
+                    indicator.classList.add('active');
                 });
 
-                 // Adaugă evenimentul pentru a sincroniza indicatorii la schimbarea slide-ului
-                 $('#carouselExampleIndicators').on('slide.bs.carousel', function (e) {
-                    const nextSlideIndex = $(e.relatedTarget).index();
-                    const activeIndicator = document.querySelector('.carousel-indicators-container img.active');
-                    if (activeIndicator) {
-                        activeIndicator.classList.remove('active');
-                    }
-                    const nextIndicator = document.querySelector(`.carousel-indicators-container img[data-slide-to="${nextSlideIndex}"]`);
-                    if (nextIndicator) {
-                        nextIndicator.classList.add('active');
-                    }
-                });    
-
-                // Funcția de scroll a indicatorilor
-                function scrollIndicators(direction) {
-                    const container = document.querySelector('.carousel-indicators-container');
-                    const scrollAmount = 100; // Cantitatea de scroll
-                    if (direction === 'prev') {
-                        container.scrollBy({
-                            left: -scrollAmount,
-                            behavior: 'smooth'
-                        });
-                    } else if (direction === 'next') {
-                        container.scrollBy({
-                            left: scrollAmount,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-
-
-                document.getElementById('carousel-indicators').appendChild(indicatorItem);
+                carouselIndicatorsContainer.appendChild(indicator);
             });
 
-            
+            // Optional: setup carousel arrows if defined
+            setupManualCarousel(carImages.length);
         })
         .catch(error => {
             console.error('Eroare:', error);
             document.getElementById('detaliiPiesa').innerText = 'A apărut o eroare la încărcarea piesei.';
         });
 }
+
 
 //celelalte
 
@@ -251,6 +242,41 @@ function list(){
     const url = `index.html`;
     window.location = url;
 }
+
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const isActive = header.classList.contains('active');
+
+    // Close all
+    document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('active'));
+    document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('show'));
+
+    // Toggle current
+    if (!isActive) {
+      header.classList.add('active');
+      header.nextElementSibling.classList.add('show');
+    }
+  });
+});
+
+
+//Event for quantity input
+  function increase() {
+    const input = document.getElementById("quantity-input");
+    let value = parseInt(input.value, 10);
+    input.value = value + 1;
+  }
+
+  function decrease() {
+    const input = document.getElementById("quantity-input");
+    let value = parseInt(input.value, 10);
+    if (value > 1) {
+      input.value = value - 1;
+    }
+  }
+
+
+
 
 
 

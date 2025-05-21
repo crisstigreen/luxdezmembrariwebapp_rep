@@ -6,6 +6,7 @@
     --color-blue: #0E5669;
     --color-black: #0A0708;
     --color-white: #FFFFFF;
+    --colo-white-grey:#f9f9f9;
     --color-grey: #EEEEEE;
     --color-red: #F21B3F;
     --color-dark-white:#FCFDFF;
@@ -53,6 +54,7 @@ a{
 .form-input{
      border:0.094rem solid var(--color-black);
     border-radius:0.5rem; 
+    background-color: var(--colo-white-grey);
     font-size: 1rem;
     padding: var(--space-1) var(--space-2);
     width: 100%;
@@ -83,6 +85,7 @@ a{
   -moz-appearance: none; 
   background-image: url('../images/ArrowCircleUp.svg'); 
   background-repeat: no-repeat;
+    background-color: var(--colo-white-grey);
   background-position: right var(--space-2) center; 
   border-radius:0.5rem; 
   border:0.094rem solid var(--color-black);
@@ -102,6 +105,28 @@ a{
   color: var(--color-black);
   cursor: not-allowed; 
   opacity: 1;
+}
+.quantity {
+    display: flex;
+    gap:var(--space-1);
+}
+.quantity-input{
+    width: 4rem;
+    text-align: center;
+}
+.btn-quantity{
+  background-color: var(--colo-white-grey);
+   border-radius:0.5rem; 
+    padding: var(--space-1) var(--space-1);
+     outline: none;
+    border:0.094rem solid var(--color-black);
+    height: 2.375rem;
+    width: 2.375rem;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    line-height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .btn-primary, .btn-secondary{
     background-color: var(--color-blue);
@@ -183,7 +208,7 @@ a{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-1) var(--base-padding-x);
+    padding: var(--space-2) var(--base-padding-x);
 }
 .dropdown-menu{
     display: none;
@@ -276,6 +301,10 @@ a{
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+.bottom-bar-right .active{
+     background-color: var(--color-black);
+    color: var(--color-white);
 }
 .bottom-bar-right a:hover{
     background-color: var(--color-black);
@@ -469,7 +498,7 @@ section{
     color: var(--color-yellow);
     font-weight: 900;
 }
-#masini, #piese, #testimoniale, #categorii{
+#masini, #piese, #testimoniale, #categorii , #intrebari{
     margin-top:var(--space-14);
 }
 .card-wrapper{
@@ -702,6 +731,16 @@ section{
     border-radius: var(--space-1);
     padding: var(--space-5);
 }
+.piese-details{
+    grid-column: span 9;
+    display: flex;
+    gap: var(--space-5);
+    background-color: var(--color-white);
+    border-radius: var(--space-1);
+    padding: var(--space-5);
+    width: 100%;
+}
+
 .details{
     display: flex;
     flex-direction: column;
@@ -713,6 +752,88 @@ section{
 .details p span{
     color: var(--color-blue);
     font-weight: 600;
+}
+.piese-info{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap:var(--space-5);
+    row-gap: var(--space-1);
+    justify-content: space-between;
+}
+.piese-info p{
+    width: calc(50% - var(--space-5));
+}
+.disponibilitate{
+    margin-top:var(--space-1);
+}
+
+.tag{
+    background-color: var(--color-yellow);
+    color:var(--color-black);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: var(--space-1) var(--space-1);
+    border-radius: var(--space-1);
+    text-align: center;
+    width: 4rem;
+}
+.cumpara-form{
+    grid-column: span 3;
+    display: flex;
+    background-color: var(--color-white);
+    border-radius: var(--space-1);
+    padding: var(--space-5);
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: var(--space-3);
+}
+.cumpara-form > div:first-of-type{
+    display: flex;
+    flex-direction: column;
+    gap:var(--space-2);
+}
+.cumpara-form .col-12{
+    grid-column: span 12;
+}
+.cumpara-form h4{
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 900;
+}
+.cumpara-form h4 span{
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-black);
+}
+.cumpara-form h5{
+    font-size: clamp(1.5rem, 2vw, 1.75rem);
+    color: var(--color-black);
+    font-weight: 900;
+}
+.cumpara-form hr{
+    margin-top: var(--space-1);
+    margin-bottom: var(--space-1);
+}
+.info{
+    padding: var(--space-1) var(--space-2);
+    background-color: var(--color-grey);
+    font-weight: 500;
+    display: flex;
+    gap:var(--space-1);
+    border-radius: var(--space-1);
+    width: fit-content;
+
+}   
+.info-outline{
+     padding: var(--space-1) 0;
+    font-weight: 500;
+    display: flex;
+    gap:var(--space-1);
+    border-radius: var(--space-1);
+    width: fit-content;
+}
+.group-price-qty{
+    display: flex;
+    gap:var(--space-1);
 }
 .solicita-form{
     grid-column: span 5;
@@ -741,7 +862,7 @@ section{
 #trust, #piese-masina{
     margin-top:var(--space-3);
 }
-#intrebari .banner-reduceri-vertical{
+#intrebari .banner-reduceri-vertical, #intrebari .banner-piese-vertical{
     grid-column: span 3;
 }
 /* Layout END*/
@@ -819,6 +940,7 @@ section{
 }
 .masini-vertical{
      background:url('../images/BannerMasiniVertical.jpg') no-repeat center center;
+     background-size: cover;
 }
 .banner-piese-vertical div{
     background: transparent;
@@ -836,6 +958,9 @@ section{
     font-size: clamp(2rem, 4vw, 3.188rem);
     font-weight: 500;
     text-align: center;
+}
+.banner-reduceri-vertical a{
+    width: 100%;
 }
 .banner-reduceri-vertical{
     background: var(--color-blue) url(../images/BannerPieseReducere.svg) no-repeat;
@@ -1041,7 +1166,6 @@ section{
 /* Accordions */
 .accordion {
   grid-column: span 9;
-  margin: auto;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -1052,6 +1176,7 @@ section{
 .accordion-header {
   background: #f9f9f9;
   border: none;
+  border-radius: var(--space-1);
   width: 100%;
   text-align: left;
   padding: var(--space-2);

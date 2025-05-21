@@ -13,7 +13,10 @@ let generatie = "";
 
 
 
-// Apelează funcția pentru a popula checkbox-urile pentru mărci când pagina se încarcă
+
+window.onload = function() {
+ document.getElementById('link-Masini').classList.add('active');
+}
 
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -204,7 +207,7 @@ function changePage(delta) {
         currentPage += delta;
         
         carsApiCall(populateMasiniShopGrid);
-       window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         
         
                  
