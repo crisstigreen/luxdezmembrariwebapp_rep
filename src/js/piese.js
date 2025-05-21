@@ -20,7 +20,6 @@ let allMarci = [];
 let allModels = [];
 let allGeneratii = []
 let IdSubCat = "";
-let Nivel = "";
 
 let selectedTip = '';
 let selectedCategorie = '';

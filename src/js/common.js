@@ -746,6 +746,24 @@ function ChangeLinkCateg(tip, categorie, subcategorie) {
     console.log("URL actualizat pentru categorie:", newPath);
 }
 
+function ChangeToPiese(tip, categorie, subcategorie) {
+    // Transformă valorile în format URL-friendly
+    let tipUrl = tip ? tip.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+    let categorieUrl = categorie ? categorie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+    let subcategorieUrl = subcategorie ? subcategorie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+
+    // Construiește URL-ul
+    let newPath = 'piese.html';
+    if (tipUrl) newPath += `/${tipUrl}`;
+    if (categorieUrl) newPath += `/${categorieUrl}`;
+    if (subcategorieUrl) newPath += `/${subcategorieUrl}`;
+
+    // Actualizează URL-ul fără reîncărcare
+    window.location({}, '', newPath);
+
+    console.log("URL actualizat pentru categorie:", newPath);
+}
+
 
 
 
