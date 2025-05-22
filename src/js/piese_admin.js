@@ -1,14 +1,23 @@
 ﻿
-let currentPage = 1;
-let totalPages = 1;
-let pageSize = 100; // Valoarea implicită
-let orderTerm = 'DESC'; // Implicit
-let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
+
 
 //PAGE LOAD 
 document.addEventListener('DOMContentLoaded', () => {
+    debugger;
    initializePage();
 });
+
+
+document.addEventListener('DOMContentLoaded', async function () {
+    debugger;
+    await generateDynamicMenu();
+});
+
+
+
+
+
+
 
 
 function initializePage() {
@@ -17,6 +26,10 @@ function initializePage() {
         return;
     }
 
+   
+
+
+    debugger;
     pieseApiCall(populateMainGrid); // Refresh grid
 
     // Reatașează evenimentele dacă trebuie (optional, vezi mai jos)
@@ -33,117 +46,6 @@ function initializePage() {
 }
 
 
-function populateMainGrid(data){
-    const rezultateTable = document.getElementById('rezultate-tabel');
-    rezultateTable.innerHTML = ''; // Resetează tabela
-    data.piese.forEach(piese => {
-        const piesaRow = `
-            <tr data-id="${piese.id}">
-                <td>${piese.id}</td>
-                <td>${piese.masina}</td>
-                <td>${piese.nume}</td>
-                <td>${piese.tipCaroserie}</td>
-                <td>${piese.pret}</td>
-                <td>${piese.discount}</td>
-                <td>
-                    <button class="edit-button" data-id="${piese.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
-                </td>
-                <td>
-                    <button class="delete-button" data-id="${piese.id}"><i class="fas fa-remove" style="font-size:14px"></i></button>
-                </td>
-            </tr>
-        `;
-        rezultateTable.innerHTML += piesaRow;
-    });
-
-    totalPages = data.totalPages; // Actualizează totalPages
-    updatePaginationControls(); // Actualizează controalele de paginare
-
-    // Adaugă eveniment pentru butoanele de editare
-    document.querySelectorAll('.edit-button').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.stopPropagation();
-            const id = this.getAttribute('data-id');
-            get_details(id); // Apelează funcția pentru a obține detaliile
-        });
-    });
-        // Adaugă eveniment pentru butoanele de delete
-    document.querySelectorAll('.delete-button').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.stopPropagation();
-            const id = this.getAttribute('data-id');
-            const link = `${API_BASE_URL}/Piese/` + id;  
-
-
-            Swal.fire({
-            title: 'Sunteți sigur?',
-            text: 'Această acțiune va șterge elementul definitiv.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Da, șterge!',
-            cancelButtonText: 'Anulează',
-            reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        debugger;
-                        //del(id, link);
-                        //showDeleteSuccessMessage();
-                        //initializePage();
-
-                        
-                         del(id, link).then(() => {
-                            showDeleteSuccessMessage();
-                            initializePage();
-                        }).catch((error) => {
-                            console.error('Eroare la ștergere:', error);
-                            Swal.fire('Eroare!', 'A apărut o eroare la ștergere.', 'error');
-                        });    
-
-
-
-                    }
-                });
-            });
-    });
-
-
-
-
-    //Swal.close();
-
-     // Întârzierea închiderii loader-ului
-     setTimeout(() => {
-        Swal.close(); // Închide loader-ul
-    }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
-
-
-}
-
-function updatePaginationControls() {
-    document.getElementById('page-info').innerText = `Page ${currentPage} of ${totalPages}`;
-    document.getElementById('prev-page').disabled = currentPage <= 1;
-    document.getElementById('next-page').disabled = currentPage >= totalPages;
-}
-
-function changePage(delta) {
-    if ((delta === -1 && currentPage > 1) || (delta === 1 && currentPage < totalPages)) {
-        currentPage += delta;
-        pieseApiCall(populateMainGrid);
-       // window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-}
-
-function changePageSize() {
-    pageSize = parseInt(document.getElementById('page-size').value);
-    currentPage = 1; // Resetăm la prima pagină
-    pieseApiCall(populateMainGrid);
-}
-
-function changeOrderBy() {
-    debugger;
-    orderTerm = document.getElementById('order_term').value;    
-    pieseApiCall(populateMainGrid);
-}
 
 async function get_details(id) {
     debugger;    
@@ -172,6 +74,13 @@ document.getElementById('cautaBtn').addEventListener('click', () => {
     currentPage = 1; // Resetăm la prima pagină
     pieseApiCall(populateMainGrid); // Apelează funcția de căutare
 });
+
+function filterMainGrid(){
+    debugger;
+    searchTerm = document.getElementById('tb_cauta').value.trim();
+    currentPage = 1; // Resetăm la prima pagină
+    pieseApiCall(populateMainGrid); // Apelează funcția de căutare
+}
 
 document.getElementById('exportBtn').addEventListener('click', async () => {
     debugger; 
@@ -258,4 +167,7 @@ window.addEventListener('pageshow', function(event) {
         window.location.reload();
     }
 });
+
+
+
 

@@ -116,17 +116,16 @@
 
 let currentPage = 1;
 let totalPages = 1;
-let pageSize = 4; // Valoarea implicită
+let pageSize = 100; // Valoarea implicită
 let orderTerm = 'DESC'; // Implicit
 let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
-let marca = "";
-let model = "";
-let generatie = "";
+
+
 
 document.addEventListener('DOMContentLoaded', async function () {
 
 
-    await carsApiCall(populateMasiniShopGrid);
+    //await carsApiCall(populateMasiniShopGrid);
 
     document.querySelectorAll(".link-masini").forEach(link => {
         link.addEventListener("click", function (event) {
@@ -137,7 +136,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     });
 
-    await pieseApiCall(populatePieseShopGrid);   
+
+     
 });
 function generateCarUrl(masina) {
     let marcaModelGeneratie = masina.nume
@@ -202,8 +202,12 @@ function onImageClick(idPiesa) {
 
 //POPULATE Masini GRID
 function populateMasiniShopGrid(data){
+    debugger;
     const rezultateDiv = document.getElementById('rezultateMasini');
-    rezultateDiv.innerHTML = '';
+    if(rezultateDiv != null){
+         rezultateDiv.innerHTML = '';
+    }  
+   
     //debugger;
     data.masiniReg.forEach(masina => {
        
@@ -239,9 +243,7 @@ function populateMasiniShopGrid(data){
 
     
     
-    
-         rezultateDiv.innerHTML += piesaHTML;
-
+        if(rezultateDiv != null){rezultateDiv.innerHTML += piesaHTML;}         
      });             
   
 

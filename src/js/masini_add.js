@@ -119,8 +119,8 @@ function populatePieseMasiniTable() {
 
             data.piese.forEach(piesa => {
                 const piesaRow = `
-                    <tr data-id="${piesa.idPiesa}">
-                        <td>${piesa.idPiesa}</td>
+                    <tr data-id="${piesa.id}">
+                        <td>${piesa.id}</td>
                         <td>${piesa.nume}</td>
                         <td>${piesa.nrOrdine}</td>
                         <td>${piesa.stoc}</td>
@@ -131,7 +131,7 @@ function populatePieseMasiniTable() {
                         <td>${calculatePretVanzare(piesa.pret, piesa.discount)}</td>
                         <td>${piesa.autovit}</td>
                          <td>
-                            <button class="edit-button" data-id="${piesa.idPiesa}"><i class="fas fa-edit" style="font-size:14px"></i></button>
+                            <button class="edit-button" data-id="${piesa.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
                         </td>
                     </tr>
                 `;
@@ -445,19 +445,27 @@ async function registerCar() {
  
     if (carId != null) {
         const updateResponse = 
-        await update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`);        
-        await uploadImagini(selectedFiles, carId, 'masini');
+        await update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`); 
+         if (selectedFiles && selectedFiles.length > 0) {
+            uploadImagini(selectedFiles, piesaId, 'masini');
+        }            
                                     
         //ORDINE PIESA - ATENTIE
         await salveazaOrdineaImaginilor(carId);       
-    } else {
-        const insertResponse = await insert(data, `${API_BASE_URL}/CarsRegister`);            
-        if (selectedFiles && selectedFiles.length > 0) {
-            await uploadImagini(selectedFiles, insertResponse.data.InsertedId, 'masini');
-            //window.location='masini_admin.html';
-        } 
-        else{
-            window.location='masini_admin.html';
+    } 
+    else {
+        const result = await insert(data, `${API_BASE_URL}/CarsRegister`);  
+        debugger;     
+        if(result.success){
+            const tipItem = 'masini';
+            const nouId = result.data.InsertedId;                
+            if (selectedFiles && selectedFiles.length > 0) {
+                await uploadImagini(selectedFiles, nouId, tipItem);
+                //window.location='masini_admin.html';
+            } 
+            else{
+                window.location='masini_admin.html';
+            }
         }
     }        
 }

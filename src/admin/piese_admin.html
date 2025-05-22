@@ -55,11 +55,17 @@
             </div>
         </div>
 
-        
+
+   
 
         <div id="menu-placeholder"></div>
 
         <div class="container_div">
+             <!-- meniu dinamic -->
+            <div class="row">                   
+                <nav class="menu" id="dynamicMenu">                        
+                </nav>                                                                          
+            </div>
 
               <!-- view -->
          <div class="row">
@@ -121,6 +127,7 @@
                                 <th>Pret</th>
                                 <th>Discount</th>
                                 <th>Edit</th> <!-- Coloana Edit -->
+                                <th>Delete</th> <!-- Coloana Edit -->
                             </tr>
                         </thead>
                         <tbody id="rezultate-tabel">
@@ -137,7 +144,7 @@
             </div>
 
      
-            
+        <input type="hidden" id="numeCatSelectata" name="custId" value="">
 
 
         </div>
@@ -169,6 +176,9 @@
     
   
     <script src="../js/piese_admin.js"></script>
+    
+
+    
     
 
     
