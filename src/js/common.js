@@ -6,6 +6,15 @@
 
 let prime = 0;
 
+let marca = "";
+let model = "";
+let generatie = "";
+let Nivel = "";
+
+var currentURL = window.location.href;
+
+
+
 async function get(link) {
     try {
         const response = await fetch(link, {
@@ -52,16 +61,12 @@ async function insert(data, link) {
 
         const result = await response.json();
         showInsertSuccessMessage();
-        //debugger;
+        debugger;
         return { success: true, data: result }; 
     } catch (error) {
         return { success: false, error: `Eroare: ${error.message}` };
     }
 }
-
-
-
-
 
 async function update(id, data, link) {
     try {
@@ -88,7 +93,6 @@ async function update(id, data, link) {
         return { success: false, error: `Eroare: ${error.message}` };
     }
 }
-
 
 async function del(id, link) {
     const url = link;
@@ -120,7 +124,7 @@ async function getCars(link) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        //debugger;
+        debugger;
         const cars = await response.json();
         populateDropdown(cars);
     } catch (error) {
@@ -128,13 +132,17 @@ async function getCars(link) {
     }
 }
 function pieseApiCall(callback) {
+    debugger;
+
+    window.topHtmlLoaded = Promise.resolve();
+
     window.topHtmlLoaded.then(() => {
         const input = document.getElementById('tb_cauta');
         if (!input) {
             console.warn('#tb_cauta not found yet');
             return;
         }
-
+    
         const searchTerm = input.value.trim(); // can be empty string
 
         let url = "";
@@ -162,6 +170,94 @@ function pieseApiCall(callback) {
             });
     });
 }
+
+function populateMainGrid(data){
+    debugger;
+    const rezultateTable = document.getElementById('rezultate-tabel');
+    rezultateTable.innerHTML = ''; // Resetează tabela
+    data.piese.forEach(piese => {
+        const piesaRow = `
+            <tr data-id="${piese.id}">
+                <td>${piese.id}</td>
+                <td>${piese.masina}</td>
+                <td>${piese.nume}</td>
+                <td>${piese.tipCaroserie}</td>
+                <td>${piese.pret}</td>
+                <td>${piese.discount}</td>
+                <td>
+                    <button class="edit-button" data-id="${piese.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
+                </td>
+                <td>
+                    <button class="delete-button" data-id="${piese.id}"><i class="fas fa-remove" style="font-size:14px"></i></button>
+                </td>
+            </tr>
+        `;
+        rezultateTable.innerHTML += piesaRow;
+    });
+
+    totalPages = data.totalPages; // Actualizează totalPages
+    updatePaginationControls(); // Actualizează controalele de paginare
+
+    // Adaugă eveniment pentru butoanele de editare
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const id = this.getAttribute('data-id');
+            get_details(id); // Apelează funcția pentru a obține detaliile
+        });
+    });
+        // Adaugă eveniment pentru butoanele de delete
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const id = this.getAttribute('data-id');
+            const link = `${API_BASE_URL}/Piese/` + id;  
+
+
+            Swal.fire({
+            title: 'Sunteți sigur?',
+            text: 'Această acțiune va șterge elementul definitiv.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Da, șterge!',
+            cancelButtonText: 'Anulează',
+            reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        debugger;
+                        //del(id, link);
+                        //showDeleteSuccessMessage();
+                        //initializePage();
+
+                        
+                         del(id, link).then(() => {
+                            showDeleteSuccessMessage();
+                            initializePage();
+                        }).catch((error) => {
+                            console.error('Eroare la ștergere:', error);
+                            Swal.fire('Eroare!', 'A apărut o eroare la ștergere.', 'error');
+                        });    
+
+
+
+                    }
+                });
+            });
+    });
+
+
+
+
+    //Swal.close();
+
+     // Întârzierea închiderii loader-ului
+     setTimeout(() => {
+        Swal.close(); // Închide loader-ul
+    }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
+
+
+}
+
 
 
 function populatePieseMasiniTable() {
@@ -208,12 +304,6 @@ function populatePieseMasiniTable() {
                     get_details(id); // Apelează funcția pentru a obține detaliile
                 });
             });
-
-
-            // Întârzierea închiderii loader-ului
-            // setTimeout(() => {
-            //     Swal.close(); // Închide loader-ul
-            // }, 200); // Rămâne deschis pentru 200 ms
 
         })
         .catch(error => {
@@ -268,16 +358,6 @@ function carsApiCall(callback) {
     //debugger;
     const url = `${API_BASE_URL}/CarsRegister/searchMasiniReg?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
     
-    // Afișează loaderul
-    // Swal.fire({
-    //     title: 'Loading...',
-    //     text: 'Please wait while we fetch the data.',
-    //     allowOutsideClick: false,
-    //     didOpen: () => {
-    //         Swal.showLoading();
-    //     }
-    // });
-
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -301,7 +381,7 @@ function carsApiCall(callback) {
 //**********  GET WITH CALL BACK ********************************************************************* */
 //**********  GET WITH CALL BACK ********************************************************************* */
 async function getCarsForDropdown(callback) {
-    ////debugger;
+    //debugger;
     try {
         const url = `${API_BASE_URL}/Cars/get`;
         const response = await fetch(url, {
@@ -319,7 +399,7 @@ async function getCarsForDropdown(callback) {
     }
 }
 async function getCarsPieseForDropdown(callback) {
-    ////debugger;
+    //debugger;
     try {
         const url = `${API_BASE_URL}/Cars/getCarsPiese`;
         const response = await fetch(url, {
@@ -336,6 +416,10 @@ async function getCarsPieseForDropdown(callback) {
         console.error('A apărut o eroare la apelarea API-ului:', error);
     }
 }
+
+
+
+
 
 
 async function getModelsForDropdown(marcaId, callback) {
@@ -405,7 +489,7 @@ function extractCarBrand(fullName) {
     return 'Unknown Brand'; // Dacă nu se găsește niciun brand
 }
 async function extractCarModel(fullName, brand) {
-    ////debugger;
+    //debugger;
     const brandEndIndex = fullName.indexOf(brand) + brand.length;
     let rest = fullName.substring(brandEndIndex).trim();
     
@@ -453,9 +537,9 @@ async function extractCarGeneratie(fullName, model) {
 //**********  POPULATE DD ********************************************************************* */
 //**********  POPULATE DD ********************************************************************* */
 function populateDropdown(cars) {
-    //debugger;
+    debugger;
     const dropdown = document.getElementById('ddd_cars');
-    dropdown.innerHTML = '<option value="">Marca</option>';
+    dropdown.innerHTML = '<option value="">Selecteaza marca</option>';
     cars.forEach(car => {
         const option = document.createElement('option');
         option.value = car.marcaID; // `id` corespunde `Id` din C#
@@ -466,8 +550,7 @@ function populateDropdown(cars) {
     const id = urlParams.get('id');
 }
 function populateModelsDropdown(models) {
-    //debugger;
-    var currentURL = window.location.href;
+    //debugger;    
     if(currentURL.includes("nomenclator")){         
         if (quill) {  
             setTimeout(() => {
@@ -477,7 +560,7 @@ function populateModelsDropdown(models) {
     }
    
     const dropdown = document.getElementById('ddd_models');
-    dropdown.innerHTML = '<option value="">Model</option>'; // Resetare dropdown
+    dropdown.innerHTML = '<option value="">Selecteaza modelul</option>'; // Resetare dropdown
     // Adaugă opțiunile din lista de modele
     models.items.forEach(model => {
         const option = document.createElement('option');
@@ -486,8 +569,7 @@ function populateModelsDropdown(models) {
         dropdown.appendChild(option);
     });
 }
-function populateGeneratiiDropdown(generatii) {
-    var currentURL = window.location.href;
+function populateGeneratiiDropdown(generatii) {    
     if(currentURL.includes("nomenclator")){        
         if (quill) {  
             setTimeout(() => {
@@ -496,7 +578,7 @@ function populateGeneratiiDropdown(generatii) {
         }
     }    
     const dropdown = document.getElementById('ddd_generatii');
-    dropdown.innerHTML = '<option value="">Generație</option>'; // Resetare dropdown
+    dropdown.innerHTML = '<option value="">Selecteaza generația</option>'; // Resetare dropdown
 
     // Adaugă opțiunile din lista de generații
     generatii.items.forEach(generatie => {
@@ -514,7 +596,7 @@ function populateGeneratiiDropdown(generatii) {
 const dddCarsElement = document.getElementById('ddd_cars');
 if (dddCarsElement) {
     dddCarsElement.addEventListener('change', function() {
-        //debugger;
+        debugger;
         const marcaId = this.value;
         var tbMarca = document.getElementById("tb_cars");
         if(tbMarca){
@@ -524,14 +606,18 @@ if (dddCarsElement) {
             getModelsForDropdown(marcaId, populateModelsDropdown);
         } else {
             // Curăță dropdown-ul de modele dacă nu este selectată nicio marcă
-            document.getElementById('ddd_models').innerHTML = '<option value="">Model</option>';
+            document.getElementById('ddd_models').innerHTML = '<option value="">Selectează modelul</option>';
         }
+
+        debugger;    
+        if(currentURL.includes("index")) {return};
+        handleMarcaChange(marcaId);
     });
 }
 const dddModelsElement = document.getElementById('ddd_models');
 if (dddModelsElement) {
     document.getElementById('ddd_models').addEventListener('change', function() {
-        //debugger;
+        debugger;
         const modelId = this.value;
         var tbModel = document.getElementById("tb_models");
         if(tbModel){
@@ -541,23 +627,24 @@ if (dddModelsElement) {
             getGeneratiiForDropdown(modelId, populateGeneratiiDropdown);
         } else {
             // Curăță dropdown-ul de generații dacă nu este selectat niciun model
-            document.getElementById('ddd_generatii').innerHTML = '<option value="">Generație</option>';
+            document.getElementById('ddd_generatii').innerHTML = '<option value="">Selectează generația</option>';
         }
+        if(currentURL.includes("index")) {return};
+        handleModelChange(modelId);
     });
 }
 
 const dddGeneratiiElement = document.getElementById('ddd_generatii');
 if (dddModelsElement) {
     document.getElementById('ddd_generatii').addEventListener('change', async function() {
-        //debugger;        
+        debugger;        
         var tbGeneratii = document.getElementById("tb_generatii");
         if(tbGeneratii){
             tbGeneratii.value = getSelectedText('ddd_generatii');  
         }  
         const generId = getSelectedValue('ddd_generatii');
         const link = `${API_BASE_URL}/Cars/GetGeneratiiByIdDesc?id=` + generId;  
-        const generatie = await get(link);
-        var currentURL = window.location.href;
+        const generatie = await get(link);        
         if(currentURL.includes("nomenclator")){            
             if (quill) {  
                 setTimeout(() => {
@@ -565,7 +652,9 @@ if (dddModelsElement) {
                 }, 0);
             }
             
-        }                             
+        }   
+        if(currentURL.includes("index")) {return};
+        handleGeneratieChange(modelId);
     });
 }
 
@@ -598,7 +687,7 @@ function populateCombustibilDropdown() {
         });
 }
 function populateTractiuneDropdown() {
-    ////debugger;
+    //debugger;
     const url =  `${API_BASE_URL}/InfoCars/GetTractiune`; 
     
     return fetch(url) // Returnează promisiunea
@@ -647,7 +736,7 @@ function populateTipCutieDropdown() {
         });
 }
 function populateCuloareDropdown() {
-    ////debugger;
+    //debugger;
     const url = `${API_BASE_URL}/InfoCars/GetCuloare`;
     
     return fetch(url)
@@ -672,7 +761,7 @@ function populateCuloareDropdown() {
         });
 }
 function populateTipCaroserieDropdown() {
-    ////debugger;
+    //debugger;
     const url = `${API_BASE_URL}/InfoCars/GetTipCaroserie`;
     
     return fetch(url)
@@ -746,169 +835,51 @@ function ChangeLinkCateg(tip, categorie, subcategorie) {
     console.log("URL actualizat pentru categorie:", newPath);
 }
 
-function ChangeToPiese(tip, categorie, subcategorie) {
-    // Transformă valorile în format URL-friendly
-    let tipUrl = tip ? tip.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
-    let categorieUrl = categorie ? categorie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
-    let subcategorieUrl = subcategorie ? subcategorie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
-
-    // Construiește URL-ul
-    let newPath = 'piese.html';
-    if (tipUrl) newPath += `/${tipUrl}`;
-    if (categorieUrl) newPath += `/${categorieUrl}`;
-    if (subcategorieUrl) newPath += `/${subcategorieUrl}`;
-
-    // Actualizează URL-ul fără reîncărcare
-    window.location({}, '', newPath);
-
-    console.log("URL actualizat pentru categorie:", newPath);
-}
 
 
 
-
-function handleMarcaChange(checkbox) {  //container este container ul tot
-    //debugger;
+function handleMarcaChange(marcaId) {  //container este container ul tot
+    debugger;
     currentPage = 1;
-    marca = checkbox.checked ? checkbox.nextSibling.textContent : "";
-    marcaId = checkbox.value;
     document.getElementById('tb_cauta').value = "";
-    if(checkbox.checked == false){
-        marcaId = 0;
-    }
     getDescriere('Marca',marcaId);
-
-    let marcaContainer;
-    let modelContainer; 
-    if (checkbox.closest('#filterSidebar')) {
-        modelContainer = document.getElementById('checkboxContainerModelSidebar'); // Containerul din bara laterală
-        marcaContainer = document.getElementById("checkboxContainerMarcaSidebar");
-    } else {
-        modelContainer = document.getElementById('checkboxContainerModel'); // Containerul principal
-        marcaContainer = document.getElementById("checkboxContainerMarca");
-    }    
-      marcaContainer.innerHTML = '';
-      modelContainer.innerHTML = '';
-    if (checkbox.checked) {
-              
-        const checkboxWrapper = document.createElement('div');
-        checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
-
-        const label = checkbox.nextSibling; // Obține eticheta asociată
-        checkboxWrapper.appendChild(checkbox);
-        checkboxWrapper.appendChild(label); // Adaugă eticheta
-        marcaContainer.appendChild(checkboxWrapper);        
-        getModelsForDropdown(marcaId, function(models) {
-            populateCheckboxesModel(models, modelContainer);
-        });
-    } else {
-        restoreMarcaCheckboxes(marcaContainer);
-    }
     model = "";
     generatie = "";
+    marca = getSelectedText('ddd_cars') == "Selecteaza marca" ? "" : getSelectedText('ddd_cars');
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
-        .then(data => {                
-            populateShopGrid(data);
+        .then(data => {    
+            debugger;     
+            if(currentURL.includes("piese")){
+                 populatePieseShopGrid(data);   
+            }
+            else{
+                populateMasiniShopGrid(data);
+            }       
+            
         })
         .catch(error => {
             console.error('Eroare la obținerea datelor:', error);
         });
-
-
     //COD LINK    
-    //debugger;    
-
-    
+    debugger;        
     ChangeLink(marca,model,generatie);
 }
 
-
-
-
-function restoreMarcaCheckboxes(container) {
-    //debugger;
-    populateCheckboxesMarca(allMarci,container);
-}
-// function populateCheckboxesMarca(cars, container) {
-//     ////debugger;
-//     allMarci = cars;
-//     cars.forEach(car => {
-//         const checkboxWrapper = document.createElement('div');
-//         checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
-
-//         const checkbox = document.createElement('input');
-//         checkbox.type = 'checkbox';
-//         checkbox.id = `marca_${car.marcaID}`; // Asigură-te că fiecare checkbox are un ID unic
-//         checkbox.value = car.marcaID; // ID-ul mărcii
-//         checkbox.addEventListener('change', function() {
-//             handleMarcaChange(this);
-//         });
-
-//         const label = document.createElement('label');
-//         label.htmlFor = `marca_${car.marcaID}`;
-//         label.textContent = car.marcaName;
-//         label.style.fontWeight = 'bold'; 
-//         label.style.color = '#007bff'; 
-//         label.style.marginLeft = '5px';                     
-//         label.style.fontSize = '15px';
-
-//         checkboxWrapper.appendChild(checkbox);
-//         checkboxWrapper.appendChild(label);
-
-//         container.appendChild(checkboxWrapper);
-//     });
-// }
-
-//------------------------------------------------
-
-function handleModelChange(checkbox) {
-    //debugger;
+function handleModelChange(modelId) {
+    debugger;
     currentPage = 1;
-    model = checkbox.checked ? checkbox.nextSibling.textContent : "";
-    modelId = checkbox.value;
     document.getElementById('tb_cauta').value = "";
-    if(checkbox.checked == false){                
-        getDescriere('Marca',marcaId);        
-    }
     getDescriere('Model',modelId);
-   
-    let modelContainer;  
-    let generatieContainer;
-
-    if (checkbox.closest('#filterSidebar')) {
-        modelContainer = document.getElementById('checkboxContainerModelSidebar'); // Containerul din bara laterală
-        generatieContainer = document.getElementById("checkboxContainerGeneratieSidebar");
-    } else {
-        modelContainer = document.getElementById('checkboxContainerModel'); // Containerul principal
-        generatieContainer = document.getElementById("checkboxContainerGeneratie");
-    }    
-    
-      modelContainer.innerHTML = '';
-      generatieContainer.innerHTML = '';
-
-    if (checkbox.checked) {
-        const checkboxWrapper = document.createElement('div');
-        checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
-
-        const label = checkbox.nextSibling; // Obține eticheta asociată
-        checkboxWrapper.appendChild(checkbox);
-        checkboxWrapper.appendChild(label); // Adaugă eticheta
-        modelContainer.appendChild(checkboxWrapper);
-
-        // Obține generațiile pentru modelul selectat
-        //getGeneratiiForDropdown(modelId, generatii => populateCheckboxesGeneratie(generatii, document.getElementById('checkboxContainerGeneratie')));
-        getGeneratiiForDropdown(modelId, function(generatii) {
-            populateCheckboxesGeneratie(generatii, generatieContainer);
-        });
-    } else {
-        // Restaurează lista completă de modele
-        restoreModelCheckboxes(modelContainer);
-    }
-    //debugger;
-    generatie = "";
+    generatie = "";    
+    model = getSelectedText('ddd_models') == "Selecteaza modelul" ? "" : getSelectedText('ddd_models');
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
-        .then(data => {                
-            populateShopGrid(data);
+        .then(data => {                           
+             if(currentURL.includes("piese")){
+                 populatePieseShopGrid(data);   
+            }
+            else{
+                populateMasiniShopGrid(data);
+            }       
         })
         .catch(error => {
             console.error('Eroare la obținerea datelor:', error);
@@ -917,79 +888,21 @@ function handleModelChange(checkbox) {
 
     ChangeLink(marca,model,generatie);
 }
-function restoreModelCheckboxes(container) {
-    populateCheckboxesModel(allModels,container);
-}
-function populateCheckboxesModel(models, container) {
-    //debugger;
-    allModels = models;
-    models.items.forEach(model => {
-        const checkboxWrapper = document.createElement('div');
-        checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = `model_${model.modelID}`; // Asigură-te că fiecare checkbox are un ID unic
-        checkbox.value = model.modelID; // ID-ul modelului
-        checkbox.addEventListener('change', function() {
-            handleModelChange(this);
-        });
-
-        const label = document.createElement('label');
-        label.htmlFor = `model_${model.modelID}`;
-        label.textContent = model.modelName;
-        label.style.fontWeight = 'bold'; 
-        label.style.color = '#007bff'; 
-        label.style.marginLeft = '5px';                     
-        label.style.fontSize = '15px';
-
-        checkboxWrapper.appendChild(checkbox);
-        checkboxWrapper.appendChild(label);
-
-        container.appendChild(checkboxWrapper);
-    });
-}
 //------------------------------------------------
-
 function handleGeneratieChange(checkbox,container) {
     currentPage = 1;
-    generatie = checkbox.checked ? checkbox.nextSibling.textContent : "";
-    generatieId = checkbox.value;
     document.getElementById('tb_cauta').value = "";
-
-    if(checkbox.checked == false){                
-        getDescriere('Model',modelId);        
-    }
     getDescriere('Generatie',generatieId);
-
-    let generatieContainer;
-
-    if (checkbox.closest('#filterSidebar')) {        
-        generatieContainer = document.getElementById("checkboxContainerGeneratieSidebar");
-    } else {        
-        generatieContainer = document.getElementById("checkboxContainerGeneratie");
-    }  
-    generatieContainer.innerHTML = '';
-
-    if (checkbox.checked) {
-        const checkboxWrapper = document.createElement('div');
-        checkboxWrapper.style.marginBottom = '10px'; // Adaugă spațiu între checkbox-uri
-
-        const label = checkbox.nextSibling; // Obține eticheta asociată
-        checkboxWrapper.appendChild(checkbox);
-        checkboxWrapper.appendChild(label); // Adaugă eticheta
-
-        generatieContainer.appendChild(checkboxWrapper);
-
-    } else {
-        // Restaurează lista completă de generații
-        restoreGeneratieCheckboxes(generatieContainer);
-    }
-    //cristi fields
-    //debugger;
+    generatie = getSelectedText('ddd_generatii');
+    generatie = getSelectedText('ddd_generatii') == "electează generația" ? "" : getSelectedText('ddd_generatii');
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {                
-            populateShopGrid(data);
+             if(currentURL.includes("piese")){
+                 populatePieseShopGrid(data);   
+            }
+            else{
+                populateMasiniShopGrid(data);
+            }       
         })
         .catch(error => {
             console.error('Eroare la obținerea datelor:', error);
@@ -1001,7 +914,7 @@ function restoreGeneratieCheckboxes(container) {
     populateCheckboxesGeneratie(allGeneratii,container);
 }
 function populateCheckboxesGeneratie(generatii,container) {
-    //debugger;
+    debugger;
     allGeneratii = generatii;    
 
     generatii.items.forEach(generatie => {
@@ -1054,7 +967,6 @@ function getSelectedText(dropdownId) {
     }
     return null;
 }
-
 
 async function setSelectedValue(selectId, value) {
 
@@ -1258,7 +1170,7 @@ async function getDescriere(numeTabel,id){
     ////debugger; 
     const link = `${API_BASE_URL}/InfoCars/GetDescriere?numeTabel=` + numeTabel + `&id=` + id;
     const desc = await get(link);
-    if(desc != null){
+        if(desc != null && document.getElementById('p_descriere') != null){
         document.getElementById('p_descriere').innerHTML = desc.descriere;
     }    
 }
@@ -1280,49 +1192,48 @@ async function  sku_gen(controlId) {
 }   */
 
 //autocomplete
-document.addEventListener('DOMContentLoaded', function () {
-    ////debugger;
-    // var currentURL = window.location.href;	
-    // if(currentURL.includes("masini_add") || currentURL.includes("piese_add")){ 
-    //     $("#tb_nume").autocomplete({
-    //         source: function (request, response) {
-    //             const url = `${API_BASE_URL}/Piese/get_autocomplete?searchTerm=${request.term}`;
-    //             $.ajax({
-    //                 url: url,
-    //                 method: "GET",
-    //                 success: function (data) {
-    //                     const results = data.map(item => ({
-    //                         label: item.numeSubCat, 
-    //                         value: item.id         
-    //                     }));
-    //                     response(results); 
-    //                 },
-    //                 error: function () {
-    //                     console.error("Nu am putut obține rezultatele pentru autocomplete.");
-    //                 }
-    //             });
-    //         },
-    //         minLength: 2, 
-    //         delay: 300, 
+document.addEventListener('DOMContentLoaded', function () {    
+    //debugger;        
+    if(currentURL.includes("masini_add") || currentURL.includes("piese_add")){ 
+        $("#tb_nume").autocomplete({
+            source: function (request, response) {
+                const url = `${API_BASE_URL}/Piese/get_autocomplete?searchTerm=${request.term}`;
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    success: function (data) {
+                        const results = data.map(item => ({
+                            label: item.numeSubCat, 
+                            value: item.id         
+                        }));
+                        response(results); 
+                    },
+                    error: function () {
+                        console.error("Nu am putut obține rezultatele pentru autocomplete.");
+                    }
+                });
+            },
+            minLength: 2, 
+            delay: 300, 
     
-    //         select: function (event, ui) {
-    //             //debugger;
-    //             event.preventDefault();
-    //             $(this).val(ui.item.label);
-    //             console.log("ID selectat:", ui.item.value);
-    //             setCategoriiAutocomplete(ui.item.value);
-    //         },
-    //         focus: function (event, ui) {
-    //             event.preventDefault();
-    //             $(this).val(ui.item.label);
-    //         }
-    //     });
-    // }  
+            select: function (event, ui) {
+                debugger;
+                event.preventDefault();
+                $(this).val(ui.item.label);
+                console.log("ID selectat:", ui.item.value);
+                setCategoriiAutocomplete(ui.item.value);
+            },
+            focus: function (event, ui) {
+                event.preventDefault();
+                $(this).val(ui.item.label);
+            }
+        });
+    }  
    
 });
 
 async function setCategoriiAutocomplete(id) {
-    //debugger;
+    debugger;
     const link = `${API_BASE_URL}/Piese/get_categorii_autocomplete?idSubCat=` + id;
     const things = await get(link);
 
@@ -1393,8 +1304,225 @@ if (slides.length > 0 && dots.length > 0) {
     showSlide(currentSlide);
 }
 
+async function generateDynamicMenu() {
+    debugger;
+    try {
+        const link = `${API_BASE_URL}/InfoCars/GetMenuItems`;
+        const response = await fetch(link);
+        const menuItems = await response.json();
+        const menu = document.getElementById('dynamicMenu');
+        const categoriiTipMap = new Map();
+        const categoriiMap = new Map();
+
+        menuItems.forEach(item => {
+            const tipId = item.CategoriiTipId;
+            const tipNume = item.CategoriiTipNume;
+            const catId = item.CategoriiId;
+            const catNume = item.CategoriiNume;
+            const subId = item.CategoriiSubId;
+            const subNume = item.CategoriiSubNume;
+
+            if (tipId && tipNume) {
+                if (!categoriiTipMap.has(tipId)) {
+                    const tipElement = document.createElement('div');
+                    tipElement.classList.add('menu-item');
+
+                    const hasChildren = menuItems.some(mi => mi.CategoriiTipId === tipId && Number.isInteger(mi.CategoriiId) && mi.CategoriiNume);
+
+                    tipElement.innerHTML = `<a href="#" class="menu-link">${tipNume}${hasChildren ? '&nbsp;<i class="arrow down"></i>' : ''}</a><div class="submenu"></div>`;
+                    menu.appendChild(tipElement);
+                    categoriiTipMap.set(tipId, tipElement.querySelector('.submenu'));
+
+                    tipElement.querySelector('.menu-link').addEventListener('click', function () {
+                        debugger;
+                        handleMenuClick('tip', tipId, tipNume);   
+                        
+                    });
+                }
+
+                if (Number.isInteger(catId) && catNume) {
+                    if (!categoriiMap.has(catId)) {
+                        const catElement = document.createElement('div');
+                        catElement.classList.add('submenu-item');
+                        catElement.dataset.catId = catId;
+
+                        const hasSubChildren = menuItems.some(mi => mi.CategoriiId === catId && Number.isInteger(mi.CategoriiSubId) && mi.CategoriiSubNume);
+
+                        catElement.innerHTML = `<a href="#" class="menu-link">${catNume}${hasSubChildren ? ' <i class="arrow right"></i>' : ''}</a><div class="subsubmenu"></div>`;
+                        categoriiTipMap.get(tipId).appendChild(catElement);
+                        categoriiMap.set(catId, catElement.querySelector('.subsubmenu'));
+
+                        catElement.querySelector('.menu-link').addEventListener('click', function () {                            
+                            handleMenuClick('categorie', catId, catNume, tipNume); // trimitem tipNume ca părinte
+                        });
+                    }
+
+                    if (Number.isInteger(subId) && subNume) {
+                        const subElement = document.createElement('div');
+                        subElement.classList.add('subsubmenu-item');
+                        subElement.innerHTML = `<a href="#" class="menu-link">${subNume}</a>`;
+                        categoriiMap.get(catId).appendChild(subElement);
+
+                        subElement.querySelector('.menu-link').addEventListener('click', function () {
+                            handleMenuClick('subcategorie', subId, subNume, tipNume, catNume); // trimitem ambii părinți
+                        });
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Eroare la generarea meniului dinamic:', error);
+    }
+}
+
+
+async function handleMenuClick(level, id, name, parentTip = '', parentCategorie = '') {
+    debugger;
+    document.getElementById("numeCatSelectata").value = name;
+    if (level === 'tip') {
+        selectedTip = name;
+        selectedCategorie = '';
+        selectedSubcategorie = '';
+        Nivel = 1;
+        getDescriere("CategoriiTip", id);
+    } else if (level === 'categorie') {
+        selectedTip = parentTip;
+        selectedCategorie = name;
+        selectedSubcategorie = '';
+         Nivel = 2;
+        getDescriere("Categorii", id);
+    } else if (level === 'subcategorie') {
+        selectedTip = parentTip;
+        selectedCategorie = parentCategorie;
+        selectedSubcategorie = name;
+        Nivel = 3
+        getDescriere("CategoriiSub", id);
+    }
+
+    IdSubCat = id;
+
+    try {
+        let link = `${API_BASE_URL}/InfoCars/GetMenuItems?level=${level}&id=${id}`;
+        const response = await fetch(link);
+        const items = await response.json();
+
+        console.log(`Filtrare pentru ${name} la nivelul ${level}`);
+        console.log(items);
+
+        // 🔥 aici construiești linkul complet
+        ChangeLinkCateg(selectedTip, selectedCategorie, selectedSubcategorie);
+    } catch (error) {
+        console.error('Eroare la filtrarea pieselor:', error);
+    }
+
+     populateApiPath();
+     
+}
+
+function populateApiPath(){
+        debugger;
+        if(marca == "" && model == "" && generatie == "" && IdSubCat == null && Nivel == null){
+            pieseApiCall(populateShopGrid);                       
+        }
+        else if(IdSubCat != null){            
+            pieseApiCallBySubcat(IdSubCat, Nivel, currentPage, pageSize, orderTerm)
+            .then(data => {              
+                if(!currentURL.includes("admin")){
+                    populateShopGrid(data);
+                }  
+                else{
+                    populateMainGrid(data);
+                }
+               
+            })
+                .catch(error => {
+                    console.error('Eroare la obținerea datelor:', error);
+            });    
+        }
+        else{
+            
+            pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
+            .then(data => {     
+                 if(!currentURL.includes("admin")){
+                    populateShopGrid(data);
+                }           
+                else{
+
+                }
+                
+            })
+                .catch(error => {
+                    console.error('Eroare la obținerea datelor:', error);
+            });     
+        }                    
+}
+
+function pieseApiCallBySubcat(idSubCat, nivel, currentPage, pageSize, orderTerm) {          
+      const url = `${API_BASE_URL}/Piese/get_by_subcat` +
+        `?IdCategorie=${encodeURIComponent(idSubCat)}` +
+        `&Nivel=${encodeURIComponent(nivel)}` +
+        `&PageNumber=${encodeURIComponent(currentPage)}` +
+        `&PageSize=${encodeURIComponent(pageSize)}` +
+        `&OrderBy=${encodeURIComponent(orderTerm)}`;
+    
+
+    // Arătăm loader-ul în timp ce așteptăm răspunsul
+    Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait while we fetch the data.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    // Facem fetch la API
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Eroare la obținerea datelor');
+            }
+            return response.json();
+        })
+        .then(data => {
+            Swal.close(); // Ascundem loader-ul după primirea datelor
+            return data;  // Returnăm datele primite (obiectul cu Piese și TotalPages)
+        })
+        .catch(error => {
+            document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
+            Swal.close();
+            throw error;
+        });
+}
 
 
 
+
+function updatePaginationControls() {
+    document.getElementById('page-info').innerText = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('prev-page').disabled = currentPage <= 1;
+    document.getElementById('next-page').disabled = currentPage >= totalPages;
+}
+
+function changePage(delta) {
+    if ((delta === -1 && currentPage > 1) || (delta === 1 && currentPage < totalPages)) {
+        currentPage += delta;
+        pieseApiCall(populateMainGrid);
+       // window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function changePageSize() {
+    debugger;
+    pageSize = parseInt(document.getElementById('page-size').value);
+    currentPage = 1; // Resetăm la prima pagină
+    pieseApiCall(populateMainGrid);
+}
+
+function changeOrderBy() {
+    debugger;
+    orderTerm = document.getElementById('order_term').value;    
+    pieseApiCall(populateMainGrid);
+}
 
 

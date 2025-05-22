@@ -7,16 +7,12 @@ let totalPages = 1;
 let pageSize = 12; // Valoarea implicită
 let orderTerm = 'DESC'; // Implicit
 let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
-let marca = "";
-let model = "";
-let generatie = "";
 
 
 
-
-window.onload = function() {
- document.getElementById('link-Masini').classList.add('active');
-}
+// window.onload = function() {
+//  document.getElementById('link-Masini').classList.add('active');
+// }
 
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -26,7 +22,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
     document.getElementById('next-page').addEventListener('click', () => changePage(1));
 
+    debugger;
     await carsApiCall(populateMasiniShopGrid);
+    
+
+     getCarsPieseForDropdown(function(cars) {
+        debugger;
+        populateDropdown(cars);
+    });
+
 
     document.querySelectorAll(".block-4-text a, .block-4-image a").forEach(link => {
         link.addEventListener("click", function (event) {

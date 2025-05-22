@@ -9,9 +9,8 @@ let totalPages = 1;
 let pageSize = 12; // Valoarea implicită
 let orderTerm = 'DESC'; // Implicit
 let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
-let marca = "";
-let model = "";
-let generatie = "";
+
+
 let marcaId = null;
 let modelId = null;
 let generatieId = null;
@@ -25,24 +24,30 @@ let selectedTip = '';
 let selectedCategorie = '';
 let selectedSubcategorie = '';
 
-window.onload = function() {
- document.getElementById('link-Piese').classList.add('active');
-}
+// window.onload = function() {
+//  document.getElementById('link-Piese').classList.add('active');
+// }
 
 window.addEventListener('DOMContentLoaded', () => {
     const pathSegments = window.location.pathname.split('/').filter(segment => segment);
-
     // Dacă avem mai mult de 1 segment în path (ex: cutii-de-viteze/suport-cutii-viteze)
     if (pathSegments.length > 1) {
         window.location.href = '/index.html';
-    }
-   
-
+    }   
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
     document.getElementById('next-page').addEventListener('click', () => changePage(1));
 
     pieseApiCall(populatePieseShopGrid);   
+
+    debugger;
+    getCarsPieseForDropdown(function(cars) {
+        debugger;
+        populateDropdown(cars);
+    });
 });
+
+
+
 
 //get cars
 // document.addEventListener('DOMContentLoaded', function() {
@@ -145,14 +150,16 @@ window.addEventListener('DOMContentLoaded', () => {
 //**********  CAUTARE ********************************************************************* */
 
 // document.getElementById('cautaBtn').addEventListener('click', () => {
-//     //debugger;
+//     debugger;
 //     searchTerm = document.getElementById('tb_cauta').value.trim();
 //     currentPage = 1; // Resetăm la prima pagină
 //     pieseApiCall(populateShopGrid);       
 // });
+
+
 // document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
 //     if (event.key === 'Enter') {
-//         //debugger;
+//         debugger;
 //         searchTerm = event.target.value.trim();
 //         currentPage = 1; // Resetăm la prima pagină
 //         pieseApiCall(populateShopGrid);
@@ -193,7 +200,6 @@ function generatePiesaUrl(piesa) {
     const rezultateDiv = document.getElementById('rezultatePiese');
     rezultateDiv.innerHTML = '';
     debugger;
-    //cristi testache
     
     data.piese.forEach(piesa => {
       
@@ -247,12 +253,27 @@ function generatePiesaUrl(piesa) {
      });             
     totalPages = data.totalPages; // Actualizează totalPages
     updatePaginationControls(); // Actualizează controalele de paginare
+
+        // Adaugă eveniment pentru butoanele de editare
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const id = this.getAttribute('data-id');
+            debugger;
+            get_details(id); // Apelează funcția pentru a obține detaliile
+        });
+    });
+     // Întârzierea închiderii loader-ului
+     setTimeout(() => {        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
+
 }
 
 
 
 function onImageClick(idPiesa) {
-    //debugger;
+    debugger;
     var pretText = document.getElementById(`piesaPret-${idPiesa}`).innerText;
     var pret = parseInt(pretText.match(/\d+/)[0]); // Extrage doar numărul din text        
     var imagini = document.getElementById(`piesaImagine-${idPiesa}`).src;
@@ -280,20 +301,10 @@ function onImageClick(idPiesa) {
 
  // Funcția API GET DATE pentru a căuta piese după Marca, Model și Generatie
  function pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm) {
-    //debugger;    
+    debugger;    
     if(marca == ""){model = ""; generatie = "";}
     if(model == ""){generatie = "";}                       
     const url = `${API_BASE_URL}/Piese/search_fields?Marca=${encodeURIComponent(marca)}&Model=${encodeURIComponent(model)}&Generatie=${encodeURIComponent(generatie)}&IdSubCat=${encodeURIComponent(IdSubCat)}&Nivel=${encodeURIComponent(Nivel)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
-
-    // Afișează loaderul
-    // Swal.fire({
-    //     title: 'Loading...',
-    //     text: 'Please wait while we fetch the data.',
-    //     allowOutsideClick: false,
-    //     didOpen: () => {
-    //         Swal.showLoading();
-    //     }
-    // });
 
     return fetch(url)
         .then(response => {
@@ -310,6 +321,45 @@ function onImageClick(idPiesa) {
         .catch(error => {            
             document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
             //Swal.close(); // Ascunde loaderul la eroare
+            throw error;
+        });
+}
+
+
+function pieseApiCallBySubcat(idSubCat, nivel, currentPage, pageSize, orderTerm) {          
+      const url = `${API_BASE_URL}/Piese/get_by_subcat` +
+        `?IdCategorie=${encodeURIComponent(idSubCat)}` +
+        `&Nivel=${encodeURIComponent(nivel)}` +
+        `&PageNumber=${encodeURIComponent(currentPage)}` +
+        `&PageSize=${encodeURIComponent(pageSize)}` +
+        `&OrderBy=${encodeURIComponent(orderTerm)}`;
+    
+
+    // Arătăm loader-ul în timp ce așteptăm răspunsul
+    Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait while we fetch the data.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    // Facem fetch la API
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Eroare la obținerea datelor');
+            }
+            return response.json();
+        })
+        .then(data => {
+            Swal.close(); // Ascundem loader-ul după primirea datelor
+            return data;  // Returnăm datele primite (obiectul cu Piese și TotalPages)
+        })
+        .catch(error => {
+            document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
+            Swal.close();
             throw error;
         });
 }

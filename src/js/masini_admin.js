@@ -8,10 +8,7 @@
     document.getElementById('order_term').addEventListener('change', () => changeOrderBy());
 });
 
-let currentPage = 1;
-let totalPages = 1;
-let pageSize = 100; // Valoarea implicită
-let orderTerm = 'DESC'; // Implicit
+
 
 
 function updateResultsTable(data) {
@@ -101,7 +98,6 @@ function changeOrderBy() {
 
 //**********  cautare ********************************************************************* */
 
-let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
 
 document.getElementById('cautaBtn').addEventListener('click', () => {

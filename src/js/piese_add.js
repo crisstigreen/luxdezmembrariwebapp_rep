@@ -159,6 +159,7 @@ async function registerPiesa() {
     var imagini = ""; 
     var motorizare = document.getElementById("tb_motorizare").value;
     var codMotor = document.getElementById("tb_codMotor").value;
+    var remarks = document.getElementById("tb_remarks").value;
 
     //debugger;
     const piesaId = getQueryParam('id');
@@ -186,7 +187,8 @@ async function registerPiesa() {
         modelId,
         generatieId,
         motorizare,
-        codMotor
+        codMotor,
+        remarks
     };
 
  
@@ -336,6 +338,7 @@ async function populateOtherFields(data) {
 
     document.getElementById('tb_motorizare').value = data.motorizare || '';
     document.getElementById('tb_codMotor').value = data.codMotor || '';
+    document.getElementById('tb_remarks').value = data.remarks || '';
 
     
     var valuta = data.pret.substring(data.pret.indexOf(' ') + 1);

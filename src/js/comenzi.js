@@ -6,11 +6,6 @@
     document.getElementById('order_term').addEventListener('change', () => changeOrderBy());
 });
 
-let currentPage = 1;
-let totalPages = 1;
-let pageSize = 100; // Valoarea implicită
-let orderTerm = 'ASC'; // Implicit
-
 
 function updateResultsTable() {
     const url = `${API_BASE_URL}/Orders/search?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
@@ -117,7 +112,6 @@ function changeOrderBy() {
 
 //**********  cautare ********************************************************************* */
 
-let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
 
 document.getElementById('cautaBtn').addEventListener('click', () => {
