@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /cart.html
+Disallow: /checkout.html
+Disallow: /myaccount.html
+Disallow: /user-orders.html
+Disallow: /order-details.html
+Disallow: /thankyou.html
+
+Allow: /
+
+Sitemap: http://localhost/sitemap.xml

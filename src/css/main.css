@@ -47,6 +47,7 @@ body,html{
 }
 p{
     font-weight: 500;
+    line-height: 140%;
 }
 a{
     text-decoration: none;
@@ -60,6 +61,10 @@ a{
     width: 100%;
     font-family: "Montserrat", sans-serif;
      font-size: 1rem;
+     font-weight: 500;
+}
+.form-input:focus{
+    border:0.094rem solid var(--color-yellow);
 }
 .form-input::placeholder{ 
     color: var(--color-black); 
@@ -865,6 +870,209 @@ section{
 #intrebari .banner-reduceri-vertical, #intrebari .banner-piese-vertical{
     grid-column: span 3;
 }
+#video{
+  position: relative;
+  height: 40vh;
+}
+#video video{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+#video::after{
+  content:'';
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: var(--color-black);
+  opacity: 0.8;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+#video .title{
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+   transform: translate(-50%, -50%);
+   width: 100%;
+}
+#video .title h1{
+    font-weight: 500;
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 4.188rem);
+    color:var(--color-white);
+}
+#video .title h1 span{
+  color:var(--color-yellow);
+  font-weight: 900;
+}
+#video .title p{
+    font-size: 1.125rem;
+    color:var(--color-white);
+    text-align: center;
+    margin-top: var(--space-2);
+}
+.about{
+  margin-top:var(--space-8);
+  display: flex;
+   align-items: center;
+   padding: 0 calc(2 * var(--base-padding-x ));
+}
+.about .image{
+  width: 50%;
+}
+.about img{
+  display: flex;
+  max-height: 43rem;
+}
+.about > .text{
+    display: flex;
+    width:50%;
+    flex-direction: column;
+}
+.about .flag-img{
+  margin-left:-15rem;
+}
+.about .box-img{
+  margin-left:-9rem;
+}
+.about > .text h2{
+  font-size: clamp(2rem, 4vw, 4.188rem);
+}
+.about hr{
+  margin-bottom: var(--space-2);
+  margin-top:var(--space-2);
+}
+.about p {
+  margin-bottom: var(--space-2);
+   
+}
+.contact{
+  padding: 0 calc(2 * var(--base-padding-x));
+  display: flex;
+  gap:var(--space-12);
+  margin-top:var(--space-14);
+}
+.contact-info{
+  width: calc(35% - var(--space-3));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.contact-info h3{
+  font-size: clamp(0.875rem, 1vw, 1rem);
+  font-weight: 500;
+}
+.contact-info h3 span{
+  font-weight: 600;
+}
+.contact-info img{
+  margin-bottom: var(--space-2);
+}
+.contact-info div:nth-last-of-type(1) > div{
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  margin-bottom: var(--space-1);
+}
+.contact-info div:nth-last-of-type(1) > div span{
+  font-weight: 600;
+}
+.program{
+  display: flex;
+  flex-direction: column;
+}
+.contact-form{
+  position: relative;
+  width: calc(65% - var(--space-3));
+}
+.contact-form::before{
+    content: '';
+    display: block;
+    position: absolute;
+    left:-4rem;
+    top:0;
+    width: 1px;
+    height: 100%;
+    background-color: var(--color-black);
+}
+.contact-form h2{
+     font-size: clamp(1.5rem, 2vw, 2.25rem);
+     margin-bottom: var(--space-3);
+     
+}
+#contactForm{
+       display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap:var(--space-3)
+}
+.contact-form .col-6{
+    grid-column: span 6;
+}
+.contact-form .col-12{
+    grid-column: span 12;
+}
+.contact-form label{
+    font-size:1rem;
+    font-weight: 500;
+}
+.contact-form label span{
+    color: var(--color-red);
+}
+.contact-form .form-input{
+    margin-top:var(--space-1);
+}
+.contact-form textarea{
+  height: 10rem;
+}
+.map-responsive{
+  margin-top:var(--space-14);
+  height: 38rem;
+  padding: 0 calc(2 * var(--base-padding-x ));
+
+}
+#map {
+    grid-column: span 12;
+  height: 100%;
+  width: 100%;
+    border-radius: var(--space-1);
+}
+.intrebari-contact{
+   padding: 0 calc(2 * var(--base-padding-x ));
+   gap: var(--space-6);
+}
+.intrebari-contact .title{
+  grid-column: span 3;
+ 
+}
+.intrebari-contact .title p{
+  text-align: left;
+}
+.politica:nth-of-type(1){
+  margin-top:var(--space-8);
+}
+.politica{
+  padding: 0 calc(2 * var(--base-padding-x ));
+  margin-bottom: var(--space-5);
+}
+.politica a{
+  display: block;
+  color:var(--color-black);
+  font-weight: 500;
+  text-decoration: underline;
+  line-height: 180%;
+}
+.offset{
+  margin-left:var(--space-3);
+}
+.politica h2{
+  margin-bottom: var(--space-2);
+}
 /* Layout END*/
 
 /* Banners */
@@ -1168,11 +1376,9 @@ section{
   grid-column: span 9;
   font-family: 'Montserrat', sans-serif;
 }
-
 .accordion-item {
  position: relative;
 }
-
 .accordion-header {
   background: #f9f9f9;
   border: none;
@@ -1188,7 +1394,6 @@ section{
   align-items: center;
   margin-bottom: var(--space-2);
 }
-
 .accordion-header::after {
   content: "";
   position: absolute;
@@ -1199,12 +1404,9 @@ section{
   font-size: 14px;
   transition: transform 0.3s ease;
 }
-
 .accordion-header.active::after {
   transform: rotate(180deg);
 }
-
-
 .accordion-body {
   max-height: 0;
   overflow: hidden;
@@ -1214,19 +1416,19 @@ section{
   color: var(--color-black);
   font-weight: 500;
 }
-
 .accordion-body.show {
   padding: var(--space-2);
   max-height: 500px; /* enough to show content */
+  margin-bottom: var(--space-2);
 }
 /* Accordions END*/
 
 
 /*MENU DE REFACUT */
-/* Stiluri pentru meniu */
+
 .menu {
   display: flex;
-  background-color: #4a4a4a; /* Culoare mai deschisă pentru fundal */
+  background-color: #4a4a4a; 
 }
 
 .menu-item {
