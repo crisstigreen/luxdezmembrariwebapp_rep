@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>Piese Auto Dezmembrări | LuxDezmembrari.ro - Calitate Premium</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="LuxDezmembrari.ro oferă piese auto second-hand premium, livrare rapidă și garanție a calității pentru orice tip de vehicul. Comandă acum!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/top.js"></script>
+      
+</head>
+<body>
+    <section id="auth">
+        <div>
+          <h1>Ești client nou?</h1> 
+          <p>Bine ai venit la LuxDezmembrari! Dacă ești pentru prima dată aici, te invităm să te înscrii și să devii parte din comunitatea noastră de clienți fideli. Înregistrându-te, vei beneficia de numeroase avantaje accesând contul tău personal.</p> 
+          <a href="register.html" class="btn-primary">Crează un cont nou <img src="images/PersonAdd.svg" alt="Cont Nou"></a>
+        </div>
+        <div class="auth-form">
+          <h2>Ai deja cont ?</h2> 
+          <p>Autentifică-te pentru a avea acces la contul tău.</p>
+          <div>
+            <label>E-mail</label>
+            <input type="text" class="form-input" id="tb_user" onclick="verifRemoveRed('tb_user')" name="tb_user" placeholder="Adresa ta de email">
+            <p id="user_error" class="text-danger"></p>
+          </div>
+          <div>
+             <label>Parola</label>
+             <input type="password" class="form-input" id="tb_pass" onclick="verifRemoveRed('tb_pass')" name="tb_pass" placeholder="Parola ta">
+             <p id="pass_error" class="text-danger"></p>
+          </div>
+          <div>
+             <a href="resetpassword.html">Ai uitat parola ?</a>
+             <button id="bt_login" onclick="login()" class="btn-primary" value="Login">Autentificare <img src="images/LockOpen.svg" alt="Autentificare"></button>
+          </div>
+        </div>
+    </section>
+ 
+
+    <script src="js/config.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/common.js"></script>
+  <script src="js/topload.js"></script> 
+  <script src="js/footer.js"></script>
+    
+
+</body>
+</html>

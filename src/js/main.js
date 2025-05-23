@@ -116,7 +116,7 @@
 
 let currentPage = 1;
 let totalPages = 1;
-let pageSize = 100; // Valoarea implicită
+let pageSize = 4; // Valoarea implicită
 let orderTerm = 'DESC'; // Implicit
 let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
@@ -125,7 +125,7 @@ let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 document.addEventListener('DOMContentLoaded', async function () {
 
 
-    //await carsApiCall(populateMasiniShopGrid);
+    await carsApiCall(populateMasiniShopGrid);
 
     document.querySelectorAll(".link-masini").forEach(link => {
         link.addEventListener("click", function (event) {
@@ -135,6 +135,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             loadCarDetails(newUrl);
         });
     });
+
+
 
 
      

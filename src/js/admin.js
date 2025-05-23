@@ -52,11 +52,11 @@ function loginUser() {
                 }
                 
                 // Afișăm mesajul de eroare corespunzător
-                Swal.fire(
-                    'Eroare!',
-                    errorMessage,
-                    'error'
-                );
+                // Swal.fire(
+                //     'Eroare!',
+                //     errorMessage,
+                //     'error'
+                // );
                 //throw new Error(errorMessage); // Oprim execuția ulterioară
             });
         }
@@ -343,6 +343,7 @@ function validareRegister() {
     var user = document.getElementById("tb_user").value;
     if (user == "") {
         document.getElementById('user_error').innerText = 'Numele de utilizator nu poate fi gol.';
+         document.getElementById('user_error').style.display ="block";
         isValid = false;
         verifRed('tb_user');
     } else if (user.length < 3) {
@@ -355,6 +356,7 @@ function validareRegister() {
     var pass = document.getElementById("tb_pass").value;
     if (pass == "") {
         document.getElementById('pass_error').innerText = 'Parola nu poate fi goală.';
+        document.getElementById('pass_error').style.display ="block";
         isValid = false;
         verifRed('tb_pass');
     } else {
@@ -501,6 +503,9 @@ function validareLogin() {
     let isValid = true;
 
     // Reset error messages
+            document.getElementById('pass_error').style.display ="none";
+            document.getElementById('user_error').style.display ="none";
+
     document.getElementById('user_error').innerText = '';
     document.getElementById('pass_error').innerText = '';
 
@@ -508,10 +513,12 @@ function validareLogin() {
     var user = document.getElementById("tb_user").value;
     if (user == "") {
         document.getElementById('user_error').innerText = 'Numele de utilizator nu poate fi gol.';
+        document.getElementById('user_error').style.display ="block";
         isValid = false;
         verifRed('tb_user');
     } else if (user.length < 3) {
         document.getElementById('user_error').innerText = 'Numele de utilizator trebuie să aibă cel puțin 3 caractere.';
+        document.getElementById('user_error').style.display ="block";
         isValid = false;
         verifRed('tb_user');
     }
@@ -520,12 +527,14 @@ function validareLogin() {
     var pass = document.getElementById("tb_pass").value;
     if (pass == "") {
         document.getElementById('pass_error').innerText = 'Parola nu poate fi goală.';
+        document.getElementById('pass_error').style.display ="block";
         isValid = false;
         verifRed('tb_pass');
     } else {
         var passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
         if (!passRegex.test(pass)) {
             document.getElementById('pass_error').innerText = 'Parola trebuie să aibă cel puțin 8 caractere, o literă mare, o literă mică, un număr și un caracter special (inclusiv _).';
+            document.getElementById('pass_error').style.display ="block";
             isValid = false;
             verifRed('tb_pass');
         }

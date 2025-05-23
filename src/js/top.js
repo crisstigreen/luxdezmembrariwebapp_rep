@@ -21,12 +21,38 @@ window.topHtmlLoaded = fetch('../top.html')
                 GetUser(userId).then(user => {                
                     var username = sessionStorage.getItem('username');
 
+                    const userAuth = document.getElementById('user_auth');
+                    const img = userAuth.querySelector('img');  
+                    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+                    document.getElementById('contul-meu').style.display ='none';
+
                     if(user.roleID == 2){ //user                
                         document.getElementById('link-Admin').style.display = 'none';
-                    }
                     
+                     
+                    }
+                 
+                     userAuth.style.display='flex';
+                     const usernameText = document.createTextNode(user.username + ' ');
+                     userAuth.insertBefore(usernameText, img);
+
                     // document.getElementById("userName").innerText = "User: " + username;
-                    // document.getElementById("userId").innerText = userId;                                      
+                    // document.getElementById("userId").innerText = userId;  
+                    
+                    
+                    userAuth.addEventListener('click', function(event) {
+                    event.preventDefault(); 
+                    dropdownMenu.classList.toggle('show');
+                    event.stopPropagation();
+                    });
+
+                    
+                    document.addEventListener('click', function(event) {
+                    if (!dropdownMenu.contains(event.target) && !userAuth.contains(event.target)) {
+                        dropdownMenu.classList.remove('show');
+                    }
+                    });
 
                     //debugger;
                     var username = document.getElementById("tb_user");
@@ -63,6 +89,7 @@ window.topHtmlLoaded = fetch('../top.html')
     }).catch(error => {
         console.error('Eroare la încărcarea top.html:', error);
     });
+
 
 
 // document.addEventListener("DOMContentLoaded", function () {
@@ -174,6 +201,10 @@ function logout(){
     debugger;
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('username');
+    document.getElementById('contul-meu').style.display ='flex';
+    document.getElementById('user_auth').style.display ='none';
+    const menu = document.querySelector('.dropdown-menu');
+     menu.classList.remove('show');
 }
 
 
