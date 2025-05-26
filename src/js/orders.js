@@ -61,26 +61,23 @@ async function GetTVA() {
 function populateOrderTable() {
     debugger;
     const items = getCartItems(); // Assuming getCartItems() returns the current items in the cart
-    const tableBody = document.querySelector('.site-block-order-table tbody');
-    tableBody.innerHTML = ''; // Clear existing content
+    const summaryContainer = document.getElementById('summary-container');
+    summaryContainer.innerHTML = ''; 
         
     items.forEach(item => {
-        const row = document.createElement('tr');
-
-        const imgSrc = item.imageUrl ? item.imageUrl : '/images/placeholder.jpg';
-
-        row.innerHTML = `            
-            <td>
-                <img src="${item.imagini}" alt="${item.name}" class="img-thumbnail" style="height: 100px;">
-            </td>
-            <td class='checkoutProd'>
-                ${item.quantity} <strong class="mx-2">x</strong> ${item.name}
-            </td>
-            
-            <td class='checkoutProd'>${item.pretTotal.toFixed(2)} RON</td>
+     const itemHtml = `
+            <div class="row-cart" data-item-id="${item.id}">
+                <div class="col-7">
+                <p>
+                ${item.quantity > 1 ? `${item.quantity} x ` : ''}${item.name} ${item.masina}
+                </p>
+                </div>
+                <div class="col-5">
+                    <h4>${item.pret * item.quantity}<span>RON</span></h4> 
+                </div>
+            </div>
         `;
-        tableBody.appendChild(row);
-        //debugger;
+        summaryContainer.innerHTML += itemHtml;
 
         orderItems.push({
             orderID: 0, 
@@ -98,14 +95,11 @@ function populateOrderTable() {
         totalSum += item.pretTotal;
     });
 
-    // Add total row
-    const totalRow = document.createElement('tr');
-    totalRow.innerHTML = `
-        <td></td>
-        <td class="text-black font-weight-bold checkoutTotal"><strong>Total</strong></td>
-        <td class="text-black font-weight-bold checkoutTotal"><strong>${totalSum.toFixed(2)} RON</strong></td>
-    `;
-    tableBody.appendChild(totalRow);    
+    const totalPrice = items.reduce((sum, item) => {
+        const itemTotal = item.pret * item.quantity;
+        return sum + itemTotal;
+    }, 0);
+   document.getElementById('pretTotal').innerHTML = `${totalPrice.toFixed(0)}<span>RON</span>`;
 }
 
 //get customer by email

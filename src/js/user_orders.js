@@ -221,14 +221,14 @@ let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
 document.getElementById('cautaBtn').addEventListener('click', () => {
     debugger;
-    searchTerm = document.getElementById('tb_cauta').value.trim();
+    searchTerm = document.getElementById('tb_cauta_comanda').value.trim();
     currentPage = 1; // Resetăm la prima pagină
     //updateResultsTable(); // Apelează funcția de căutare
     fetchOrders();
 });
 
 
-document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
+document.getElementById('tb_cauta_comanda').addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
         searchTerm = event.target.value.trim();
         currentPage = 1; // Resetăm la prima pagină
@@ -249,5 +249,29 @@ async function get_details(id) {
         //document.getElementById('detaliiPiesa').innerText = 'Piesa nu a fost găsită.';
     }
 }
+
+/*Menu de navigare pentru contul utilizatorului*/
+ document.addEventListener('DOMContentLoaded', function () {
+    const links = document.querySelectorAll('.myaccount-link');
+    const accountDetails = document.getElementById('account-details');
+    const orders = document.getElementById('orders');
+
+    links.forEach((link, index) => {
+      link.addEventListener('click', () => {
+        // Toggle "active" class
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+
+        // Show appropriate section
+        if (index === 0) {
+          accountDetails.style.display = 'block';
+          orders.style.display = 'none';
+        } else {
+          accountDetails.style.display = 'none';
+          orders.style.display = 'block';
+        }
+      });
+    });
+  });
 
 

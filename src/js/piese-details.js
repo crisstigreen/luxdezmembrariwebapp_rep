@@ -1,4 +1,6 @@
 ﻿// PAGE LOAD
+let MAX_QUANTITY = 1;
+let MIN_QUANTITY = 1;
 
 window.onload = function() {
     //debugger;
@@ -79,7 +81,7 @@ function loadPiesa(piesaId) {
                 document.getElementById('detaliiPiesa').innerText = 'Piesa nu a fost găsită.';
                 return;
             }
-                console.log('Piesa:', piesa);  
+            MAX_QUANTITY = piesa.stoc;
             // Afișează detaliile piesei
             document.getElementById('piesaMeniu').innerText = piesa.nume;
             document.getElementById('piesaTitlu').textContent = piesa.nume;
@@ -101,10 +103,11 @@ function loadPiesa(piesaId) {
             }
 
             const pretFaraRON = piesa.pret.replace('RON', '').trim();
-            document.getElementById('piesaPret').innerHTML = `${pretFaraRON}<span>RON/buc</span>`;
+            document.getElementById('piesaPret').innerHTML = `${pretFaraRON} <span>RON/buc</span>`;
             document.getElementById('piesaSku').textContent = piesa.skU_Id;
             document.getElementById('piesaCodMotor').textContent = piesa.codMotor;
             document.getElementById('piesaMotorizare').textContent = piesa.motorizare;
+
 
             const carImages = piesa.imagini || [];
             const carouselInner = document.getElementById('carousel-inner');
@@ -168,36 +171,36 @@ function loadPiesa(piesaId) {
 
 //celelalte
 
-function openImageModal(imageSrc) {
-    var modalImage = document.getElementById('modalImage');
-    modalImage.src = imageSrc;
-    $('#imageModal').modal('show');
-}
+// function openImageModal(imageSrc) {
+//     var modalImage = document.getElementById('modalImage');
+//     modalImage.src = imageSrc;
+//     $('#imageModal').modal('show');
+// }
   // Adaugă evenimentele de click după ce elementele au fost adăugate în DOM
-  document.querySelectorAll('.js-btn-minus, .js-btn-plus').forEach(button => {        
-    button.addEventListener('click', function() {    
-        debugger;    
-        const action = this.getAttribute('data-action');                        
-        updateQuantity(action);        
-    });
-});
+//   document.querySelectorAll('.js-btn-minus, .js-btn-plus').forEach(button => {        
+//     button.addEventListener('click', function() {    
+//         debugger;    
+//         const action = this.getAttribute('data-action');                        
+//         updateQuantity(action);        
+//     });
+// });
 
-function updateQuantity(action){
-    debugger;
-    var count = parseInt(document.getElementById('quantity-input').value);
-    if(action == 'plus')
-    {
-        count++;
-    }
-    else if (count > 1){
-        count--;
-    }
+// function updateQuantity(action){
+//     debugger;
+//     var count = parseInt(document.getElementById('quantity-input').value);
+//     if(action == 'plus')
+//     {
+//         count++;
+//     }
+//     else if (count > 1){
+//         count--;
+//     }
     
-    var pret = parseInt(document.getElementById('piesaPret').innerText); 
-    var total = count * pret;
+//     var pret = parseInt(document.getElementById('piesaPret').innerText); 
+//     var total = count * pret;
     
-    document.getElementById('piesaPretTotal').innerText = total + " RON";
-}
+//     document.getElementById('piesaPretTotal').innerText = total + " RON";
+// }
 
 document.getElementById('addToCart').addEventListener('click', () => {
     debugger;            
@@ -206,7 +209,7 @@ document.getElementById('addToCart').addEventListener('click', () => {
     var pretTotal = pret;        
     var firstImageElement = document.querySelector('#carousel-inner img');    
     var firstImageSrc = firstImageElement ? firstImageElement.src : null;
-           
+    var quantity = document.getElementById(`quantity-input`).value     
     var imagini = firstImageSrc;
 
     var masina = document.getElementById('piesaMasina').innerText;    
@@ -218,7 +221,7 @@ document.getElementById('addToCart').addEventListener('click', () => {
         const product = {
             id: piesaId,
             name: piesaTitlu,                        
-            quantity: 1,
+            quantity: quantity,
             pret: pret,
             pretTotal: pretTotal,
             imagini: imagini,
@@ -261,19 +264,23 @@ document.querySelectorAll('.accordion-header').forEach(header => {
 
 
 //Event for quantity input
-  function increase() {
+ function increase() {
     const input = document.getElementById("quantity-input");
     let value = parseInt(input.value, 10);
-    input.value = value + 1;
-  }
+
+    if (value < MAX_QUANTITY) {
+        input.value = value + 1;
+    }
+}
 
   function decrease() {
     const input = document.getElementById("quantity-input");
     let value = parseInt(input.value, 10);
-    if (value > 1) {
-      input.value = value - 1;
+
+    if (value > MIN_QUANTITY) {
+        input.value = value - 1;
     }
-  }
+}
 
 
 

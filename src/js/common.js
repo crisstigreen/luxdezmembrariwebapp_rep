@@ -251,9 +251,9 @@ function populateMainGrid(data){
     //Swal.close();
 
      // Întârzierea închiderii loader-ului
-     setTimeout(() => {
-        Swal.close(); // Închide loader-ul
-    }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
+    //  setTimeout(() => {
+    //     Swal.close(); // Închide loader-ul
+    // }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
 
 
 }
