@@ -937,7 +937,7 @@ section{
 }
 .about img{
   display: flex;
-  max-height: 43rem;
+  max-height:39rem;
 }
 .about > .text{
     display: flex;
