@@ -37,6 +37,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    transition: 0.3s ease all;
 }
 body,html{
     padding:0;
@@ -481,7 +482,7 @@ section{
     gap: var(--space-2);
 }
 .trust-item h2{
-    font-size: clamp(1.5rem, 2vw, 1.75rem);
+    font-size: clamp(1.5rem, 1.8vw, 1.75rem);
     color: var(--color-black);
     font-weight: 900;
 }
@@ -497,7 +498,7 @@ section{
     gap:var(--space-2);
 }
 .title h2{
-    font-size: clamp(2rem, 4vw, 4.188rem);
+   font-size: clamp(1.5rem, 3.7vw, 4.188rem);
     color: var(--color-black);
     font-weight: 500;
 }
@@ -546,7 +547,7 @@ section{
      margin-bottom: var(--space-4); 
 }
 .card-body h3 a{
-    font-size: clamp(1rem, 2vw, 1.313rem);
+    font-size: clamp(1rem, 1.5vw, 1.313rem);
     color: var(--color-black);
     font-weight: 500;
     margin-top:var(--space-3);   
@@ -587,7 +588,7 @@ section{
      width:50%;
 }
 .card-footer h4{
-    font-size: clamp(2rem, 3vw, 3rem);
+    font-size: clamp(2rem, 2.5vw, 3rem);
     font-weight: 900;
 }
 .card-footer h4 span{
@@ -615,7 +616,7 @@ section{
     padding: var(--space-5);
 }
 .categorii-item > div > h3{
-     font-size: clamp(1rem, 2vw, 1.313rem);
+     font-size: clamp(1rem, 1.5vw, 1.313rem);
      color:var(--color-yellow);
      font-weight: 900;
 }
@@ -642,7 +643,7 @@ section{
 }
 #title h1{
     grid-column: span 12;
-    font-size: clamp(2rem, 4vw, 4.188rem);
+      font-size: clamp(1.5rem, 3.7vw, 4.188rem);
     color: var(--color-black);
     font-weight: 500;
     text-align: center;
@@ -807,7 +808,7 @@ section{
     grid-column: span 12;
 }
 .cumpara-form h4{
-    font-size: clamp(2rem, 3vw, 3rem);
+    font-size: clamp(2rem, 2.5vw, 3rem);
     font-weight: 900;
 }
 .cumpara-form h4 span{
@@ -816,7 +817,7 @@ section{
     color: var(--color-black);
 }
 .cumpara-form h5{
-    font-size: clamp(1.5rem, 2vw, 1.75rem);
+    font-size: clamp(1.5rem, 1.8vw, 1.75rem);
     color: var(--color-black);
     font-weight: 900;
 }
@@ -844,6 +845,7 @@ section{
     gap:var(--space-1);
     border-radius: var(--space-1);
     width: fit-content;
+     font-size: 0.875rem;
 }
 .group-price-qty{
     display: flex;
@@ -913,7 +915,7 @@ section{
 #video .title h1{
     font-weight: 500;
     text-align: center;
-    font-size: clamp(2rem, 4vw, 4.188rem);
+     font-size: clamp(1.5rem, 3.7vw, 4.188rem);
     color:var(--color-white);
 }
 #video .title h1 span{
@@ -951,7 +953,7 @@ section{
   margin-left:-9rem;
 }
 .about > .text h2{
-  font-size: clamp(2rem, 4vw, 4.188rem);
+  font-size: clamp(1.5rem, 3.7vw, 4.188rem);
 }
 .about hr{
   margin-bottom: var(--space-2);
@@ -1086,6 +1088,7 @@ section{
 }
 
 #auth div:nth-of-type(1){
+  grid-column-start: 2;
   grid-column: span 5;
 
 }
@@ -1153,7 +1156,7 @@ section{
   font-weight: 600;
 }
 #register h1{
-  font-size: clamp(2rem, 4vw, 4.188rem);
+  font-size: clamp(1.5rem, 3.7vw, 4.188rem);
 }
 #register-form{
   background-color: var(--color-white);
@@ -1178,7 +1181,12 @@ section{
   grid-column: span 6;
   display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+ 
+}
+#register-form .display-inline{
+     flex-direction: row;
+    align-items: center;
+    gap: var(--space-1);
 }
 #register-form .col-12{
   grid-column: span 12;
@@ -1201,14 +1209,14 @@ section{
   grid-column-end: span 8;
 }
 #account-details h1, #orders h1, #cart h1{
-    font-size: clamp(2rem, 4vw, 4.188rem);
+   font-size: clamp(1.5rem, 3.7vw, 4.188rem);
     font-weight: 900;
     margin-bottom: var(--space-3);
 }
 .myaccount-link {
   display: flex;
   align-items: center;
-    font-size: clamp(1rem, 2vw, 1.313rem);
+    font-size: clamp(1rem, 1.5vw, 1.313rem);
     font-weight: 500;
     column-gap: var(--space-1);
     margin-bottom: var(--space-2);
@@ -1240,7 +1248,7 @@ section{
 #cart h1{
   grid-column-start: 2;
   grid-column-end: span 10;
-  font-size: clamp(2rem, 4vw, 4.188rem);
+   font-size: clamp(1.5rem, 3.7vw, 4.188rem);
     font-weight: 900;
     margin-bottom: var(--space-3);
     margin-top: var(--space-5);
@@ -1267,7 +1275,7 @@ section{
   grid-column: span 3;
 }
 .cart-header {
-  font-size: clamp(1rem, 2vw, 1.313rem);
+  font-size: clamp(1rem, 1.5vw, 1.313rem);
   font-weight: 900;
   margin-bottom: var(--space-2);
     padding-bottom: var(--space-2);
@@ -1360,7 +1368,7 @@ section{
   margin-bottom: var(--space-2);
 }
 .cart-summary h2{
- font-size: clamp(1rem, 2vw, 1.313rem);
+ font-size: clamp(1rem, 1.5vw, 1.313rem);
   font-weight: 900;
   margin-bottom: var(--space-2);
     padding-bottom: var(--space-2);
@@ -1446,7 +1454,9 @@ section{
 .checkout-container .col-6 .form-radio:nth-of-type(1){
   margin-top: var(--space-3);
 }
-
+.self-align-end{
+  align-self: flex-end;
+}
 /* Layout END*/
 
 /* Dropdown Menu */
@@ -1511,7 +1521,7 @@ section{
 
 }
 .banner-reduceri h2{
-    font-size: clamp(2rem, 4vw, 4.188rem);
+     font-size: clamp(1.5rem, 3.7vw, 4.188rem);
     color: var(--color-white);
     font-weight: 900;
 }
@@ -1542,7 +1552,7 @@ section{
 }
 .banner-piese h2{
    color:var(--color-white);
-    font-size: clamp(2rem, 4vw, 4.188rem);
+      font-size: clamp(1.5rem, 3.7vw, 4.188rem);
     font-weight: 500;
     text-align: center;
 }
@@ -1582,7 +1592,7 @@ section{
 }
 .banner-piese-vertical h2{
     color:var(--color-white);
-    font-size: clamp(2rem, 4vw, 3.188rem);
+    font-size: clamp(1.5rem, 4vw, 3.188rem);
     font-weight: 500;
     text-align: center;
 }
@@ -1603,7 +1613,7 @@ section{
      min-height: 38rem;
 }
 .banner-reduceri-vertical h2{
-    font-size: clamp(2rem, 4vw, 3.188rem);
+    font-size: clamp(1.5rem, 4vw, 3.188rem);
     color: var(--color-white);
     font-weight: 900;
 }
@@ -1667,7 +1677,7 @@ section{
 }
 .testimonial-text {
     margin-top: var(--space-1);
-    font-size: clamp(1rem, 2vw, 1.313rem);
+    font-size: clamp(1rem, 1.5vw, 1.313rem);
     max-width: 50rem;
 }
 .dots {
@@ -1805,7 +1815,7 @@ section{
   width: 100%;
   text-align: left;
   padding: var(--space-2);
-  font-size: clamp(1.5rem, 2vw, 1.75rem);
+  font-size: clamp(1rem, 1.8vw, 1.75rem);
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -1841,6 +1851,532 @@ section{
   margin-bottom: var(--space-2);
 }
 /* Accordions END*/
+
+
+
+
+@media screen and (min-width: 1366px) and (max-width: 1641px) {
+
+  .btn-primary, .btn-secondary, .btn-outline{
+    font-size: 0.75rem;
+  }
+
+.card{
+  padding: var(--space-1);
+}
+.card-image figure, .card-image figure img{
+  height: 10.25rem;
+}
+.card-footer{
+  margin-top: var(--space-4);
+}
+.card-body h3{
+  margin-top:var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.card-footer a:nth-of-type(1){
+  width: 45%;
+}
+.card-footer a:last-of-type{
+  width: 55%;
+}
+
+.categorii-item img{
+  width: 45%;
+}
+.categorii-item > div{
+  width: 45%;
+}
+.categorii-item > div > a{
+  font-size: 0.875rem;;
+}
+.masini-details, .piese-details, .cumpara-form, .solicita-form, .filter-area, .filtre, .categorii-item, .cart-container, .cart-summary{
+  padding: var(--space-3);
+}
+
+.details p{
+  font-size: 0.875rem;
+}
+.masini-details > .carousel, .piese-details > .carousel{
+  width: 50%;
+}
+.form-input, .form-select{
+  font-size: 0.875rem;
+}
+.piese-details{
+  grid-column: span 8;
+}
+.cumpara-form{
+  grid-column: span 4;
+}
+.piese-info{
+  column-gap: var(--space-2);
+}
+#video{
+  height:37vh;
+}
+.about img{
+  max-height: 31rem;
+}
+.accordion-header{
+  font-size: 1.4rem;
+}
+#cart h1{
+  grid-column-start: 1;
+}
+.cart-container, .checkout-container{
+  grid-column-start: 1;
+  grid-column-end: span 8;
+}
+#register-form, #register > div{
+  grid-column-start: 2;
+  grid-column-end: span 10;
+}
+.cart-summary{
+  grid-column: span 4;
+}
+#myaccount > div:first-of-type{
+  grid-column-start: 1;
+  grid-column-end: span 3;
+}
+}
+
+
+@media  screen and (min-width: 1024px) and (max-width: 1365px) {
+   .btn-primary, .btn-secondary, .btn-outline{
+    font-size: 0.75rem;
+  }
+.masini-details, .piese-details, .cumpara-form, .solicita-form, .filter-area, .filtre, .categorii-item, .cart-container, .cart-summary{
+  padding: var(--space-2);
+}
+.car-area div{
+  width: 65%;
+}
+.car-area{
+  padding: var(--space-3);
+}
+p{
+  font-size: 0.875rem;
+}
+  .trust-area{
+    flex-wrap: wrap;
+    padding: var(--space-2);
+  }
+  .trust-item{
+    width: calc(50% - var(--space-2));
+    flex: auto;
+  }
+  .card{
+    grid-column: span 6;
+  }
+  .testimonial-slider{
+    height: 18rem;
+  }
+  .banner-reduceri
+  {
+    padding: var(--space-3);
+  }
+  .form-input, .form-select{
+  font-size: 0.875rem;
+}
+.categorii-item{
+  flex-direction: column;
+}
+.categorii-item > img{
+  width: 60%;
+}
+.accordion-header{
+  font-size: 1.2rem;
+}
+footer .logo{
+  width: 10rem;
+}
+.masini-details{
+  flex-direction: column;
+}
+.solicita-form{
+  height: fit-content;
+}
+.solicita-form .col-6{
+  grid-column: span 12;
+}
+.accordion{
+  grid-column: span 8;
+}
+.testimonial-content{
+  padding: var(--space-9);
+}
+#intrebari .banner-reduceri-vertical, #intrebari .banner-piese-vertical{
+  grid-column: span 4;
+}
+.banner-reduceri-vertical{
+  min-height: 31rem;
+      background-position: 0 -22%;
+}
+.banner-piese-vertical{
+  min-height: 31rem;
+}
+.accordion-header::after{
+  width: var(--space-4);
+  height: var(--space-4);
+}
+.accordion-header::after{
+  background-size: var(--space-4);
+}
+.side-bar{
+  grid-column: span 4;
+}
+.rezultateMasini{
+  grid-column: span 8;
+}
+.rezultateMasini .card-wrapper > .card{
+  grid-column: span 6;
+}
+.card-footer{
+  flex-direction: column;
+  align-items: flex-start;
+    margin-top: var(--space-4);
+}
+.card-footer a{
+  width: 100%;
+}
+.card-image figure, .card-image figure img{
+  height: 10.25rem;
+}
+
+.card-body h3{
+  margin-top:var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.piese-details{
+  flex-direction: column;
+    grid-column: span 7;
+}
+.cumpara-form{
+  grid-column: span 5;
+  height: fit-content;
+}
+.about img{
+  max-height: 23rem;
+}
+.about .flag-img{
+  margin-left: -6rem;
+}
+.about .box-img{
+  margin-left: -4rem;
+}
+#video{
+  height: 37vh;
+}
+#auth div:nth-of-type(1) .btn-primary{
+  width: 80%;
+}
+#auth .auth-form{
+  padding: var(--space-3);
+}
+#myaccount > div:first-of-type{
+  grid-column-start: 1;
+  grid-column-end: span 3;
+}
+#register-form{
+  padding: var(--space-3);
+}
+#cart h1{
+  grid-column-start: 1;
+}
+.cart-container, .checkout-container{
+  grid-column-start: 1;
+  grid-column-end: span 8;
+}
+#register-form, #register > div{
+  grid-column-start: 2;
+  grid-column-end: span 10;
+}
+.cart-summary{
+  grid-column: span 4;
+}
+.row-cart a{
+  font-size: 0.875rem;
+}
+}
+
+@media screen and  (min-width: 768px) and (max-width: 1023px) {
+  :root{
+     --base-padding-x: max(2vw, 24px);
+  }
+  .top-bar-left, .top-bar-right, .top-bar a, .top-bar div, .btn-primary, .btn-secondary, .btn-outline{
+    font-size: 0.75rem;
+  }
+   .middle-bar-right a, .form-input, .form-select,#register p, label, .search-input, p, .breadcrumb-wrapper a{
+  font-size: 0.875rem;
+  }
+  .title h2, #video .title h1, #register h1{
+    font-size: clamp(1.5rem, 5vw, 4.188rem);
+  }
+  #myaccount, #cart, #auth, #checkout{
+    margin-top:var(--space-3);
+  }
+  #title h1{
+    margin-top:var(--space-3);
+    margin-bottom: var(--space-2);
+        font-size: clamp(1.5rem, 5vw, 4.188rem);
+  }
+  .cart-summary h4 span, .cart-summary p{
+    font-size: 0.875rem;
+  }
+  #cart h1{
+    grid-column-start: 1;
+  }
+  .row-cart a{
+    font-size: 0.875rem;
+  }
+  .cart-container{
+    grid-column-start: 1;
+    grid-column-end: span 12;
+    padding: var(--space-3);
+    
+  }
+  .checkout-container{
+    grid-column-start: 1;
+    grid-column-end:span 12;
+  }
+  .cart-summary{
+    padding: var(--space-3);
+    grid-column: span 12;
+  }
+  #auth div:nth-of-type(1) .btn-primary{
+    width: 100%;
+  }
+  #auth .auth-form{
+    grid-column-start: 6;
+  }
+  .auth-form .btn-primary{
+    width: 50%;
+  }
+  #account-details{
+    grid-column-start: 5;
+  }
+  #register-form{
+    padding: var(--space-2);
+  }
+  #myaccount > div:first-of-type{
+    grid-column-start: 1;
+    grid-column-end: span 4;
+    display: flex;
+    flex-direction: column;
+  }
+  #register-form, #register > div{
+    grid-column-start: 1;
+    grid-column-end: span 12;
+  }
+  .contact, .map-responsive, .intrebari-contact{
+        padding: 0 var(--base-padding-x);
+  }
+  .piese-details, .cumpara-form{
+    grid-column: span 12;
+    padding: var(--space-2);
+  }
+  .cumpara-form .btn-primary{
+    width: 15rem;
+  }
+  #shop-container{
+    margin-top:var(--space-4);
+  }
+  .middle-bar-left img{
+       width: 10rem;
+  }
+  #auth .auth-form{
+    padding: var(--space-2);
+  }
+  .categorii-item > div > a{
+    font-size: 0.875rem;
+  }
+  .filtre{
+    padding: var(--space-2);
+  }
+  .side-bar, .rezultateMasini, .masini-details, .solicita-form{
+    grid-column: span 12;
+  }
+  .rezultateMasini .card-wrapper > .card{
+    grid-column: span 6;
+  }
+  .masini-details{
+    padding: var(--space-2);
+    gap:var(--space-2);
+  }
+ .accordion{
+  grid-column: span 8;
+ }
+ .accordion-body{
+  font-size: 0.875rem;
+ }
+ .accordion-header{
+  padding-right: var(--space-5);
+ }
+ .accordion-header::after{
+  width: var(--space-3);
+  height: var(--space-3);
+  background-size: var(--space-3);
+ }
+ .masini-details > .carousel, .piese-details > .carousel{
+  width: 50%;
+}
+.banner-reduceri-vertical{
+  min-height: 20rem;
+  height: 29rem;
+  background-position: 0 -26%;
+}
+.banner-piese-vertical{
+  min-height: 20rem;
+  height: 29rem;
+}
+.intrebari-contact .title{
+  grid-column: span 4;
+}
+.contact{
+  gap:var(--space-6);
+}
+.contact-form::before{
+  left:-1.5rem;
+}
+.piese-info{
+  column-gap: var(--space-2);
+}
+#video{
+  height: 23vh;
+}
+#video .title p{
+  font-size: 0.875rem;
+  margin-top:0;
+}
+.contact-info div:nth-last-of-type(1) > div span{
+  font-size: 0.75rem;
+}
+.contact-form label{
+  font-size: 0.875rem;
+}
+.about img{
+  max-height: 17rem;
+}
+.about .flag-img{
+  margin-left:-5rem;
+}
+
+.about .box-img{
+  margin-left: -3rem;
+}
+#carousel-inner{
+  height: 220px;
+}
+  .solicita-form{
+    padding: var(--space-2);
+  }
+  .banners{
+    flex-direction: row;
+  }
+  #intrebari .banner-reduceri-vertical, #intrebari .banner-piese-vertical{
+    grid-column: span 4;
+  }
+  .side-bar .banner-piese-vertical, .side-bar .banner-reduceri-vertical{
+    width: calc(50% - var(--space-2));
+    min-height: 10rem;
+    height: 13rem;
+  }
+  .side-bar .banner-reduceri-vertical{
+    background-position: 0;
+  }
+  .filter-area{
+    padding: var(--space-2);
+    grid-column: span 5;
+  }
+  .filter-area h2:nth-of-type(2){
+    margin-top:var(--space-6)
+  }
+  .car-area{
+    padding: var(--space-2);
+      grid-column: span 7;
+  }
+  .car-area div{
+    width: 80%;
+  }
+    .trust-area{
+    flex-wrap: wrap;
+    padding: var(--space-2);
+  }
+  .trust-item{
+    width: calc(50% - var(--space-2));
+    flex: auto;
+  }
+  .trust-item img{
+    width: 3rem;
+  }
+  #masini, #piese, #testimoniale, #categorii, #intrebari, .map-responsive, .contact{
+    margin-top:var(--space-10);
+  }
+  .card-wrapper{
+    margin-top:var(--space-4);
+  }
+   .card{
+    grid-column: span 6;
+  }
+  .card-footer, #banners, .categorii-wrapper{
+    margin-top:var(--space-4);
+  }
+  .card-body h3{
+        margin-top: var(--space-1);
+    margin-bottom: var(--space-2);
+  }
+  .card-image figure img, .card-image figure{
+    height: 12rem;
+  }
+  .testimonial-slider{
+    margin-top:var(--space-4);
+    height: 14rem;
+  }
+  .testimonial-text{
+    font-size: 0.875rem;
+  }
+  .testimonial-content{
+    padding: var(--space-6);
+  }
+  .user-avatar{
+    width: 5rem;
+    height: 5rem;
+  }
+  .banner-reduceri{
+    padding: var(--space-2);
+  }
+  .categorii-item{
+    padding: var(--space-2);
+    flex-direction: column;
+  }
+  .categorii-item > img{
+    width: 100%;
+  }
+  footer > .col-3:nth-of-type(1){
+    grid-column: span 12;
+    margin-top:var(--space-4);
+  }
+  footer img{
+    width: 80%;
+  }
+  footer > .col-3 {
+    grid-column: span 6;
+  }
+  footer > .col-2{
+    grid-column: span 6;
+  }
+  footer > .col-2, footer > .col-3{
+    margin-top:var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  footer hr{
+    width: 100%;
+  }
+}
+
+
+
 
 
 /*MENU DE REFACUT */
