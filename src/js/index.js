@@ -1,5 +1,5 @@
-  debugger;
+  //debugger;
     getCarsPieseForDropdown(function(cars) {
-        debugger;
+       // debugger;
         populateDropdown(cars);
     });

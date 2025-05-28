@@ -132,7 +132,7 @@ async function getCars(link) {
     }
 }
 function pieseApiCall(callback) {
-    debugger;
+    //debugger;
 
     window.topHtmlLoaded = Promise.resolve();
 
@@ -172,7 +172,7 @@ function pieseApiCall(callback) {
 }
 
 function populateMainGrid(data){
-    debugger;
+    //debugger;
     const rezultateTable = document.getElementById('rezultate-tabel');
     rezultateTable.innerHTML = ''; // Resetează tabela
     data.piese.forEach(piese => {
@@ -251,9 +251,9 @@ function populateMainGrid(data){
     //Swal.close();
 
      // Întârzierea închiderii loader-ului
-    //  setTimeout(() => {
-    //     Swal.close(); // Închide loader-ul
-    // }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
+     setTimeout(() => {
+        Swal.close(); // Închide loader-ul
+    }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
 
 
 }
@@ -537,7 +537,7 @@ async function extractCarGeneratie(fullName, model) {
 //**********  POPULATE DD ********************************************************************* */
 //**********  POPULATE DD ********************************************************************* */
 function populateDropdown(cars) {
-    debugger;
+    //debugger;
     const dropdown = document.getElementById('ddd_cars');
     dropdown.innerHTML = '<option value="">Selecteaza marca</option>';
     cars.forEach(car => {
@@ -596,7 +596,7 @@ function populateGeneratiiDropdown(generatii) {
 const dddCarsElement = document.getElementById('ddd_cars');
 if (dddCarsElement) {
     dddCarsElement.addEventListener('change', function() {
-        debugger;
+        //debugger;
         const marcaId = this.value;
         var tbMarca = document.getElementById("tb_cars");
         if(tbMarca){
@@ -609,7 +609,7 @@ if (dddCarsElement) {
             document.getElementById('ddd_models').innerHTML = '<option value="">Selectează modelul</option>';
         }
 
-        debugger;    
+        //debugger;    
         if(currentURL.includes("index")) {return};
         handleMarcaChange(marcaId);
     });
@@ -617,7 +617,7 @@ if (dddCarsElement) {
 const dddModelsElement = document.getElementById('ddd_models');
 if (dddModelsElement) {
     document.getElementById('ddd_models').addEventListener('change', function() {
-        debugger;
+        //debugger;
         const modelId = this.value;
         var tbModel = document.getElementById("tb_models");
         if(tbModel){
@@ -637,7 +637,7 @@ if (dddModelsElement) {
 const dddGeneratiiElement = document.getElementById('ddd_generatii');
 if (dddModelsElement) {
     document.getElementById('ddd_generatii').addEventListener('change', async function() {
-        debugger;        
+        //debugger;        
         var tbGeneratii = document.getElementById("tb_generatii");
         if(tbGeneratii){
             tbGeneratii.value = getSelectedText('ddd_generatii');  
@@ -839,7 +839,7 @@ function ChangeLinkCateg(tip, categorie, subcategorie) {
 
 
 function handleMarcaChange(marcaId) {  //container este container ul tot
-    debugger;
+    //debugger;
     currentPage = 1;
     document.getElementById('tb_cauta').value = "";
     getDescriere('Marca',marcaId);
@@ -848,7 +848,7 @@ function handleMarcaChange(marcaId) {  //container este container ul tot
     marca = getSelectedText('ddd_cars') == "Selecteaza marca" ? "" : getSelectedText('ddd_cars');
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {    
-            debugger;     
+            //debugger;     
             if(currentURL.includes("piese")){
                  populatePieseShopGrid(data);   
             }
@@ -861,12 +861,12 @@ function handleMarcaChange(marcaId) {  //container este container ul tot
             console.error('Eroare la obținerea datelor:', error);
         });
     //COD LINK    
-    debugger;        
+    //debugger;        
     ChangeLink(marca,model,generatie);
 }
 
 function handleModelChange(modelId) {
-    debugger;
+    //debugger;
     currentPage = 1;
     document.getElementById('tb_cauta').value = "";
     getDescriere('Model',modelId);
@@ -914,7 +914,7 @@ function restoreGeneratieCheckboxes(container) {
     populateCheckboxesGeneratie(allGeneratii,container);
 }
 function populateCheckboxesGeneratie(generatii,container) {
-    debugger;
+    //debugger;
     allGeneratii = generatii;    
 
     generatii.items.forEach(generatie => {
@@ -1048,7 +1048,7 @@ function showErrorMessage(errorMessage) {
 
 
 async function uploadImagini(files, itemId, tipItem) {
-        debugger;
+        //debugger;
         if (itemId == null) return;
     
         const formData = new FormData();

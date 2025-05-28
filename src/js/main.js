@@ -149,7 +149,7 @@ function generateCarUrl(masina) {
     return `/:${marcaModelGeneratie}-${masina.id}`; 
 }
 function veziPiese(id,totalPiese){   
-    debugger; 
+    //debugger; 
     if (id) {
         const url = totalPiese > 0 ? `index.html?id=${id}` : `masini-details.html?id=${id}`;
         window.open(url, '_self');
@@ -204,7 +204,7 @@ function onImageClick(idPiesa) {
 
 //POPULATE Masini GRID
 function populateMasiniShopGrid(data){
-    debugger;
+    //debugger;
     const rezultateDiv = document.getElementById('rezultateMasini');
     if(rezultateDiv != null){
          rezultateDiv.innerHTML = '';
