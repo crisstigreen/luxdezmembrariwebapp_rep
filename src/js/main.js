@@ -136,6 +136,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     });
 
+    pieseApiCall(populatePieseShopGrid);        
+
 
 
 
@@ -177,19 +179,19 @@ function generatePiesaUrl(piesa) {
 }
 function onImageClick(idPiesa) {
     //debugger;
+    var nume =document.getElementById(`piesaTitlu-${idPiesa}`).innerText;
     var pretText = document.getElementById(`piesaPret-${idPiesa}`).innerText;
     var pret = parseInt(pretText.match(/\d+/)[0]); // Extrage doar numărul din text        
     var imagini = document.getElementById(`piesaImagine-${idPiesa}`).src;
     var masina = document.getElementById(`piesaMasina-${idPiesa}`).innerText;
-    var tipCaroserie = document.getElementById(`piesaTipCaroserie-${idPiesa}`).innerText;
+    //var tipCaroserie = document.getElementById(`piesaTipCaroserie-${idPiesa}`).innerText;
     var codIntern = document.getElementById(`piesaCodintern-${idPiesa}`).innerText;
     var stoc = document.getElementById(`piesaStoc-${idPiesa}`).innerText;
 
     if(idPiesa){
         const product = {
             id: idPiesa.toString(),
-            //name: document.getElementById(`piesaTitlu-${idPiesa}`).innerText,
-            name: "Ornament dreapta - hardcodat",
+            name: nume,
             quantity: 1,
             pret: pret,
             pretTotal: pret,
@@ -199,6 +201,7 @@ function onImageClick(idPiesa) {
             stoc: stoc
         };
         addToCart(product);
+        window.location.href = '/cart.html';
     }
 }
 
@@ -226,7 +229,7 @@ function populateMasiniShopGrid(data){
                 </div>
                 <div class="card-body">
                     <h3>
-                        <a class="link-masini" href="${generateCarUrl(masina)}">${masina.nume}</a>
+                        <a class="link-masini" href="${generateCarUrl(masina)}" >${masina.nume}</a>
                     </h3>
                     <div class="card-desc">
                           <p>Cod motor: <span>${masina.codMotor} </span></p>
@@ -286,7 +289,7 @@ function populateMasiniShopGrid(data){
                     </figure>
                     <div class="card-body" id="piesa-${piesa.id}">
                         <h3 style="font-weight: bold;">
-                            <a href="${generatePiesaUrl(piesa)}">${piesa.nume}</a>
+                            <a href="${generatePiesaUrl(piesa)}" id="piesaTitlu-${piesa.id}">${piesa.nume}</a>
                         </h3>
                         <div class="card-desc-piese">
                             <p>Masina: <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
@@ -297,9 +300,9 @@ function populateMasiniShopGrid(data){
                         </div>
                         <div class="card-footer">
                             <h4 id="piesaPret-${piesa.id}">${piesa.pret.replace('RON','').trim()}<span>RON</span></h4>
-                            <a href="cart.html" class="btn-primary">
+                            <a class="btn-primary" ${cartImageEvents}>
                                 Cumpără
-                                <img src='images/ShoppingBagW.svg'  alt="Adauga in cos"  ${cartImageEvents} />
+                                <img src='images/ShoppingBagW.svg'  alt="Adauga in cos"   />
                             </a>
                         </div>
                     </div>
