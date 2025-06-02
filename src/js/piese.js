@@ -274,7 +274,7 @@ function generatePiesaUrl(piesa) {
 
 
 function onImageClick(idPiesa) {
-    debugger;
+   // debugger;
     var nume =document.getElementById(`piesaTitlu-${idPiesa}`).innerText;
     var pretText = document.getElementById(`piesaPret-${idPiesa}`).innerText;
     var pret = parseInt(pretText.match(/\d+/)[0]); // Extrage doar numărul din text        
