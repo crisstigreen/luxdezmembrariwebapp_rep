@@ -371,6 +371,13 @@ function registerPiesaCar() {
 
 //Add masina
 async function registerCar() {    
+    await registerCarFunc(); 
+    setTimeout(() => {
+        window.location = 'masini_admin.html';
+    }, 1500);         
+}
+
+async function registerCarFunc() {    
     debugger;
      if(verificare() == false){
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -469,6 +476,8 @@ async function registerCar() {
         }
     }        
 }
+
+
 
 //Add masina
 async function registerPiesaMasina() {

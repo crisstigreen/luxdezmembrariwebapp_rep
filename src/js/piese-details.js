@@ -3,7 +3,7 @@ let MAX_QUANTITY = 1;
 let MIN_QUANTITY = 1;
 
 window.onload = function() {
-    //debugger;
+    debugger;
     document.getElementById('link-Piese').classList.add('active');
     let pathname = window.location.pathname.substring(1); 
 
@@ -84,7 +84,10 @@ function loadPiesa(piesaId) {
             MAX_QUANTITY = piesa.stoc;
             // Afișează detaliile piesei
             document.getElementById('piesaMeniu').innerText = piesa.nume;
-            document.getElementById('piesaTitlu').textContent = piesa.nume;
+            
+            document.getElementById('piesaTitlu').textContent = piesa.nume  + " " + piesa.codPiesa + " " + piesa.masina + " " 
+            + piesa.motorizare + " " + piesa.codMotor + " " + (piesa.remarks == null ? "" : piesa.remarks);
+
             document.getElementById('piesaMasina').textContent = piesa.masina;
             document.getElementById('piesaCodPiesa').textContent = piesa.codPiesa;
             document.getElementById('piesaBucati').textContent = piesa.stoc;

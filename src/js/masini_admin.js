@@ -1,5 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-    
+    debugger;
     carsApiCall(updateResultsTable);
 
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
@@ -12,7 +12,7 @@
 
 
 function updateResultsTable(data) {
-   
+    debugger;
     const rezultateTable = document.getElementById('rezultate-tabel');
     rezultateTable.innerHTML = ''; // Resetează tabela
 
@@ -42,6 +42,9 @@ function updateResultsTable(data) {
                 <td>
                     <button class="edit-button" data-id="${car.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
                 </td>
+                <td>
+                    <button class="delete-button" data-id="${car.id}"><i class="fas fa-remove" style="font-size:14px"></i></button>
+                </td>
             </tr>
         `;
         rezultateTable.innerHTML += carRow;
@@ -58,6 +61,40 @@ function updateResultsTable(data) {
             get_details(id); // Apelează funcția pentru a obține detaliile
         });
     });
+
+            // Adaugă eveniment pentru butoanele de delete
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const id = this.getAttribute('data-id');
+            const link = `${API_BASE_URL}/CarsRegister/` + id;  
+            Swal.fire({
+            title: 'Sunteți sigur?',
+            text: 'Această acțiune va șterge elementul definitiv.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Da, șterge!',
+            cancelButtonText: 'Anulează',
+            reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        debugger;                                                                     
+                         del(id, link).then(() => {
+                            showDeleteSuccessMessage();
+                            initializePage();
+                        }).catch((error) => {
+                            console.error('Eroare la ștergere:', error);
+                            Swal.fire('Eroare!', 'A apărut o eroare la ștergere.', 'error');
+                        });    
+
+
+
+                    }
+                });
+            });
+    });
+
+
 
     // Întârzierea închiderii loader-ului
     setTimeout(() => {

@@ -123,8 +123,18 @@ function verificare(){
     return verif;
 }
 
+
+
 async function registerPiesa() {
     debugger;
+    await registerPiesaFunc(); 
+    setTimeout(() => {
+        window.location = 'piese_admin.html';
+    }, 1500); 
+}
+
+async function  registerPiesaFunc(){
+     debugger;
     if(verificare() == false){
         return;
     }
@@ -199,6 +209,7 @@ async function registerPiesa() {
         }
         //ORDINE PIESA - ATENTIE
         await salveazaOrdineaImaginilor(piesaId);
+         
     }  
     else{
         piesa.id = 0;        
@@ -209,10 +220,10 @@ async function registerPiesa() {
             const nouId = result.data.id;
             if (selectedFiles && selectedFiles.length > 0) {
                 await uploadImagini(selectedFiles, nouId, tipItem);
-                //window.location='piese_admin.html';
+              
             }
             else{
-                window.location='piese_admin.html';
+                
             }
              
         } else {
@@ -221,6 +232,7 @@ async function registerPiesa() {
     }
    
 }
+    
 
 
 
