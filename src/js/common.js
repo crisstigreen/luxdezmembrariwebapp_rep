@@ -97,21 +97,21 @@ async function update(id, data, link) {
 async function del(id, link) {
     const url = link;
 
-    return fetch(url, {
+    const response = await fetch(url, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         },
         body: id
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Eroare la ștergere');
-        }
-        return response.text(); // sau response.json() dacă API-ul returnează JSON
     });
-}
 
+    const message = await response.text();
+
+    return {
+        success: response.ok,
+        message: message
+    };
+}
 
 
 async function getCars(link) {
@@ -140,10 +140,10 @@ function pieseApiCall(callback) {
         const input = document.getElementById('tb_cauta');
         if (!input) {
             console.warn('#tb_cauta not found yet');
-            return;
+            //return;
         }
     
-        const searchTerm = input.value.trim(); // can be empty string
+        const searchTerm = input == null ? "" : (input.value.trim()); // can be empty string
 
         let url = "";
         if (/^\d+$/.test(searchTerm) && searchTerm !== "") {
@@ -172,7 +172,7 @@ function pieseApiCall(callback) {
 }
 
 function populateMainGrid(data){
-    //debugger;
+    debugger;
     const rezultateTable = document.getElementById('rezultate-tabel');
     rezultateTable.innerHTML = ''; // Resetează tabela
     data.piese.forEach(piese => {
@@ -261,6 +261,7 @@ function populateMainGrid(data){
 
 
 function populatePieseMasiniTable() {
+    debugger;
     const carId = getQueryParam('id');
     const url =   `${API_BASE_URL}/InfoCars/GetById?IdMasina=` +  carId; 
         
@@ -355,7 +356,7 @@ function pieseMasinaApiCall(carId,callback) {
 }
 
 function carsApiCall(callback) {
-    //debugger;
+    debugger;
     const url = `${API_BASE_URL}/CarsRegister/searchMasiniReg?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
     
     fetch(url)
@@ -1005,38 +1006,38 @@ async function setSelectedValueVal(selectId, value) {
 //**********  MESSAGES ********************************************************************* */
 //**********  MESSAGES ********************************************************************* */
 function showInsertSuccessMessage() {
-    // Swal.fire({
-    //     title: 'Success!',
-    //     text: 'Insert operation completed successfully.',
-    //     icon: 'success',
-    //     confirmButtonText: 'OK'
-    // });
+   /*   Swal.fire({
+         title: 'Success!',
+         text: 'Insert operation completed successfully.',
+         icon: 'success',
+         confirmButtonText: 'OK'
+     }); */
 }
 function showUpdateSuccessMessage() {
 
-    // Swal.fire({
-    //     title: 'Success!',
-    //     text: 'Update operation completed successfully.',
-    //     icon: 'success',
-    //     confirmButtonText: 'OK'
-    // });
+/*      Swal.fire({
+         title: 'Success!',
+         text: 'Update operation completed successfully.',
+         icon: 'success',
+         confirmButtonText: 'OK'
+     }); */
 }
 function showDeleteSuccessMessage() {
 
-    // Swal.fire({
-    //     title: 'Success!',
-    //     text: 'Delete operation completed successfully.',
-    //     icon: 'success',
-    //     confirmButtonText: 'OK'
-    // });
+/*      Swal.fire({
+         title: 'Success!',
+         text: 'Delete operation completed successfully.',
+         icon: 'success',
+         confirmButtonText: 'OK'
+     }); */
 }
 function showErrorMessage(errorMessage) {
-    // Swal.fire({
-    //     title: 'Error!',
-    //     text: errorMessage,
-    //     icon: 'error',
-    //     confirmButtonText: 'OK'
-    // });
+/*      Swal.fire({
+         title: 'Error!',
+         text: errorMessage,
+        icon: 'error',
+         confirmButtonText: 'OK'
+     }); */
 }
 
 
