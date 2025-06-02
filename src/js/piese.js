@@ -39,9 +39,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     pieseApiCall(populatePieseShopGrid);   
 
-    debugger;
+    //debugger;
     getCarsPieseForDropdown(function(cars) {
-        debugger;
+        //debugger;
         populateDropdown(cars);
     });
 });
@@ -62,17 +62,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 //hamburger
-// document.addEventListener('DOMContentLoaded', async function () {
-//     await generateDynamicMenu();
+document.addEventListener('DOMContentLoaded', async function () {
+    await generateDynamicMenu();
 
-//     const hamburger = document.getElementById('hamburgerButton');
-//     const menu = document.getElementById('dynamicMenu');
+/*     const hamburger = document.getElementById('hamburgerButton');
+    const menu = document.getElementById('dynamicMenu'); */
 
-//     hamburger.addEventListener('click', function () {
-//         this.classList.toggle('active');
-//         menu.classList.toggle('active');
-//     });
-// });
+/*     hamburger.addEventListener('click', function () {
+        this.classList.toggle('active');
+        menu.classList.toggle('active');
+    }); */
+});
 
 //side menu
 // document.addEventListener('DOMContentLoaded', function () {
@@ -203,7 +203,7 @@ function generatePiesaUrl(piesa) {
     
     data.piese.forEach(piesa => {
       
-        //debugger;       
+        debugger;       
         var imageSrc = piesa.imagini ? `${API_BASE_URL_IMG}/` + piesa.imagini[0] : 'images/placeholder.jpg';
       
         if(piesa.imagini != null && piesa.imagini.length == 0){
@@ -230,7 +230,7 @@ function generatePiesaUrl(piesa) {
                     </div>
                     <div class="card-body" id="piesa-${piesa.id}">
                         <h3 style="font-weight: bold;">
-                            <a href="${generatePiesaUrl(piesa)}" id="piesaTitlu-${piesa.id}">${piesa.nume}</a>
+                            <a href="${generatePiesaUrl(piesa)}">${piesa.nume} ${piesa.codPiesa} ${piesa.masina} ${piesa.motorizare} ${piesa.codMotor} ${piesa.remarks}</a>
                         </h3>
                         <div class="card-desc-piese">
                             <p>Masina: <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
@@ -401,6 +401,7 @@ function changeOrderBy() {
 }
 
 function populateApiPath(){
+        debugger;
         if(marca == "" && model == "" && generatie == "" && IdSubCat == null && Nivel == null){
             pieseApiCall(populatePieseShopGrid);                       
         }
@@ -419,156 +420,6 @@ function populateApiPath(){
 
 
 
-// DEFAULT AIA BUNA Funcția care gestionează click-ul pe fiecare nivel de meniu
-/* async function handleMenuClick(level, id, name) {
-    debugger;
-    document.getElementById("numeCatSelectata").value = name;
-    if(level == 'tip'){
-        Nivel = 1;
-        getDescriere("CategoriiTip",id)
-    }
-    else if(level == 'categorie'){
-        Nivel = 2;
-        getDescriere("Categorii",id)
-    }
-    else if(level == 'subcategorie'){
-        Nivel = 3
-        getDescriere("CategoriiSub",id)
-    }
-    IdSubCat = id;
- 
-    try {
-        let filterData = { level, id, name };
-        let link = `${API_BASE_URL}/InfoCars/GetMenuItems?level=${filterData.level}&id=${filterData.id}`;
-
-        // Apelăm API-ul pentru a aduce piesele filtrate
-        const response = await fetch(link);
-        const items = await response.json();
-
-        // Afișăm piesele filtrate (acesta este doar un exemplu, se poate adapta pentru a le afișa într-o zonă anume)
-        console.log(`Filtrare pentru ${name} la nivelul ${level}`);
-        console.log(items);
-
-        // Poți adăuga aici logica pentru a actualiza UI-ul cu piesele filtrate (ex: afișare într-un tabel, listă etc.)
-    } catch (error) {
-        console.error('Eroare la filtrarea pieselor:', error);
-    }
-
-    populateApiPath();      
-}
- */
-
-
-// async function handleMenuClick(level, id, name, parentTip = '', parentCategorie = '') {
-//     document.getElementById("numeCatSelectata").value = name;
-
-//     if (level === 'tip') {
-//         selectedTip = name;
-//         selectedCategorie = '';
-//         selectedSubcategorie = '';
-//         getDescriere("CategoriiTip", id);
-//     } else if (level === 'categorie') {
-//         selectedTip = parentTip;
-//         selectedCategorie = name;
-//         selectedSubcategorie = '';
-//         getDescriere("Categorii", id);
-//     } else if (level === 'subcategorie') {
-//         selectedTip = parentTip;
-//         selectedCategorie = parentCategorie;
-//         selectedSubcategorie = name;
-//         getDescriere("CategoriiSub", id);
-//     }
-
-//     IdSubCat = id;
-
-//     try {
-//         let link = `${API_BASE_URL}/InfoCars/GetMenuItems?level=${level}&id=${id}`;
-//         const response = await fetch(link);
-//         const items = await response.json();
-
-//         console.log(`Filtrare pentru ${name} la nivelul ${level}`);
-//         console.log(items);
-
-//         // 🔥 aici construiești linkul complet
-//         ChangeLinkCateg(selectedTip, selectedCategorie, selectedSubcategorie);
-//     } catch (error) {
-//         console.error('Eroare la filtrarea pieselor:', error);
-//     }
-
-//     populateApiPath();
-// }
-
-
-
-
-
-// async function generateDynamicMenu() {
-//     try {
-//         const link = `${API_BASE_URL}/InfoCars/GetMenuItems`;
-//         const response = await fetch(link);
-//         const menuItems = await response.json();
-//         const menu = document.getElementById('dynamicMenu');
-//         const categoriiTipMap = new Map();
-//         const categoriiMap = new Map();
-
-//         menuItems.forEach(item => {
-//             const tipId = item.CategoriiTipId;
-//             const tipNume = item.CategoriiTipNume;
-//             const catId = item.CategoriiId;
-//             const catNume = item.CategoriiNume;
-//             const subId = item.CategoriiSubId;
-//             const subNume = item.CategoriiSubNume;
-
-//             if (tipId && tipNume) {
-//                 if (!categoriiTipMap.has(tipId)) {
-//                     const tipElement = document.createElement('div');
-//                     tipElement.classList.add('menu-item');
-
-//                     const hasChildren = menuItems.some(mi => mi.CategoriiTipId === tipId && Number.isInteger(mi.CategoriiId) && mi.CategoriiNume);
-
-//                     tipElement.innerHTML = `<a href="#" class="menu-link">${tipNume}${hasChildren ? '&nbsp;<i class="arrow down"></i>' : ''}</a><div class="submenu"></div>`;
-//                     menu.appendChild(tipElement);
-//                     categoriiTipMap.set(tipId, tipElement.querySelector('.submenu'));
-
-//                     tipElement.querySelector('.menu-link').addEventListener('click', function () {
-//                         handleMenuClick('tip', tipId, tipNume);
-//                     });
-//                 }
-
-//                 if (Number.isInteger(catId) && catNume) {
-//                     if (!categoriiMap.has(catId)) {
-//                         const catElement = document.createElement('div');
-//                         catElement.classList.add('submenu-item');
-//                         catElement.dataset.catId = catId;
-
-//                         const hasSubChildren = menuItems.some(mi => mi.CategoriiId === catId && Number.isInteger(mi.CategoriiSubId) && mi.CategoriiSubNume);
-
-//                         catElement.innerHTML = `<a href="#" class="menu-link">${catNume}${hasSubChildren ? ' <i class="arrow right"></i>' : ''}</a><div class="subsubmenu"></div>`;
-//                         categoriiTipMap.get(tipId).appendChild(catElement);
-//                         categoriiMap.set(catId, catElement.querySelector('.subsubmenu'));
-
-//                         catElement.querySelector('.menu-link').addEventListener('click', function () {
-//                             handleMenuClick('categorie', catId, catNume, tipNume); // trimitem tipNume ca părinte
-//                         });
-//                     }
-
-//                     if (Number.isInteger(subId) && subNume) {
-//                         const subElement = document.createElement('div');
-//                         subElement.classList.add('subsubmenu-item');
-//                         subElement.innerHTML = `<a href="#" class="menu-link">${subNume}</a>`;
-//                         categoriiMap.get(catId).appendChild(subElement);
-
-//                         subElement.querySelector('.menu-link').addEventListener('click', function () {
-//                             handleMenuClick('subcategorie', subId, subNume, tipNume, catNume); // trimitem ambii părinți
-//                         });
-//                     }
-//                 }
-//             }
-//         });
-//     } catch (error) {
-//         console.error('Eroare la generarea meniului dinamic:', error);
-//     }
-// }
 
 
 
