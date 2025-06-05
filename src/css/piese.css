@@ -100,15 +100,53 @@
     position: relative;
 }
 
-.image-container {
-    display: inline-block;
-    position: relative;
-    margin: 10px;
-}
 
 .image-container img {
     display: block;
 }
+.image-wrapper {
+  display: inline-block;
+  margin: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  vertical-align: top;
+  width: 220px; /* fix width */
+}
+
+.image-container {
+  width: 100%;
+  height: 220px; /* fix height for rotated images */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.buttons {
+    margin: 3px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-wrap: nowrap;         /* nu permite trecerea pe rândul următor */
+    gap: 6px;                  /* spațiu între butoane */
+    margin-top: 8px;
+    justify-content: flex-start; /* aliniere la stânga */
+    overflow-x: auto;          /* scroll dacă e prea lung */
+}
+
+.buttons {
+    white-space: nowrap;       /* păstrează butonul pe un singur rând */
+}
+
+
 
 .remove-btn {
     position: absolute;

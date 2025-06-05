@@ -128,7 +128,8 @@ function loadPiesa(piesaId) {
 
             carImages.forEach((imgSrc, index) => {
                 const isPlaceholder = imgSrc.includes('placeholder.jpg');
-                const fullSrc = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
+                const fullSrc = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}?v=${Date.now()}`;
+                
 
                 // Create carousel item
                 const carouselItem = document.createElement('div');

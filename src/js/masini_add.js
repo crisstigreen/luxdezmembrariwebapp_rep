@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', async  () => {
 
 
 //load imagini
-document.addEventListener('DOMContentLoaded', async function() {    
+document.addEventListener('DOMContentLoaded', async function() {  
+    debugger;  
     const previewContainer = document.getElementById('preview');
     new Sortable(previewContainer, {
         animation: 150,
@@ -36,47 +37,99 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     function populatePreview(images) {
-        
         const previewContainer = document.getElementById('preview');
         previewContainer.innerHTML = '';
-        const piesaId = getQueryParam('id');
-    
+        const masinaId = getQueryParam('id');
+
         images.forEach(image => {
-            //debugger;
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('image-wrapper');
+
             const imageContainer = document.createElement('div');
             imageContainer.classList.add('image-container');
-            imageContainer.setAttribute('data-id', image.denumireImagine); 
+            imageContainer.setAttribute('data-id', image.denumireImagine);
+
             const img = document.createElement('img');
-            img.src = `${API_BASE_URL_IMG}/${image.denumireImagine}`; // Aceasta este calea corecta                       
-    
+            img.src = `${API_BASE_URL_IMG}/${image.denumireImagine}?v=${Date.now()}`;
+            img.style.transition = "transform 0.3s ease";
+            img.dataset.rotation = "0";
+
+            const buttonsContainer = document.createElement('div');
+            buttonsContainer.classList.add('buttons-container');
+
+            // Buton de ștergere
             const removeBtn = document.createElement('button');
-            removeBtn.classList.add('remove-btn');
-            removeBtn.textContent = 'x';
-            removeBtn.addEventListener('click', function() {
-                // Șterge imaginea din frontend
-                previewContainer.removeChild(imageContainer);
-    
-                // Apelează API-ul pentru a șterge imaginea din backend
-                fetch(`${API_BASE_URL}/Imagini/StergeImagine?numeImagine=${image.denumireImagine}&itemId=${piesaId}`, {
+            removeBtn.className = 'btn btn-danger btn-sm buttons';
+            removeBtn.textContent = '✖';
+            removeBtn.addEventListener('click', function () {
+                previewContainer.removeChild(wrapper);
+                fetch(`${API_BASE_URL}/Imagini/StergeImagine?numeImagine=${image.denumireImagine}&itemId=${masinaId}`, {
                     method: 'DELETE'
                 })
                 .then(response => {
-                    if (response.ok) {
-                        console.log('Imaginea a fost ștearsă cu succes din backend.');
-                    } else {
-                        console.error('Eroare la ștergerea imaginii din backend.');
-                    }
+                    if (!response.ok) throw new Error('Eroare la ștergerea imaginii din backend.');
                 })
-                .catch(error => {
-                    console.error('Eroare de rețea:', error);
+                .catch(console.error);
+            });
+
+            // Buton rotire stânga
+            const rotateLeftBtn = document.createElement('button');
+            rotateLeftBtn.type = 'button';
+            rotateLeftBtn.className = 'btn btn-secondary btn-sm buttons';
+            rotateLeftBtn.textContent = '⟲';
+            rotateLeftBtn.addEventListener('click', () => rotateImage(img, -90));
+
+            // Buton rotire dreapta
+            const rotateRightBtn = document.createElement('button');
+            rotateRightBtn.type = 'button';
+            rotateRightBtn.className = 'btn btn-secondary btn-sm buttons';
+            rotateRightBtn.textContent = '⟳';
+            rotateRightBtn.addEventListener('click', () => rotateImage(img, 90));
+
+            // Buton salvare rotație
+            const saveRotationBtn = document.createElement('button');
+            saveRotationBtn.type = 'button';
+            saveRotationBtn.className = 'btn btn-success btn-sm buttons';
+            saveRotationBtn.textContent = '💾';
+            saveRotationBtn.addEventListener('click', () => {
+                const rotation = parseInt(img.dataset.rotation || "0");
+                fetch(`${API_BASE_URL}/Imagini/RotireImagine`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        denumireImagine: image.denumireImagine,
+                        rotatie: rotation
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Imagine rotită și salvată cu succes.");
+                    } else {
+                        alert("Eroare la salvare.");
+                    }
                 });
             });
-    
+
             imageContainer.appendChild(img);
-            imageContainer.appendChild(removeBtn);
-            previewContainer.appendChild(imageContainer);
+            buttonsContainer.appendChild(removeBtn);
+            buttonsContainer.appendChild(rotateLeftBtn);
+            buttonsContainer.appendChild(rotateRightBtn);
+            buttonsContainer.appendChild(saveRotationBtn);
+            wrapper.appendChild(imageContainer);
+            wrapper.appendChild(buttonsContainer);
+            previewContainer.appendChild(wrapper);
         });
     }
+
+    function rotateImage(img, angle) {
+        let currentRotation = parseInt(img.dataset.rotation || "0");
+        currentRotation = (currentRotation + angle + 360) % 360;
+        img.dataset.rotation = currentRotation.toString();
+        img.style.transform = `rotate(${currentRotation}deg)`;
+    }
+
+
+
     debugger;
     await sku_gen("tb_skupiese");
     if(piesaId){

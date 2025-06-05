@@ -39,139 +39,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     pieseApiCall(populatePieseShopGrid);   
 
-    //debugger;
+    debugger;
     getCarsPieseForDropdown(function(cars) {
-        //debugger;
+        debugger;
         populateDropdown(cars);
     });
 });
-
-
-
-
-//get cars
-// document.addEventListener('DOMContentLoaded', function() {
-//     const containerMarca = document.getElementById('checkboxContainerMarca');
-//     getCarsPieseForDropdown(function(cars) {
-//         populateCheckboxesMarca(cars, containerMarca);
-//     });
-
-//     getDescriere('test',0);
-// });
-
-
-
-//hamburger
-document.addEventListener('DOMContentLoaded', async function () {
-    await generateDynamicMenu();
-
-/*     const hamburger = document.getElementById('hamburgerButton');
-    const menu = document.getElementById('dynamicMenu'); */
-
-/*     hamburger.addEventListener('click', function () {
-        this.classList.toggle('active');
-        menu.classList.toggle('active');
-    }); */
-});
-
-//side menu
-// document.addEventListener('DOMContentLoaded', function () {
-//     //debugger;
-//     const filtreBtn = document.getElementById('filtreBtn');
-//     const filterSidebar = document.getElementById('filterSidebar');
-//     const closeFilters = document.getElementById('closeFilters');
-//     const filtrare = document.getElementById('filtrare');
-
-//     // Functia pentru a copia filtrele in meniul lateral
-//     function copyFiltersToSidebar() {
-//         const checkboxContainerMarca = document.getElementById('checkboxContainerMarca');
-//         const checkboxContainerModel = document.getElementById('checkboxContainerModel');
-//         const checkboxContainerGeneratie = document.getElementById('checkboxContainerGeneratie');
-        
-//         // Găsim div-urile specifice din filterSidebar
-//         const checkboxContainerMarcaSidebar = document.getElementById('checkboxContainerMarcaSidebar');
-//         const checkboxContainerModelSidebar = document.getElementById('checkboxContainerModelSidebar');
-//         const checkboxContainerGeneratieSidebar = document.getElementById('checkboxContainerGeneratieSidebar');
-
-//         // Golim div-urile laterale înainte de a copia conținutul
-//      /*    checkboxContainerMarcaSidebar.innerHTML = '';
-//         checkboxContainerModelSidebar.innerHTML = '';
-//         checkboxContainerGeneratieSidebar.innerHTML = ''; */
-
-
-//          // Copiem conținutul din div-urile de filtre în div-urile specifice din sidebar
-//          checkboxContainerMarcaSidebar.appendChild(checkboxContainerMarca.cloneNode(true));
-//          checkboxContainerModelSidebar.appendChild(checkboxContainerModel.cloneNode(true));
-//          checkboxContainerGeneratieSidebar.appendChild(checkboxContainerGeneratie.cloneNode(true));
-
-//         // Reatașăm evenimentele de filtrare la checkbox-urile copiate
-//         attachFilterEvents(filterSidebar);
-//     }
-//     function attachFilterEvents(container) {
-//         // Găsim toate checkbox-urile din meniul lateral
-//         const checkboxes = container.querySelectorAll('input[type="checkbox"]');
-
-//         // Adăugăm evenimentul 'change' pentru fiecare checkbox
-//         checkboxes.forEach(checkbox => {
-//             checkbox.addEventListener('change', function () {
-//                 // Codul tău de filtrare va fi aici
-//                 // Exemplu:
-//                 console.log(`Filtrare activată pentru: ${checkbox.name}`);
-//                 // Adaugă funcționalitatea de filtrare
-
-//                 //!!!  aici trebuie
-//                 handleMarcaChange(this, container);
-//             });
-//         });
-//     }
-
-//     filtreBtn.addEventListener('click', function () {
-//         //debugger;
-//         copyFiltersToSidebar(); // Copiem filtrele în lateral
-//         filterSidebar.style.display = 'block';
-//         filtreBtn.style.display = 'none';  // Ascundem butonul "Filtre"
-//         closeFilters.style.display = 'block';
-//     });
-
-//     // Închidem meniul lateral de filtre
-//     closeFilters.addEventListener('click', function () {
-//         filterSidebar.style.display = 'none';
-//         filtreBtn.style.display = 'block';  // Afișăm din nou butonul "Filtre"
-//         closeFilters.style.display = 'none';
-//     });
-// });
-
-
-
-
-//**********  CAUTARE ********************************************************************* */
-//**********  CAUTARE ********************************************************************* */
-//**********  CAUTARE ********************************************************************* */
-//**********  CAUTARE ********************************************************************* */
-
-// document.getElementById('cautaBtn').addEventListener('click', () => {
-//     debugger;
-//     searchTerm = document.getElementById('tb_cauta').value.trim();
-//     currentPage = 1; // Resetăm la prima pagină
-//     pieseApiCall(populateShopGrid);       
-// });
-
-
-// document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
-//     if (event.key === 'Enter') {
-//         debugger;
-//         searchTerm = event.target.value.trim();
-//         currentPage = 1; // Resetăm la prima pagină
-//         pieseApiCall(populateShopGrid);
-             
-//     }
-// });
-
-
-//**********  POPULATE GRID ********************************************************************* */
-//**********  POPULATE GRID ********************************************************************* */
-//**********  POPULATE GRID ********************************************************************* */
-//**********  POPULATE GRID ********************************************************************* */
 
 
 
@@ -204,7 +77,13 @@ function generatePiesaUrl(piesa) {
     data.piese.forEach(piesa => {
       
         debugger;       
-        var imageSrc = piesa.imagini ? `${API_BASE_URL_IMG}/` + piesa.imagini[0] : 'images/placeholder.jpg';
+        //img.src = `${API_BASE_URL_IMG}/${image.denumireImagine}?v=${Date.now()}`;
+
+        var imageSrc = piesa.imagini
+        ? `${API_BASE_URL_IMG}/${piesa.imagini[0]}?v=${Date.now()}`
+        : 'images/placeholder.jpg';
+
+
       
         if(piesa.imagini != null && piesa.imagini.length == 0){
             imageSrc = '/images/placeholder.jpg';
@@ -274,7 +153,7 @@ function generatePiesaUrl(piesa) {
 
 
 function onImageClick(idPiesa) {
-   // debugger;
+    debugger;
     var nume =document.getElementById(`piesaTitlu-${idPiesa}`).innerText;
     var pretText = document.getElementById(`piesaPret-${idPiesa}`).innerText;
     var pret = parseInt(pretText.match(/\d+/)[0]); // Extrage doar numărul din text        
@@ -402,7 +281,7 @@ function changeOrderBy() {
 
 function populateApiPath(){
         debugger;
-        if(marca == "" && model == "" && generatie == "" && IdSubCat == null && Nivel == null){
+        if(marca == "" && model == "" && generatie == "" && IdSubCat == "" && Nivel == ""){
             pieseApiCall(populatePieseShopGrid);                       
         }
         else{
@@ -416,6 +295,7 @@ function populateApiPath(){
             });     
         }                    
 }
+
 
 
 

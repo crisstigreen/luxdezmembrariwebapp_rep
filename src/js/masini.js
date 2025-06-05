@@ -71,7 +71,9 @@ function populateMasiniShopGrid(data){
     //debugger;
     data.masiniReg.forEach(masina => {
        
-        const imageSrc = masina.imagini[0] ? `${API_BASE_URL_IMG}/` + masina.imagini[0] : 'images/placeholder.jpg';
+        const imageSrc = masina.imagini[0] 
+        ? `${API_BASE_URL_IMG}/${masina.imagini[0]}?v=${Date.now()}` 
+        : 'images/placeholder.jpg';
                   
         const piesaHTML = `
         <div class="card">

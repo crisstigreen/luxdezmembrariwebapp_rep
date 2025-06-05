@@ -1,7 +1,7 @@
 ﻿//PAGE LOAD
 window.onload = function() {
     //debugger;
-    document.getElementById('link-Masini').classList.add('active');
+    //document.getElementById('link-Masini').classList.add('active');
     let pathname = window.location.pathname.substring(1); // Elimină primul "/"
     let regex = /(.+)-(\d+)$/; // Capturăm numele și ID-ul
     let match = pathname.match(regex);
@@ -57,7 +57,7 @@ function loadMasina(carId) {
 
             carImages.forEach((imgSrc, index) => {
                 const isPlaceholder = imgSrc.includes('placeholder.jpg');
-                const fullSrc = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}`;
+                const fullSrc = isPlaceholder ? imgSrc : `${API_BASE_URL_IMG}/${imgSrc}?v=${Date.now()}`;
 
                 // Create carousel item
                 const carouselItem = document.createElement('div');

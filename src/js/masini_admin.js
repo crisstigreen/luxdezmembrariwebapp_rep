@@ -81,7 +81,8 @@ function updateResultsTable(data) {
                         debugger;                                                                     
                          del(id, link).then(() => {
                             showDeleteSuccessMessage();
-                            initializePage();
+                            //initializePage();
+                            carsApiCall(updateResultsTable);
                         }).catch((error) => {
                             console.error('Eroare la ștergere:', error);
                             Swal.fire('Eroare!', 'A apărut o eroare la ștergere.', 'error');
