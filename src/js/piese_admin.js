@@ -2,14 +2,10 @@
 
 
 //PAGE LOAD 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     debugger;
-   initializePage();
-});
+    await initializePage();
 
-
-document.addEventListener('DOMContentLoaded', async function () {
-    debugger;
     await generateDynamicMenu();
 });
 
@@ -20,17 +16,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
 
-function initializePage() {
-    if (sessionStorage.getItem('userId') == null) {
+
+
+async function initializePage() {
+      debugger;
+
+    if (sessionStorage.getItem('email') == null || sessionStorage.getItem('role') == "2") {
         window.location = '../index.html';
         return;
-    }
-
-   
-
-
-    debugger;
-    pieseApiCall(populateMainGrid); // Refresh grid
+    }   
+    
+  
+    await pieseApiCall(populateMainGrid); // Refresh grid
 
     // Reatașează evenimentele dacă trebuie (optional, vezi mai jos)
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));

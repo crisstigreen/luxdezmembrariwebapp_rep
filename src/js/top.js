@@ -1,5 +1,5 @@
 
-window.topHtmlLoaded = fetch('../top.html')
+window.topHtmlLoaded = fetch('/top.html')
     .then(response => response.text())
     .then(data => {
      
@@ -13,7 +13,7 @@ window.topHtmlLoaded = fetch('../top.html')
             
             if(userId == null)
             {
-                document.getElementById('link-Admin').style.display = 'none';
+                //document.getElementById('link-Admin').style.display = 'none';
                 //document.getElementById('userOrdersMenu').style.display = 'none';
             }
             else
@@ -28,7 +28,7 @@ window.topHtmlLoaded = fetch('../top.html')
                     document.getElementById('contul-meu').style.display ='none';
 
                     if(user.roleID == 2){ //user                
-                        document.getElementById('link-Admin').style.display = 'none';
+                        //document.getElementById('link-Admin').style.display = 'none';
                     
                      
                     }
@@ -91,6 +91,7 @@ window.topHtmlLoaded = fetch('../top.html')
     });
 
 document.addEventListener('DOMContentLoaded', async function () {
+    //debugger;
     await generateDynamicMenu();
 });
     
@@ -106,6 +107,7 @@ function logout(){
     debugger;
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('username');
+    sessionStorage.removeItem('email');
     document.getElementById('contul-meu').style.display ='flex';
     document.getElementById('user_auth').style.display ='none';
     const menu = document.querySelector('.dropdown-menu');

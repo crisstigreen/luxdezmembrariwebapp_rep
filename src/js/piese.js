@@ -23,25 +23,23 @@ let IdSubCat = "";
 let selectedTip = '';
 let selectedCategorie = '';
 let selectedSubcategorie = '';
+let tipFiltrare = "";
 
 // window.onload = function() {
 //  document.getElementById('link-Piese').classList.add('active');
 // }
 
 window.addEventListener('DOMContentLoaded', () => {
-    const pathSegments = window.location.pathname.split('/').filter(segment => segment);
-    // Dacă avem mai mult de 1 segment în path (ex: cutii-de-viteze/suport-cutii-viteze)
-    if (pathSegments.length > 1) {
-        window.location.href = '/index.html';
-    }   
+    debugger;
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
     document.getElementById('next-page').addEventListener('click', () => changePage(1));
+       
+    //new
+    parsePathAndFilterOnLoad();
 
-    pieseApiCall(populatePieseShopGrid);   
-
-    debugger;
+    //debugger;
     getCarsPieseForDropdown(function(cars) {
-        debugger;
+        //debugger;
         populateDropdown(cars);
     });
 });
@@ -72,11 +70,11 @@ function generatePiesaUrl(piesa) {
  function populatePieseShopGrid(data){
     const rezultateDiv = document.getElementById('rezultatePiese');
     rezultateDiv.innerHTML = '';
-    debugger;
+    //debugger;
     
     data.piese.forEach(piesa => {
       
-        debugger;       
+        //debugger;       
         //img.src = `${API_BASE_URL_IMG}/${image.denumireImagine}?v=${Date.now()}`;
 
         var imageSrc = piesa.imagini
@@ -116,13 +114,13 @@ function generatePiesaUrl(piesa) {
                             <p style='display:none' id="piesaStoc-${piesa.id}">${piesa.stoc}</p>
                             <p>Cod intern: <span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
                             <p>SKU_ID: <span id="piesasku_ID-${piesa.id}">${piesa.skU_Id}</span></p>
-                            <p>Disponibilitate: ${piesa.stoc > 0 ? `<span> <img src='images/CheckmarkCircle.svg' alt="Disponibil"/> În stoc (${piesa.stoc})` : '<span>Fără stoc</span>'}</p>
+                            <p>Disponibilitate: ${piesa.stoc > 0 ? `<span> <img src='/images/CheckmarkCircle.svg' alt="Disponibil"/> În stoc (${piesa.stoc})` : '<span>Fără stoc</span>'}</p>
                         </div>
                         <div class="card-footer">
                             <h4 id="piesaPret-${piesa.id}">${piesa.pret.replace('RON','').trim()}<span>RON</span></h4>
                             <a class="btn-primary" ${cartImageEvents}>
                                 Cumpără
-                                <img src='images/ShoppingBagW.svg'  alt="Adauga in cos"   />
+                                <img src='/images/ShoppingBagW.svg'  alt="Adauga in cos"   />
                             </a>
                         </div>
                     </div>
@@ -182,10 +180,113 @@ function onImageClick(idPiesa) {
 }
 
  // Funcția API GET DATE pentru a căuta piese după Marca, Model și Generatie
- function pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm) {
-    debugger;    
-    if(marca == ""){model = ""; generatie = "";}
-    if(model == ""){generatie = "";}                       
+async function pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm) {
+    debugger;
+    //tip filtrare - cautare marca existenta
+    const link = "http://localhost:5012/api/Piese/search_marcabyname?partialName=" + selectedTip;  
+    var tipFiltrareObj = await get(link);
+    tipFiltrare = tipFiltrareObj.length == 0 ? "byCateg" : "byMarca";
+    
+
+    //EXTRAG DIN URL   
+    var menuSend = "";
+    switch (Nivel) {
+        case 1:
+            menuSend = selectedTip;
+            break;
+        case 2:
+            menuSend = selectedCategorie;
+            break;
+        case 3:
+            menuSend = selectedSubcategorie;
+            break;
+    }
+
+    if(tipFiltrare == 'byCateg'){     //*****byCateg
+        //meniu
+        if (!currentURL.includes("html") && !/\/[a-z0-9\-]+-\d+$/i.test(currentURL))
+        {
+            linkId = `${API_BASE_URL}/Piese?menu=` + menuSend + `&tip=` + Nivel;
+            IdSubCat = await get(linkId);
+        }
+    }
+    else{                             //*****byMarca        
+        //marci
+        linkMarciDuble = "http://localhost:5012/api/InfoCars/GetMarciDuble";  
+        const marciDuble = await get(linkMarciDuble);
+        const marciDubleSlug = marciDuble.map(nume => nume.toLowerCase().replace(/ /g, "-"));
+        const menuSlug = menuSend.toLowerCase();
+        marca = "";
+        model = "";
+        generatie = "";
+
+        if (IdSubCat == "" && !currentURL.includes("html")) {
+            // 1. Căutăm dacă menuSlug începe cu o marcă dublă cunoscută
+            const matchedMarca = marciDubleSlug.find(marcaSlug => menuSlug.startsWith(marcaSlug));
+
+            if (matchedMarca) {
+                // Marca este marca dublă găsită (ex: "alfa-romeo")
+                marca = matchedMarca.replace(/-/g, " ");
+
+                // Extragem restul după marca dublă + separator "-"
+                let rest = menuSlug.substring(matchedMarca.length);
+                if (rest.startsWith("-")) rest = rest.substring(1); // scoatem separatorul dacă există
+
+                if (rest) {
+                    const restParts = rest.split("-");
+
+                    if (restParts.length >= 3) {
+                        // Restul conține: model + cod generatie + ani (ex: "i01-facelift-2017---2020")
+                        model = restParts[0].replace(/-/g, " ");
+
+                        const codGen = restParts[1].replace(/-/g, " ");
+                        const aniGen = restParts.slice(2).join("-").replace(/---/g, " - ").replace(/-/g, " ");
+
+                        generatie = `${codGen} ${aniGen}`.trim();
+                    } else if (restParts.length === 1) {
+                        // doar model
+                        model = restParts[0].replace(/-/g, " ");
+                    } else if (restParts.length === 2) {
+                        // model + cod generatie
+                        model = restParts[0].replace(/-/g, " ");
+                        generatie = restParts[1].replace(/-/g, " ");
+                    }
+                }
+            } else {
+                // Nu e marcă dublă, deci presupunem marcă simplă ca prima parte
+                const parts = menuSlug.split("-");
+
+                marca = parts[0].replace(/-/g, " ");
+
+                if (parts.length >= 4) {
+                    // Format: marca-model-codGeneratie-ani
+                    model = parts[1].replace(/-/g, " ");
+                    const codGen = parts[2].replace(/-/g, " ");
+                    const aniGen = parts.slice(3).join("-").replace(/---/g, " - ").replace(/-/g, " ");
+                    generatie = `${codGen} ${aniGen}`.trim();
+                } else if (parts.length === 3) {
+                    // Format: marca-model-generatie (fara ani)
+                    model = parts[1].replace(/-/g, " ");
+                    generatie = parts[2].replace(/-/g, " ");
+                } else if (parts.length === 2) {
+                    model = parts[1].replace(/-/g, " ");
+                }
+            }
+
+            if(model != "" && generatie != ""){
+                const link = "http://localhost:5012/api/Piese/search_generation?GenText=" + generatie + "&MarcaName=" + marca + "&ModelName=" + model;  
+                const generatieNoua = await get(link);
+                generatie = generatieNoua[0].generatieName;
+            }            
+            IdSubCat = "";
+        }
+
+    }
+   
+    // Curățare finală, evităm valori undefined
+    if (!marca) { model = ""; generatie = ""; }
+    if (!model) { generatie = ""; }
+
     const url = `${API_BASE_URL}/Piese/search_fields?Marca=${encodeURIComponent(marca)}&Model=${encodeURIComponent(model)}&Generatie=${encodeURIComponent(generatie)}&IdSubCat=${encodeURIComponent(IdSubCat)}&Nivel=${encodeURIComponent(Nivel)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
 
     return fetch(url)
@@ -196,16 +297,16 @@ function onImageClick(idPiesa) {
             return response.json();
         })
         .then(data => {
-            //debugger;
-           // Swal.close(); // Ascunde loaderul la succes
-            return data; // Returnează datele primite de la API
+            return data;
         })
-        .catch(error => {            
+        .catch(error => {
             document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
-            //Swal.close(); // Ascunde loaderul la eroare
             throw error;
         });
 }
+
+ 
+
 
 
 function pieseApiCallBySubcat(idSubCat, nivel, currentPage, pageSize, orderTerm) {          
@@ -280,7 +381,7 @@ function changeOrderBy() {
 }
 
 function populateApiPath(){
-        debugger;
+        //debugger;
         if(marca == "" && model == "" && generatie == "" && IdSubCat == "" && Nivel == ""){
             pieseApiCall(populatePieseShopGrid);                       
         }

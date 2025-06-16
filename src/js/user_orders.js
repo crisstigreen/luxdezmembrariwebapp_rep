@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    //updateResultsTable();
+    
+
+    var userId = sessionStorage.getItem('email');
+    if (userId == null){
+         window.location='login.html';
+    }
+    debugger;
     fetchOrders();
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
     document.getElementById('next-page').addEventListener('click', () => changePage(1));

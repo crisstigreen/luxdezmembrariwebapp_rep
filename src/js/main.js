@@ -116,15 +116,14 @@
 
 let currentPage = 1;
 let totalPages = 1;
-let pageSize = 4; // Valoarea implicită
+let pageSize = 100; // Valoarea implicită
 let orderTerm = 'DESC'; // Implicit
 let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
 
 
 document.addEventListener('DOMContentLoaded', async function () {
-
-
+    debugger;          
     await carsApiCall(populateMasiniShopGrid);
 
     document.querySelectorAll(".link-masini").forEach(link => {
@@ -135,8 +134,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             loadCarDetails(newUrl);
         });
     });
-
-    pieseApiCall(populatePieseShopGrid);        
 
 
 
@@ -179,19 +176,19 @@ function generatePiesaUrl(piesa) {
 }
 function onImageClick(idPiesa) {
     //debugger;
-    var nume =document.getElementById(`piesaTitlu-${idPiesa}`).innerText;
     var pretText = document.getElementById(`piesaPret-${idPiesa}`).innerText;
     var pret = parseInt(pretText.match(/\d+/)[0]); // Extrage doar numărul din text        
     var imagini = document.getElementById(`piesaImagine-${idPiesa}`).src;
     var masina = document.getElementById(`piesaMasina-${idPiesa}`).innerText;
-    //var tipCaroserie = document.getElementById(`piesaTipCaroserie-${idPiesa}`).innerText;
+    var tipCaroserie = document.getElementById(`piesaTipCaroserie-${idPiesa}`).innerText;
     var codIntern = document.getElementById(`piesaCodintern-${idPiesa}`).innerText;
     var stoc = document.getElementById(`piesaStoc-${idPiesa}`).innerText;
 
     if(idPiesa){
         const product = {
             id: idPiesa.toString(),
-            name: nume,
+            //name: document.getElementById(`piesaTitlu-${idPiesa}`).innerText,
+            name: "Ornament dreapta - hardcodat",
             quantity: 1,
             pret: pret,
             pretTotal: pret,
@@ -201,7 +198,6 @@ function onImageClick(idPiesa) {
             stoc: stoc
         };
         addToCart(product);
-        window.location.href = '/cart.html';
     }
 }
 
@@ -229,7 +225,7 @@ function populateMasiniShopGrid(data){
                 </div>
                 <div class="card-body">
                     <h3>
-                        <a class="link-masini" href="${generateCarUrl(masina)}" >${masina.nume}</a>
+                        <a class="link-masini" href="${generateCarUrl(masina)}">${masina.nume}</a>
                     </h3>
                     <div class="card-desc">
                           <p>Cod motor: <span>${masina.codMotor} </span></p>
@@ -289,20 +285,20 @@ function populateMasiniShopGrid(data){
                     </figure>
                     <div class="card-body" id="piesa-${piesa.id}">
                         <h3 style="font-weight: bold;">
-                            <a href="${generatePiesaUrl(piesa)}" id="piesaTitlu-${piesa.id}">${piesa.nume}</a>
+                            <a href="${generatePiesaUrl(piesa)}">${piesa.nume}</a>
                         </h3>
                         <div class="card-desc-piese">
                             <p>Masina: <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
                             <p style='display:none' id="piesaStoc-${piesa.id}">${piesa.stoc}</p>
                             <p>Cod intern: <span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
                             <p>SKU_ID: <span id="piesasku_ID-${piesa.id}">${piesa.skU_Id}</span></p>
-                            <p>Disponibilitate: ${piesa.stoc > 0 ? `<span> <img src='images/CheckmarkCircle.svg' alt="Disponibil"/> În stoc (${piesa.stoc})` : '<span>Fără stoc</span>'}</p>
+                            <p>Disponibilitate: ${piesa.stoc > 0 ? `<span> <img src='/images/CheckmarkCircle.svg' alt="Disponibil"/> În stoc (${piesa.stoc})` : '<span>Fără stoc</span>'}</p>
                         </div>
                         <div class="card-footer">
                             <h4 id="piesaPret-${piesa.id}">${piesa.pret.replace('RON','').trim()}<span>RON</span></h4>
-                            <a class="btn-primary" ${cartImageEvents}>
+                            <a href="cart.html" class="btn-primary">
                                 Cumpără
-                                <img src='images/ShoppingBagW.svg'  alt="Adauga in cos"   />
+                                <img src='images/ShoppingBagW.svg'  alt="Adauga in cos"  ${cartImageEvents} />
                             </a>
                         </div>
                     </div>

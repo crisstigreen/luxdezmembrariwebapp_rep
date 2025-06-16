@@ -8,6 +8,19 @@ let pageSize = 12; // Valoarea implicită
 let orderTerm = 'DESC'; // Implicit
 let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
+let marcaId = null;
+let modelId = null;
+let generatieId = null;
+
+let allMarci = [];
+let allModels = [];
+let allGeneratii = []
+let IdSubCat = "";
+
+let selectedTip = '';
+let selectedCategorie = '';
+let selectedSubcategorie = '';
+
 
 
 // window.onload = function() {
@@ -16,17 +29,17 @@ let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
 
 document.addEventListener('DOMContentLoaded', async function () {
-    //const containerMarca = document.getElementById('checkboxContainerMarca');
-    // getCarsForDropdown(cars => populateCheckboxesMarca(cars, containerMarca));
-
+    debugger;
     document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
     document.getElementById('next-page').addEventListener('click', () => changePage(1));
+    
+    //await carsApiCall(populateMasiniShopGrid);
 
-    debugger;
-    await carsApiCall(populateMasiniShopGrid);
+     //new
+    parsePathAndFilterOnLoad();
     
 
-     getCarsPieseForDropdown(function(cars) {
+    getCarsPieseForDropdown(function(cars) {
         debugger;
         populateDropdown(cars);
     });
@@ -42,7 +55,118 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 });
 
+function carsApiCall(callback) {
+    debugger;
+    const url = `${API_BASE_URL}/CarsRegister/searchMasiniReg?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
+    
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Eroare la obținerea datelor');
+            }
+            return response.json();
+        })
+        .then(data => {
+            //populateMainGrid(data);
+            callback(data);
+        })
+        .catch(error => {
+            console.error('Eroare:', error);
+            document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
+        });
+}
 
+
+function parsePathAndFilterOnLoad() {
+    const path = window.location.pathname; // ex: /motoare
+    const parts = path.split('/').filter(Boolean); // elimină golurile
+
+    if (parts.length >= 1) {     
+        Nivel = 1;  
+        selectedTip = decodeURIComponent(parts[0] || '');
+        populateApiPath(); // sau pieseApiCallFields(...) dacă ai nevoie mai direct
+    }
+}
+
+
+function populateApiPath(){
+        debugger;
+        if(marca == "" && model == "" && generatie == "" && IdSubCat == "" && Nivel == ""){
+            pieseApiCall(populatePieseShopGrid);                       
+        }
+        else{
+            //debugger;
+            pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
+            .then(data => {                
+                populateMasiniShopGrid(data);
+            })
+                .catch(error => {
+                    console.error('Eroare la obținerea datelor:', error);
+            });     
+        }                    
+}
+
+
+function populatePieseShopGrid(data){
+    const rezultateDiv = document.getElementById('rezultateMasini');
+    rezultateDiv.innerHTML = '';
+    //debugger;
+    //cristi testache
+    
+    data.masiniReg.forEach(piesa => {
+        debugger;       
+        //var imageSrc = piesa.imagini ? `${API_BASE_URL_IMG}/` + piesa.imagini[0] : 'images/placeholder.jpg';
+
+          var imageSrc = piesa.imagini
+            ? `${API_BASE_URL_IMG}/${piesa.imagini[0]}?v=${Date.now()}`
+            : 'images/placeholder.jpg';
+      
+        if(piesa.imagini != null && piesa.imagini.length == 0){
+            imageSrc = '/images/placeholder.jpg';
+        }
+        const inStock = piesa.stoc > 0;
+    
+        const cartImageEvents = inStock 
+        ? `
+            onclick="onImageClick(${piesa.id})"
+        `
+        : `
+            onclick="event.preventDefault();"
+        `;
+
+        const piesaHTML = `
+            <div class="card">
+                <div class="card-image">
+                    <figure class="link-piese">
+                        <a  href="${generateCarUrl(piesa)}">                        
+                            <img src="${imageSrc}" alt="${piesa.nume}" id="piesaImagine-${piesa.id}">
+                        </a>
+                    </figure>
+                    <div class="card-body" id="piesa-${piesa.id}">
+                        <h3 style="font-weight: bold;">
+                            <a href="${generateCarUrl(piesa)}">${piesa.nume}</a>
+                        </h3>
+                        <div class="card-desc-piese">
+                            <p>Masina: <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
+                            <p style='display:none' id="piesaStoc-${piesa.id}">${piesa.stoc}</p>
+                            <p>Cod intern: <span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
+                            <p>SKU_ID: <span id="piesasku_ID-${piesa.id}">${piesa.skU_Id}</span></p>
+                            <p>Disponibilitate: ${piesa.stoc > 0 ? `<span> <img src='/images/CheckmarkCircle.svg' alt="Disponibil"/> În stoc (${piesa.stoc})` : '<span>Fără stoc</span>'}</p>
+                        </div>
+                        <div class="card-footer">                            
+                            <a href="cart.html" class="btn-primary">
+                                Cumpără
+                                <img src='images/ShoppingBagW.svg'  alt="Adauga in cos"  ${cartImageEvents} />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        rezultateDiv.innerHTML += piesaHTML;                
+     });             
+   
+}
 
 
 /* function generateCarUrl(masina) {
@@ -158,24 +282,103 @@ function populateMasiniShopGrid(data){
 
 
  // Funcția API GET DATE pentru a căuta piese după Marca, Model și Generatie
- function pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm) {
-    //debugger;    
+ async function pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm) {
+    debugger;    
+
+        //EXTRAG DIN URL
+    if(marca == "")  
+    {
+        var menuSend = "";
+        switch (Nivel) {
+            case 1:
+                menuSend = selectedTip.substr(1);
+                break;
+            case 2:
+                menuSend = selectedCategorie;
+                break;
+            case 3:
+                menuSend = selectedSubcategorie;
+                break;
+        }
+        //iau marcile care au doua cuvinte - gen Alfa Romeo
+        const link = "http://localhost:5012/api/InfoCars/GetMarciDuble";  
+        const marciDuble = await get(link);
+        const marciDubleSlug = marciDuble.map(nume => nume.toLowerCase().replace(/ /g, "-"));
+        const menuSlug = menuSend.toLowerCase();
+        marca = "";
+        model = "";
+        generatie = "";
+
+        if (IdSubCat == "" && !currentURL.includes("html")) {
+        // 1. Căutăm dacă menuSlug începe cu o marcă dublă cunoscută
+        const matchedMarca = marciDubleSlug.find(marcaSlug => menuSlug.startsWith(marcaSlug));
+
+        if (matchedMarca) {
+                // Marca este marca dublă găsită (ex: "alfa-romeo")
+                marca = matchedMarca.replace(/-/g, " ");
+
+                // Extragem restul după marca dublă + separator "-"
+                let rest = menuSlug.substring(matchedMarca.length);
+                if (rest.startsWith("-")) rest = rest.substring(1); // scoatem separatorul dacă există
+
+                if (rest) {
+                    const restParts = rest.split("-");
+
+                    if (restParts.length >= 3) {
+                        // Restul conține: model + cod generatie + ani (ex: "i01-facelift-2017---2020")
+                        model = restParts[0].replace(/-/g, " ");
+
+                        const codGen = restParts[1].replace(/-/g, " ");
+                        const aniGen = restParts.slice(2).join("-").replace(/---/g, " - ").replace(/-/g, " ");
+
+                        generatie = `${codGen} ${aniGen}`.trim();
+                    } else if (restParts.length === 1) {
+                        // doar model
+                        model = restParts[0].replace(/-/g, " ");
+                    } else if (restParts.length === 2) {
+                        // model + cod generatie
+                        model = restParts[0].replace(/-/g, " ");
+                        generatie = restParts[1].replace(/-/g, " ");
+                    }
+                }
+            } else {
+                // Nu e marcă dublă, deci presupunem marcă simplă ca prima parte
+                const parts = menuSlug.split("-");
+
+                marca = parts[0].replace(/-/g, " ");
+
+                if (parts.length >= 4) {
+                    // Format: marca-model-codGeneratie-ani
+                    model = parts[1].replace(/-/g, " ");
+                    const codGen = parts[2].replace(/-/g, " ");
+                    const aniGen = parts.slice(3).join("-").replace(/---/g, " - ").replace(/-/g, " ");
+                    generatie = `${codGen} ${aniGen}`.trim();
+                } else if (parts.length === 3) {
+                    // Format: marca-model-generatie (fara ani)
+                    model = parts[1].replace(/-/g, " ");
+                    generatie = parts[2].replace(/-/g, " ");
+                } else if (parts.length === 2) {
+                    model = parts[1].replace(/-/g, " ");
+                }
+            }
+
+            if(model != "" && generatie != ""){
+                const link = "http://localhost:5012/api/Piese/search_generation?GenText=" + generatie + "&MarcaName=" + marca + "&ModelName=" + model;  
+                const generatieNoua = await get(link);
+                generatie = generatieNoua[0].generatieName;
+            }            
+            IdSubCat = "";
+        }
+
+    }
+
+
     if(marca == ""){model = ""; generatie = "";}
     if(model == ""){generatie = "";}
     searchTerm = marca;
     searchTerm += ' ' + model;
     searchTerm += ' ' + generatie;
-    const url = `${API_BASE_URL}/CarsRegister/searchMasiniReg?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
-    
-    // Afișează loaderul
-    // Swal.fire({
-    //     title: 'Loading...',
-    //     text: 'Please wait while we fetch the data.',
-    //     allowOutsideClick: false,
-    //     didOpen: () => {
-    //         Swal.showLoading();
-    //     }
-    // });
+    const url = `${API_BASE_URL}/CarsRegister/searchMasiniReg?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;    
 
     return fetch(url)
         .then(response => {
@@ -185,8 +388,6 @@ function populateMasiniShopGrid(data){
             return response.json();
         })
         .then(data => {
-            //debugger;
-            // Swal.close(); // Ascunde loaderul la succes
             return data; // Returnează datele primite de la API
         })
         .catch(error => {

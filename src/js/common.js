@@ -131,9 +131,8 @@ async function getCars(link) {
         console.error('A apărut o eroare la apelarea API-ului:', error);
     }
 }
-function pieseApiCall(callback) {
-    //debugger;
-
+async function pieseApiCall(callback) {
+    debugger;
     window.topHtmlLoaded = Promise.resolve();
 
     window.topHtmlLoaded.then(() => {
@@ -355,26 +354,7 @@ function pieseMasinaApiCall(carId,callback) {
         });
 }
 
-function carsApiCall(callback) {
-    debugger;
-    const url = `${API_BASE_URL}/CarsRegister/searchMasiniReg?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
-    
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Eroare la obținerea datelor');
-            }
-            return response.json();
-        })
-        .then(data => {
-            //populateMainGrid(data);
-            callback(data);
-        })
-        .catch(error => {
-            console.error('Eroare:', error);
-            document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
-        });
-}
+
 
 
 //**********  GET WITH CALL BACK ********************************************************************* */
@@ -598,7 +578,7 @@ const dddCarsElement = document.getElementById('ddd_cars');
 if (dddCarsElement) {
     dddCarsElement.addEventListener('change', function() {
         //debugger;
-        const marcaId = this.value;
+        marcaId = this.value;
         var tbMarca = document.getElementById("tb_cars");
         if(tbMarca){
             tbMarca.value = getSelectedText('ddd_cars');  
@@ -619,7 +599,7 @@ const dddModelsElement = document.getElementById('ddd_models');
 if (dddModelsElement) {
     document.getElementById('ddd_models').addEventListener('change', function() {
         //debugger;
-        const modelId = this.value;
+        modelId = this.value;
         var tbModel = document.getElementById("tb_models");
         if(tbModel){
             tbModel.value = getSelectedText('ddd_models');  
@@ -636,15 +616,16 @@ if (dddModelsElement) {
 }
 
 const dddGeneratiiElement = document.getElementById('ddd_generatii');
+//debugger;
 if (dddModelsElement) {
     document.getElementById('ddd_generatii').addEventListener('change', async function() {
-        //debugger;        
+        debugger;        
         var tbGeneratii = document.getElementById("tb_generatii");
         if(tbGeneratii){
             tbGeneratii.value = getSelectedText('ddd_generatii');  
         }  
-        const generId = getSelectedValue('ddd_generatii');
-        const link = `${API_BASE_URL}/Cars/GetGeneratiiByIdDesc?id=` + generId;  
+        generatieId = getSelectedValue('ddd_generatii');        
+        const link = `${API_BASE_URL}/Cars/GetGeneratiiByIdDesc?id=` + generatieId;  
         const generatie = await get(link);        
         if(currentURL.includes("nomenclator")){            
             if (quill) {  
@@ -655,6 +636,7 @@ if (dddModelsElement) {
             
         }   
         if(currentURL.includes("index")) {return};
+        modelId = generatie.modelID;
         handleGeneratieChange(modelId);
     });
 }
@@ -796,13 +778,13 @@ function populateTipCaroserieDropdown() {
 
 
 function ChangeLink(marca, model, generatie) { 
-    // Transformă valorile în format URL-friendly
+    //debugger;
     let marcaUrl = marca.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
     let modelUrl = model ? model.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
     let generatieUrl = generatie ? generatie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
 
     // Construiește URL-ul nou
-    let newPath = marcaUrl;
+    let newPath = currentURL.includes('masini') ? ':' + marcaUrl : marcaUrl;
     if (modelUrl) {
         newPath += '-' + modelUrl;
     }
@@ -840,7 +822,7 @@ function ChangeLinkCateg(tip, categorie, subcategorie) {
 
 
 function handleMarcaChange(marcaId) {  //container este container ul tot
-    //debugger;
+    debugger;
     currentPage = 1;
     document.getElementById('tb_cauta').value = "";
     getDescriere('Marca',marcaId);
@@ -849,7 +831,7 @@ function handleMarcaChange(marcaId) {  //container este container ul tot
     marca = getSelectedText('ddd_cars') == "Selecteaza marca" ? "" : getSelectedText('ddd_cars');
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {    
-            //debugger;     
+            debugger;     
             if(currentURL.includes("piese")){
                  populatePieseShopGrid(data);   
             }
@@ -1006,38 +988,16 @@ async function setSelectedValueVal(selectId, value) {
 //**********  MESSAGES ********************************************************************* */
 //**********  MESSAGES ********************************************************************* */
 function showInsertSuccessMessage() {
-   /*   Swal.fire({
-         title: 'Success!',
-         text: 'Insert operation completed successfully.',
-         icon: 'success',
-         confirmButtonText: 'OK'
-     }); */
+    alert("Adaugat cu success");
 }
 function showUpdateSuccessMessage() {
-
-/*      Swal.fire({
-         title: 'Success!',
-         text: 'Update operation completed successfully.',
-         icon: 'success',
-         confirmButtonText: 'OK'
-     }); */
+     alert("Actualizat cu success");
 }
 function showDeleteSuccessMessage() {
-
-/*      Swal.fire({
-         title: 'Success!',
-         text: 'Delete operation completed successfully.',
-         icon: 'success',
-         confirmButtonText: 'OK'
-     }); */
+     alert("Sters cu success");
 }
 function showErrorMessage(errorMessage) {
-/*      Swal.fire({
-         title: 'Error!',
-         text: errorMessage,
-        icon: 'error',
-         confirmButtonText: 'OK'
-     }); */
+     alert("Eroare: " + errorMessage);
 }
 
 
@@ -1306,7 +1266,7 @@ if (slides.length > 0 && dots.length > 0) {
 }
 
 async function generateDynamicMenu() {
-    debugger;
+    //debugger;
     try {
         const link = `${API_BASE_URL}/InfoCars/GetMenuItems`;
         const response = await fetch(link);
@@ -1420,43 +1380,43 @@ async function handleMenuClick(level, id, name, parentTip = '', parentCategorie 
      
 }
 
-function populateApiPath(){
-        debugger;
-        if(marca == "" && model == "" && generatie == "" && IdSubCat == null && Nivel == null){
-            pieseApiCall(populateShopGrid);                       
-        }
-        else if(IdSubCat != null){            
-            pieseApiCallBySubcat(IdSubCat, Nivel, currentPage, pageSize, orderTerm)
-            .then(data => {              
-                if(!currentURL.includes("admin")){
-                    populateShopGrid(data);
-                }  
-                else{
-                    populateMainGrid(data);
-                }
-               
-            })
-                .catch(error => {
-                    console.error('Eroare la obținerea datelor:', error);
-            });    
-        }
-        else{
-            
-            pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
-            .then(data => {     
-                 if(!currentURL.includes("admin")){
-                    populateShopGrid(data);
-                }           
-                else{
 
-                }
-                
-            })
-                .catch(error => {
-                    console.error('Eroare la obținerea datelor:', error);
-            });     
-        }                    
+//nou-functie pentru filtrare directa cu link in browser
+function parsePathAndFilterOnLoad() {
+    const path = window.location.pathname; // ex: /motoare
+    const parts = path.split('/').filter(Boolean); // elimină golurile
+
+    if (parts.length >= 1) {
+        let tip = decodeURIComponent(parts[0] || '');
+        let categorie = decodeURIComponent(parts[1] || '');
+        let subcategorie = decodeURIComponent(parts[2] || '');
+
+        // Setează nivelul în funcție de câte părți are URL-ul
+        if (parts.length === 1) {
+            selectedTip = tip;
+            selectedCategorie = '';
+            selectedSubcategorie = '';
+            Nivel = 1;
+        } else if (parts.length === 2) {
+            selectedTip = tip;
+            selectedCategorie = categorie;
+            selectedSubcategorie = '';
+            Nivel = 2;
+        } else if (parts.length >= 3) {
+            selectedTip = tip;
+            selectedCategorie = categorie;
+            selectedSubcategorie = subcategorie;
+            Nivel = 3;
+        }
+
+        console.log("Filtrare automată din URL:", { selectedTip, selectedCategorie, selectedSubcategorie, Nivel });
+
+        // Acum poți chema direct populateApiPath()
+        populateApiPath(); // sau pieseApiCallFields(...) dacă ai nevoie mai direct
+    }
 }
+
+
 
 function pieseApiCallBySubcat(idSubCat, nivel, currentPage, pageSize, orderTerm) {          
       const url = `${API_BASE_URL}/Piese/get_by_subcat` +
@@ -1467,15 +1427,8 @@ function pieseApiCallBySubcat(idSubCat, nivel, currentPage, pageSize, orderTerm)
         `&OrderBy=${encodeURIComponent(orderTerm)}`;
     
 
-    // Arătăm loader-ul în timp ce așteptăm răspunsul
-    Swal.fire({
-        title: 'Loading...',
-        text: 'Please wait while we fetch the data.',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
+    
+        
 
     // Facem fetch la API
     return fetch(url)
@@ -1485,13 +1438,11 @@ function pieseApiCallBySubcat(idSubCat, nivel, currentPage, pageSize, orderTerm)
             }
             return response.json();
         })
-        .then(data => {
-            Swal.close(); // Ascundem loader-ul după primirea datelor
+        .then(data => {  
             return data;  // Returnăm datele primite (obiectul cu Piese și TotalPages)
         })
         .catch(error => {
-            document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
-            Swal.close();
+            document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';      
             throw error;
         });
 }

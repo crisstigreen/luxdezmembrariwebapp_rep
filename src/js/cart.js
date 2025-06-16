@@ -24,7 +24,7 @@ function displayCartItems() {
                     <h3>
                         <a href="piese-details.html?id=${item.id}" id="piesaTitlu-${item.id}">${item.name} ${item.masina}</a>
                     </h3>
-                    <p>Disponibilitate <span><img src="images/CheckmarkCircle.svg" alt="Disponibil"> În stoc (${item.stoc})</span></p>
+                    <p>Disponibilitate <span><img src="/images/CheckmarkCircle.svg" alt="Disponibil"> În stoc (${item.stoc})</span></p>
                     <a href="#" class="js-btn-delete" data-id="${item.id}">Sterge</a>
                 </div>
                 <div class="col-3 quantity">
@@ -276,8 +276,15 @@ function deleteLogged(itemId) {
 
 
 document.getElementById('btn_finalizeaza').addEventListener('click', () => {
-    debugger;        
-    
+    debugger;     
+
+    const email = sessionStorage.getItem('email');   
+    if (email == null){ 
+        window.location='login.html';
+    }
+    else{
+        window.location='checkout.html';
+    }
     
     
     

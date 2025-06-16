@@ -22,8 +22,12 @@ function login() {
         loginUser();
     }
 }
+
+
+
+
+
 function loginUser() {
-    debugger;
     var userName = document.getElementById("tb_user").value;
     var pass = document.getElementById("tb_pass").value;
     const user = {
@@ -32,6 +36,7 @@ function loginUser() {
     };
 
     const url = `${API_BASE_URL}/Users/login`;
+
     fetch(url, {
         method: 'POST',
         headers: {
@@ -39,55 +44,43 @@ function loginUser() {
         },
         body: JSON.stringify(user)
     })
-    .then(response => {
-        debugger;
+    .then(async response => {
+        let data;
+        try {
+            data = await response.json(); // chiar și la eroare, tot luăm JSON
+        } catch (err) {
+            showErrorMessage("Răspuns invalid de la server.");
+            return;
+        }
+
         if (!response.ok) {
-            // Dacă răspunsul nu este OK (de exemplu 403 sau 400)
-            return response.json().then(data => {
-                let errorMessage = 'A apărut o eroare în timpul autentificării.';
-                
-                // Verificăm statusul și mesajul primit
-                if (data && data.message) {
-                    errorMessage = data.message; // Extragem mesajul din răspuns
-                }
-                
-                // Afișăm mesajul de eroare corespunzător
-                // Swal.fire(
-                //     'Eroare!',
-                //     errorMessage,
-                //     'error'
-                // );
-                //throw new Error(errorMessage); // Oprim execuția ulterioară
-            });
+            const errorMessage = data?.message || 'A apărut o eroare la autentificare.';
+            showErrorMessage(errorMessage);
+            return;
         }
-        
-        // Dacă răspunsul este OK, continuăm cu procesarea JSON-ului
-        return response.json(); // Procesăm răspunsul JSON dacă este ok
-    })
-    .then(data => {
-        debugger;
-        if (data) {
-            debugger;
-            var userId = data[0]; // Obține UserId din array-ul returnat
-            var username = data[1]; // Obține Username din array-ul returnat
 
-            sessionStorage.setItem('userId', userId);
-            sessionStorage.setItem('username', username);
-
-            window.location.href = '../index.html';
-        }
+        // Dacă suntem aici, înseamnă că autentificarea a reușit
+        var userId = data[0];
+        var username = data[1];
+        var email = data[2];
+        var role = data[3];
+        sessionStorage.setItem('userId', userId);
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('email', email);
+        sessionStorage.setItem('role', role);
+        window.location.href = '../index.html';
     })
     .catch(error => {
-        debugger;
-        console.error('Error:', error);
-        // În cazul în care sunt erori neașteptate
-        Swal.fire(
-            'Eroare!',
-            'A apărut o eroare în timpul autentificării.',
-            'error'
-        );
+        console.error('Eroare rețea sau server indisponibil:', error);
+        showErrorMessage('Nu se poate realiza conexiunea cu serverul. Încearcă din nou mai târziu.');
     });
 }
+
+
+
+
+
+
 
 //**********  POST ********************************************************************* */
 //**********  POST ********************************************************************* */
@@ -96,11 +89,12 @@ function register() {
     window.location.href = 'register.html'; //relative to domain
 }
 
-function registerUser() {    
+function registerUser(event) {  
+    event.preventDefault();  
     debugger;
-    if (validareRegister() == false) {
+     if (validareRegister() == false) {
         return;
-    }   
+    }    
              
     var userName = document.getElementById("tb_user").value;    
     var pass = document.getElementById("tb_pass").value;
@@ -110,8 +104,9 @@ function registerUser() {
         Username: userName,       
         PasswordHash: pass,  
         Email: email   
-    };
-    insertUser(user);          
+    }; 
+    insertUser(user);  
+    clear();        
 }
 
 
@@ -136,6 +131,15 @@ function insertUser(user){
         document.getElementById('tb_email').value = "";    
         return response.json();
     })              
+}
+
+function clear(){
+    document.getElementById("tb_nume").value = "";
+    document.getElementById("tb_prenume").value = "";
+    document.getElementById("tb_telefon").value = "";
+    document.getElementById("tb_email").value = "";
+    document.getElementById("tb_user").value = "";
+    document.getElementById("tb_pass").value = "";
 }
 
 
@@ -368,8 +372,12 @@ function validareRegister() {
         }
     }
 
-    // Validare email
+    // Validare email cristi test
     var email = document.getElementById("tb_email").value;
+
+
+    var exista = verifEmail(email);
+
     if (email == "") {
         document.getElementById('email_error').innerText = 'Adresa de email nu poate fi goală.';
         isValid = false;
@@ -381,6 +389,12 @@ function validareRegister() {
             isValid = false;
             verifRed('tb_email');
         }
+    }
+
+    var datePersonale = document.getElementById("tb_check").checked;
+    if(datePersonale == false){
+        isValid = false;
+        verifRed('divPersonale');
     }
 
     return isValid;
@@ -539,15 +553,20 @@ function validareLogin() {
             verifRed('tb_pass');
         }
     }
+    
 
     return isValid;
 }
+
+
 function validareResetPass() {
     let isValid = true;
     document.getElementById('email_error').innerText = '';
     
-    // Validare email
+    // Validare email  --TEST CRISTI
+    debugger;
     var email = document.getElementById("tb_email").value;
+
     if (email == "") {
         document.getElementById('email_error').innerText = 'Adresa de email nu poate fi goală.';
         isValid = false;
@@ -563,6 +582,26 @@ function validareResetPass() {
 
     return isValid;
 }
+
+
+async function verifEmail(email) {
+    debugger;
+    const url = `${API_BASE_URL}/Users/email/${email}`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Eroare la verificarea emailului');
+        }
+
+        const exista = await response.json(); // va fi true sau false
+        return exista;
+
+    } catch (error) {
+        console.error('Eroare verificare email:', error);
+        return false; // în caz de eroare, presupunem că nu există
+    }
+}
+
 
 
 
