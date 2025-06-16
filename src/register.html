@@ -19,22 +19,22 @@
         </div>
         <form id="register-form" method="post">
              <div class="col-6">
-                <label for="tb_nume">Nume</label>
+                <label for="">Nume</label>
                 <input type="text" class="form-input" id="tb_nume" onclick="verifRemoveRed('tb_nume')" name="tb_nume" placeholder="Numele tău">
                 <p id="nume_error" class="error-message"></p>
             </div>
              <div class="col-6">
-                <label for="tb_prenume">Prenume</label>
+                <label >Prenume</label>
                 <input type="text" class="form-input" id="tb_prenume" onclick="verifRemoveRed('tb_prenume')" name="tb_prenume" placeholder="Numele tău">
                 <p id="prenume_error" class="error-message"></p>
             </div>
               <div class="col-6">
-                <label for="tb_telefon">Telefon</label>
+                <label>Telefon</label>
                 <input type="text" class="form-input" id="tb_telefon" onclick="verifRemoveRed('tb_telefon')" name="tb_telefon" placeholder="Numărul tău de telefon">
                 <p id="telefon_error" class="error-message"></p>
             </div>
              <div class="col-6">
-                <label for="tb_email">Adresa de e-mail</label>
+                <label for="tb_user">Adresa de e-mail</label>
                 <input type="text" class="form-input" id="tb_email" onclick="verifRemoveRed('tb_email')" name="tb_email" placeholder="Adresa ta de e-mail">
                 <p id="email_error" class="error-message"></p>
             </div>
@@ -44,17 +44,20 @@
                 <p id="user_error" class="error-message"></p>
             </div>
               <div class="col-6">
-                <label for="tb_pass">Parola</label>
+                <label for="tb_password">Parola</label>
                 <input type="password" class="form-input" id="tb_pass" onclick="verifRemoveRed('tb_pass')" name="tb_pass">
                 <p>Parola trebuie să aibă cel puțin 8 caractere, o literă mare, o literă mică, un număr și un caracter special</p>
                 <p id="pass_error" class="error-message"></p>
             </div>
-            <div class="col-6 display-inline">
-                <input type="checkbox" id="tb_check" name="tb_check">
+            <div class="col-6">
+                <div id="divPersonale" style="width: 20px; padding-left: 3px; padding-top: 1px;">
+                     <input type="checkbox" id="tb_check" name="tb_check" onclick="verifRemoveRed('divPersonale')">
+                </div>
+                
                 <label for="tb_check">Sunt de acord cu prelucrarea datelor mele personale</label>
             </div>
             <div class="col-6">
-                 <button class="btn-primary" id="bt_register" onclick="registerUser()" >Crează Contul<img src="images/PersonAdd.svg" alt="Cont Nou"></button>
+                 <button class="btn-primary" type="submit" id="bt_register" onclick="registerUser(event)" >Crează Contul<img src="images/PersonAdd.svg" alt="Cont Nou"></button>
             </div>
         </form>
     </section>

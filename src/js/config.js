@@ -23,18 +23,15 @@ const BASE_URL = 'http://localhost:8080/';
  */
 	
 	
-// const API_BASE_URL = 'http://localhost:5012/api';
-// const API_BASE_URL_IMG = 'https://luxdezmembrari.fra1.cdn.digitaloceanspaces.com/luxdezmembrari';
-// const BASE_URL = 'http://localhost:5012/';
-
-
- const API_BASE_URL = 'https://www.dezmembrariroman.ro/api';
+const API_BASE_URL = 'http://localhost:5012/api';
 const API_BASE_URL_IMG = 'https://luxdezmembrari.fra1.cdn.digitaloceanspaces.com/luxdezmembrari';
-const BASE_URL = 'https://www.dezmembrariroman.ro/';  
+const BASE_URL = 'http://localhost:5012/';
 
-//const API_BASE_URL = 'http://127.0.0.1:5500/api';
-//const API_BASE_URL_IMG = 'https://luxdezmembrari.fra1.cdn.digitaloceanspaces.com/luxdezmembrari';
-//const BASE_URL = 'http://127.0.0.1:5500/';
+
+/* const API_BASE_URL = 'https://www.dezmembrariroman.ro/api';
+const API_BASE_URL_IMG = 'https://luxdezmembrari.fra1.cdn.digitaloceanspaces.com/luxdezmembrari';
+const BASE_URL = 'https://www.dezmembrariroman.ro/';  */
+
 
 
 
