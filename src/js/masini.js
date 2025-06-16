@@ -301,7 +301,10 @@ function populateMasiniShopGrid(data){
                 break;
         }
         //iau marcile care au doua cuvinte - gen Alfa Romeo
-        const link = "http://localhost:5012/api/InfoCars/GetMarciDuble";  
+
+                               
+
+        const link =  `${API_BASE_URL}/InfoCars/GetMarciDuble`;
         const marciDuble = await get(link);
         const marciDubleSlug = marciDuble.map(nume => nume.toLowerCase().replace(/ /g, "-"));
         const menuSlug = menuSend.toLowerCase();
@@ -363,7 +366,7 @@ function populateMasiniShopGrid(data){
             }
 
             if(model != "" && generatie != ""){
-                const link = "http://localhost:5012/api/Piese/search_generation?GenText=" + generatie + "&MarcaName=" + marca + "&ModelName=" + model;  
+                const link = `${API_BASE_URL}/Piese/search_generation?GenText=` + generatie + "&MarcaName=" + marca + "&ModelName=" + model;  
                 const generatieNoua = await get(link);
                 generatie = generatieNoua[0].generatieName;
             }            

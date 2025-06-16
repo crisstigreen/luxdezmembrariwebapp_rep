@@ -182,8 +182,8 @@ function onImageClick(idPiesa) {
  // Funcția API GET DATE pentru a căuta piese după Marca, Model și Generatie
 async function pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm) {
     debugger;
-    //tip filtrare - cautare marca existenta
-    const link = "http://localhost:5012/api/Piese/search_marcabyname?partialName=" + selectedTip;  
+    //tip filtrare - cautare marca existenta    
+    const link = `${API_BASE_URL}/Piese/search_marcabyname?partialName=` + selectedTip;  
     var tipFiltrareObj = await get(link);
     tipFiltrare = tipFiltrareObj.length == 0 ? "byCateg" : "byMarca";
     
@@ -211,8 +211,8 @@ async function pieseApiCallFields(marca, model, generatie, currentPage, pageSize
         }
     }
     else{                             //*****byMarca        
-        //marci
-        linkMarciDuble = "http://localhost:5012/api/InfoCars/GetMarciDuble";  
+        //marci        
+        linkMarciDuble = `${API_BASE_URL}/InfoCars/GetMarciDuble`;  
         const marciDuble = await get(linkMarciDuble);
         const marciDubleSlug = marciDuble.map(nume => nume.toLowerCase().replace(/ /g, "-"));
         const menuSlug = menuSend.toLowerCase();
@@ -273,8 +273,8 @@ async function pieseApiCallFields(marca, model, generatie, currentPage, pageSize
                 }
             }
 
-            if(model != "" && generatie != ""){
-                const link = "http://localhost:5012/api/Piese/search_generation?GenText=" + generatie + "&MarcaName=" + marca + "&ModelName=" + model;  
+            if(model != "" && generatie != ""){                
+                const link = `${API_BASE_URL}/Piese/search_generation?GenText=` + generatie + "&MarcaName=" + marca + "&ModelName=" + model;  
                 const generatieNoua = await get(link);
                 generatie = generatieNoua[0].generatieName;
             }            

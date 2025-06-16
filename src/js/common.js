@@ -1330,7 +1330,18 @@ async function generateDynamicMenu() {
                     }
                 }
             }
+
         });
+
+          const toggleButton = document.getElementById('menuButton'); // presupunem că ai un buton
+            toggleButton.addEventListener('click', () => {
+            const currentDisplay = getComputedStyle(menu).display;
+            menu.style.display = currentDisplay === 'none' ? 'flex' : 'none';
+            });
+
+            menu.addEventListener('mouseleave', () => {
+            menu.style.display = 'none';
+            });
     } catch (error) {
         console.error('Eroare la generarea meniului dinamic:', error);
     }

@@ -63,24 +63,31 @@
         <div>
             <h1>Comenzile mele</h1>
         </div>
-        <input type="text" class="form-control" id="tb_cauta_comanda" placeholder="Căutare după număr comandă..." name="tb_cauta_comanda">
-          <button id="cautaBtn" class="btn btn-success btn-sm col">Cauta</button>   
-           <select id="page-size" class="form-control">
+        <div id="comenzilemele">
+            <div class="filtre-comenzi">
+            <input type="text" class="form-input" id="tb_cauta_comanda" placeholder="Căutare după număr comandă..." name="tb_cauta_comanda">
+          
+            <select id="page-size" class="form-select">
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="50">50</option>
                             <option selected value="100">100</option>
-         </select>  
-           <select id="order_term" class="form-control">
+            </select>  
+           <select id="order_term" class="form-select">
                             <option  value="DESC">Cele mai noi</option>
                             <option selected value="ASC">Cele mai vechi</option>
                         </select>  
-                          <div class="order-container" id="orderContainer"></div>
-                           <div id="pagination-controls">
-                        <button class="btn btn-success btn-sm" id="prev-page" disabled>Previous</button>
-                        <strong id="page-info"></strong>
-                        <button class="btn btn-success btn-sm" id="next-page" disabled>Next</button>                            
+                          <button id="cautaBtn" class="btn-primary">Cauta</button>   
+            </div>
+          
+                        <div class="order-container" id="orderContainer"></div>
+                        <div id="pagination-controls">
+                        <p id="page-info"></p>
+                       <button class="btn btn-success btn-sm" id="prev-page" disabled=""><img src="/images/prev.svg" alt="Inapoi"></button>
+                       <button class="btn btn-success btn-sm" id="next-page"><img src="/images/next.svg" alt="Urmatoarea"></button>                        
                     </div>
+        </div>
+      
     </div>
 </section>
 

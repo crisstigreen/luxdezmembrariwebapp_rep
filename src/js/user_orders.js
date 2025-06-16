@@ -100,6 +100,7 @@ async function fetchOrders() {
         var userId = sessionStorage.getItem('userId');
         const response = await fetch(`${API_BASE_URL}/Orders/searchByUserId?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&UserId=${userId}&OrderBy=${encodeURIComponent(orderTerm)}`); // Schimbă cu URL-ul tău
         const orders = await response.json();
+        console.log('Comenzi preluate:', orders);
         populateOrders(orders.comenzi);
     } catch (error) {
         console.error('Eroare la preluarea comenzilor:', error);
@@ -117,14 +118,23 @@ function populateOrders(orders) {
         // Zona pentru articole și totalAmount
         const orderDetailsDiv = document.createElement('div');
         orderDetailsDiv.className = 'order-details';
-        const orderTitle = document.createElement('h5');
+        const orderNumarComanda = document.createElement('h2');
+   
         const orderLink = document.createElement('a');
         orderLink.href = `order-details.html?orderId=${order.orderID}`;
         orderLink.target = '_blank';
-        orderLink.textContent = order.articole;
-        orderTitle.appendChild(orderLink);
-        orderDetailsDiv.appendChild(orderTitle);
-        
+        orderLink.innerHTML = '<img src="images/DownloadIcon.svg"/> Descară factura'; // textul linkului
+        orderNumarComanda.textContent = `Nr comandă: ${order.orderID}`; // numarul comenzii
+        orderDetailsDiv.appendChild(orderNumarComanda);
+        orderDetailsDiv.appendChild(orderLink);
+    
+     
+       const orderArticlesDiv = document.createElement('div');
+       orderArticlesDiv.className = 'order-articles';
+       const orderArticles = document.createElement('h5');
+       orderArticles.textContent = order.articole;
+       orderArticlesDiv.appendChild(orderArticles);
+
         // Zona pentru Cantitate
         const orderQuantity = document.createElement('p');
         const boldQuantityLabel = document.createElement('strong');
@@ -133,7 +143,7 @@ function populateOrders(orders) {
         quantityValue.textContent = order.quantity;  // Valorile vor fi îngroșate și verzi
         orderQuantity.appendChild(boldQuantityLabel);
         orderQuantity.appendChild(quantityValue);
-        orderDetailsDiv.appendChild(orderQuantity);
+       // orderDetailsDiv.appendChild(orderQuantity);
 
         // Zona pentru orderDate și totalAmount
         const orderInfoDiv = document.createElement('div');
@@ -154,7 +164,6 @@ function populateOrders(orders) {
             second: '2-digit'
         });
         const boldOrderDateLabel = document.createElement('strong');
-        boldOrderDateLabel.textContent = 'Data comenzii: ';
         const orderDateText = document.createElement('span');
         orderDateText.textContent = `${datePart} : ${timePart}`; // Valorile vor fi îngroșate și verzi
         orderDate.appendChild(boldOrderDateLabel);
@@ -162,17 +171,22 @@ function populateOrders(orders) {
         orderInfoDiv.appendChild(orderDate);
 
         // Crearea pentru Total
+        const total = order.totalAmount
+        .split(',')
+        .map(Number)
+        .reduce((sum, val) => sum + val, 0);
         const orderAmount = document.createElement('p');
         const boldOrderAmountLabel = document.createElement('strong');
         boldOrderAmountLabel.textContent = 'Total: ';
         const orderAmountText = document.createElement('span');
-        orderAmountText.textContent = `${order.totalAmount} lei`; // Valorile vor fi îngroșate și verzi
+        orderAmountText.textContent = total + ' lei'; 
         orderAmount.appendChild(boldOrderAmountLabel);
         orderAmount.appendChild(orderAmountText);
         orderInfoDiv.appendChild(orderAmount);
 
         // Adaugă div-urile create la containerul principal
         orderDiv.appendChild(orderDetailsDiv);
+        orderDiv.appendChild(orderArticlesDiv);
         orderDiv.appendChild(orderInfoDiv);
         orderContainer.appendChild(orderDiv);
     });
