@@ -25,9 +25,10 @@ let selectedCategorie = '';
 let selectedSubcategorie = '';
 let tipFiltrare = "";
 
-// window.onload = function() {
-//  document.getElementById('link-Piese').classList.add('active');
-// }
+//Pentru activarea meniului de piese
+window.onload = function() {
+  document.getElementById('link-Piese').classList.add('active');
+}
 
 window.addEventListener('DOMContentLoaded', () => {
     debugger;

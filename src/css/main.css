@@ -356,7 +356,7 @@ footer h3{
     color: var(--color-white);
 }
 footer .logo{
-    width: 16rem;
+    width: 13.5rem;
 }
 footer > .col-2, footer > .col-3{
     display: flex;
@@ -392,6 +392,20 @@ footer img{
 /* Layout */
 #hero{
     margin-top:var(--space-6);
+}
+#thankyou{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#thankyou img{
+  max-height:40vh;
+}
+#thankyou h1{
+      font-size: clamp(2rem, 3vw, 3.125rem);
+    font-weight: 900;
+    margin-bottom: var(--space-1);
 }
 section{
   display: grid;
@@ -592,7 +606,7 @@ section{
      width:50%;
 }
 .card-footer h4{
-    font-size: clamp(2rem, 2.5vw, 3rem);
+    font-size: clamp(2rem, 2.2vw, 3rem);
     font-weight: 900;
 }
 .card-footer h4 span{
@@ -932,6 +946,19 @@ section{
     text-align: center;
     margin-top: var(--space-2);
 }
+#descriere{
+  margin-top: var(--space-8);
+}
+#descriere article{
+    grid-column-start: 4;
+    grid-column-end: span 9;
+    background-color: var(--color-white);
+    border-radius: var(--space-1);
+}
+#descriere article p{
+  font-size: 0.875rem;
+  margin: var(--space-2);
+}
 .about{
   margin-top:var(--space-8);
   display: flex;
@@ -1198,6 +1225,7 @@ section{
 }
 .order-articles{
   margin-top:var(--space-2);
+  margin-bottom: var(--space-1);
 }
 .order-details a{
   color:var(--color-blue);
@@ -2174,6 +2202,9 @@ footer .logo{
 .rezultateMasini .card-wrapper > .card{
   grid-column: span 6;
 }
+#descriere article{
+  grid-column-start: 5;
+}
 .card-footer{
   flex-direction: column;
   align-items: flex-start;
@@ -2300,15 +2331,16 @@ footer .logo{
   .auth-form .btn-primary{
     width: 50%;
   }
-  #account-details{
-    grid-column-start: 5;
+  #account-details, #orderContainer{
+    grid-column-start: 4;
+    grid-column-end: span 9;
   }
   #register-form{
     padding: var(--space-2);
   }
   #myaccount > div:first-of-type{
     grid-column-start: 1;
-    grid-column-end: span 4;
+    grid-column-end: span 3;
     display: flex;
     flex-direction: column;
   }
@@ -2347,6 +2379,11 @@ footer .logo{
   .rezultateMasini .card-wrapper > .card{
     grid-column: span 6;
   }
+  #descriere article{
+  grid-column-start: 1;
+      grid-column-end: span 12;
+
+}
   .masini-details{
     padding: var(--space-2);
     gap:var(--space-2);
@@ -2694,6 +2731,11 @@ footer .logo{
   .rezultateMasini .card-wrapper > .card, .rezultateMasini{
     grid-column: span 12;
   }
+    #descriere article{
+  grid-column-start: 1;
+      grid-column-end: span 12;
+
+}
   .card-footer{
     margin-top:var(--space-4);
   }
@@ -2859,9 +2901,20 @@ footer .logo{
   #myaccount > div:first-of-type{
     padding: 0;
   }
-  #myaccount > div:first-of-type, #account-details{
+  #myaccount > div:first-of-type, #account-details, #orders{
     grid-column-start: 1;
      grid-column: span 12;
+  }
+   .filtre-comenzi{
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: space-between;
+  }
+  #order_term {
+    width: 50%;
+}
+  #page-size{
+    width: 45%;
   }
 
 }
@@ -2870,6 +2923,11 @@ footer .logo{
   :root{
      --base-padding-x: max(2vw, 16px);
   }
+    #descriere article{
+  grid-column-start: 1;
+      grid-column-end: span 12;
+
+}
   .menu{
     margin-left:0;
   }
@@ -3246,9 +3304,30 @@ footer .logo{
   #myaccount > div:first-of-type{
     padding: 0;
   }
-  #myaccount > div:first-of-type, #account-details{
+  #myaccount > div:first-of-type, #account-details, #orders{
     grid-column-start: 1;
      grid-column: span 12;
+  }
+  .filtre-comenzi{
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: space-between;
+  }
+  #order_term {
+    width: 50%;
+}
+  #page-size{
+    width: 45%;
+  }
+  .order > .order-info, .order > .order-details{
+    flex-wrap: wrap;
+  }
+  #orderContainer{
+    padding: var(--space-2);
+  }
+  .order-details h2{
+    font-size: 1.125rem;
+    width: 100%;
   }
 
 }

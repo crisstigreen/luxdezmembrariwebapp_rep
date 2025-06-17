@@ -22,10 +22,10 @@ let selectedCategorie = '';
 let selectedSubcategorie = '';
 
 
-
-// window.onload = function() {
-//  document.getElementById('link-Masini').classList.add('active');
-// }
+//Pentru activarea meniului de masini
+ window.onload = function() {
+  document.getElementById('link-Masini').classList.add('active');
+ }
 
 
 document.addEventListener('DOMContentLoaded', async function () {
