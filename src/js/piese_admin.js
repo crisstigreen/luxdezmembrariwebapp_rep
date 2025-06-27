@@ -35,6 +35,10 @@ async function initializePage() {
     document.getElementById('page-size').addEventListener('change', () => changePageSize());
     document.getElementById('order_term').addEventListener('change', () => changeOrderBy());
 
+     document.getElementById('bt_clear_temp').addEventListener('click', () =>            
+         localStorage.clear()         
+    );
+
     fetch('/admin/menu.html')
         .then(response => response.text())
         .then(data => {

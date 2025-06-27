@@ -10,12 +10,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Function to update the cart count display
 function updateCartCountDisplay() {
-    //debugger;     
-     setTimeout(() => {
-        //debugger; 
+    debugger;     
+    setTimeout(() => {
+        debugger; 
         const countElement = document.getElementById('cart-count');
         if(countElement != null)
-        {
+        { 
             countElement.textContent = getCartCount();
         }  
         
@@ -25,7 +25,7 @@ function updateCartCountDisplay() {
 
 // Function to get the cart count from localStorage
 function getCartCount() {
-    //debugger; 
+    debugger; 
     let count = localStorage.getItem('cartCount');
     if (count) {
         return parseInt(count);
@@ -38,7 +38,7 @@ function getCartCount() {
 function addToCart(product) {
     debugger;
     let count = getCartCount();
-    count += product.quantity;
+    count += parseInt(product.quantity);
     setCartCount(count);
     updateCartCountDisplay();
 
@@ -61,7 +61,7 @@ function setCartItems(items) {
 
 // Function to set the cart count in localStorage
 function setCartCount(count) {
-    //debugger;
+    debugger;
     localStorage.setItem('cartCount', count);
 }
 

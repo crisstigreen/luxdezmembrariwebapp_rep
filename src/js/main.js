@@ -124,7 +124,7 @@ let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
 document.addEventListener('DOMContentLoaded', async function () {
     debugger;          
-    await carsApiCall(populateMasiniShopGrid);
+    //await carsApiCall(populateMasiniShopGrid);
 
     document.querySelectorAll(".link-masini").forEach(link => {
         link.addEventListener("click", function (event) {
