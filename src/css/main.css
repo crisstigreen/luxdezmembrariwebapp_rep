@@ -460,7 +460,7 @@ section{
 .filter-area > .form-input:nth-of-type(1),
 .filter-area > .btn-primary
 {
-    margin-top:var(--space-2);
+    margin-top:var(--space-3);
 }
 
 .car-area{
