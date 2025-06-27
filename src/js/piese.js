@@ -26,23 +26,42 @@ let selectedSubcategorie = '';
 let tipFiltrare = "";
 
 //Pentru activarea meniului de piese
+
+
+
 window.onload = function() {
-  document.getElementById('link-Piese').classList.add('active');
-}
+  var interval = setInterval(function() {
+    var linkPiese = document.getElementById('link-Piese');
+    if (linkPiese) {
+      linkPiese.classList.add('active');
+      clearInterval(interval);
+    }
+  }, 100); // verifică la 100ms
+};
+
 
 window.addEventListener('DOMContentLoaded', () => {
-    debugger;
-    document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
-    document.getElementById('next-page').addEventListener('click', () => changePage(1));
-       
-    //new
-    parsePathAndFilterOnLoad();
+    //debugger;     
+    const urlParams = new URLSearchParams(window.location.search);
+    var searchTerm = urlParams.get('search');
+    if(searchTerm != null){
+        currentPage = 1; // Resetăm la prima pagină        
+        //document.getElementById("tb_cauta").value = searchTerm; 
+        pieseApiCall(populateMainGrid);
+    }
+    else{         
+        document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
+        document.getElementById('next-page').addEventListener('click', () => changePage(1));        
+        //new
+        parsePathAndFilterOnLoad();
 
-    //debugger;
-    getCarsPieseForDropdown(function(cars) {
         //debugger;
-        populateDropdown(cars);
-    });
+        getCarsPieseForDropdown(function(cars) {
+            //debugger;
+            populateDropdown(cars);
+        });
+
+     }
 });
 
 
@@ -70,25 +89,19 @@ function generatePiesaUrl(piesa) {
 //POPULATE Piese GRID
  function populatePieseShopGrid(data){
     const rezultateDiv = document.getElementById('rezultatePiese');
-    rezultateDiv.innerHTML = '';
-    //debugger;
-    
-    data.piese.forEach(piesa => {
-      
-        //debugger;       
-        //img.src = `${API_BASE_URL_IMG}/${image.denumireImagine}?v=${Date.now()}`;
+    rezultateDiv.innerHTML = ''; 
+    const isLoggedIn = sessionStorage.getItem('email') != null;
 
+    
+    data.piese.forEach(piesa => {      
+        //debugger;       
         var imageSrc = piesa.imagini
         ? `${API_BASE_URL_IMG}/${piesa.imagini[0]}?v=${Date.now()}`
-        : 'images/placeholder.jpg';
-
-
-      
+        : 'images/placeholder.jpg';      
         if(piesa.imagini != null && piesa.imagini.length == 0){
             imageSrc = '/images/placeholder.jpg';
         }
-        const inStock = piesa.stoc > 0;
-    
+        const inStock = piesa.stoc > 0;    
         const cartImageEvents = inStock 
         ? `
             onclick="onImageClick(${piesa.id})"
@@ -96,6 +109,13 @@ function generatePiesaUrl(piesa) {
         : `
             onclick="event.preventDefault();"
         `;
+
+        // Construiește Locatie doar dacă userul e logat
+      const codInternHTML = `
+        <p class="${isLoggedIn ? '' : 'hidden'}">
+            Locatie: <span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span>
+        </p>`;
+
 
         const piesaHTML = `
             <div class="card">
@@ -113,7 +133,7 @@ function generatePiesaUrl(piesa) {
                         <div class="card-desc-piese">
                             <p>Masina: <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
                             <p style='display:none' id="piesaStoc-${piesa.id}">${piesa.stoc}</p>
-                            <p>Cod intern: <span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
+                            ${codInternHTML}
                             <p>SKU_ID: <span id="piesasku_ID-${piesa.id}">${piesa.skU_Id}</span></p>
                             <p>Disponibilitate: ${piesa.stoc > 0 ? `<span> <img src='/images/CheckmarkCircle.svg' alt="Disponibil"/> În stoc (${piesa.stoc})` : '<span>Fără stoc</span>'}</p>
                         </div>
@@ -153,7 +173,7 @@ function generatePiesaUrl(piesa) {
 
 function onImageClick(idPiesa) {
     debugger;
-    var nume =document.getElementById(`piesaTitlu-${idPiesa}`).innerText;
+    var nume =document.getElementById(`piesa-${idPiesa}`).innerText;
     var pretText = document.getElementById(`piesaPret-${idPiesa}`).innerText;
     var pret = parseInt(pretText.match(/\d+/)[0]); // Extrage doar numărul din text        
     var imagini = document.getElementById(`piesaImagine-${idPiesa}`).src;
@@ -182,7 +202,7 @@ function onImageClick(idPiesa) {
 
  // Funcția API GET DATE pentru a căuta piese după Marca, Model și Generatie
 async function pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm) {
-    debugger;
+    //debugger;
     //tip filtrare - cautare marca existenta    
     const link = `${API_BASE_URL}/Piese/search_marcabyname?partialName=` + selectedTip;  
     var tipFiltrareObj = await get(link);
@@ -381,22 +401,7 @@ function changeOrderBy() {
 
 }
 
-function populateApiPath(){
-        //debugger;
-        if(marca == "" && model == "" && generatie == "" && IdSubCat == "" && Nivel == ""){
-            pieseApiCall(populatePieseShopGrid);                       
-        }
-        else{
-            //debugger;
-            pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
-            .then(data => {                
-                populatePieseShopGrid(data);
-            })
-                .catch(error => {
-                    console.error('Eroare la obținerea datelor:', error);
-            });     
-        }                    
-}
+
 
 
 

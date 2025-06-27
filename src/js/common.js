@@ -136,14 +136,14 @@ async function pieseApiCall(callback) {
     window.topHtmlLoaded = Promise.resolve();
 
     window.topHtmlLoaded.then(() => {
-        const input = document.getElementById('tb_cauta');
-        if (!input) {
-            console.warn('#tb_cauta not found yet');
-            //return;
-        }
-    
-        const searchTerm = input == null ? "" : (input.value.trim()); // can be empty string
+        const input = document.getElementById('tb_cauta');                
+        var searchTerm = input == null ? "" : (input.value.trim()); // can be empty string
 
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('search') != null){
+            searchTerm = urlParams.get('search');            
+        }
+                
         let url = "";
         if (/^\d+$/.test(searchTerm) && searchTerm !== "") {
             // Numeric + not empty = search by SKU
@@ -162,100 +162,105 @@ async function pieseApiCall(callback) {
             })
             .then(data => {
                 callback(data);
+
+                
             })
             .catch(error => {
                 console.error('Eroare:', error);
-                document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
+                document.getElementById('rezultatePiese').innerText = 'A apărut o eroare la căutarea pieselor.';
             });
     });
 }
 
 function populateMainGrid(data){
     debugger;
-    const rezultateTable = document.getElementById('rezultate-tabel');
-    rezultateTable.innerHTML = ''; // Resetează tabela
-    data.piese.forEach(piese => {
-        const piesaRow = `
-            <tr data-id="${piese.id}">
-                <td>${piese.id}</td>
-                <td>${piese.masina}</td>
-                <td>${piese.nume}</td>
-                <td>${piese.tipCaroserie}</td>
-                <td>${piese.pret}</td>
-                <td>${piese.discount}</td>
-                <td>
-                    <button class="edit-button" data-id="${piese.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
-                </td>
-                <td>
-                    <button class="delete-button" data-id="${piese.id}"><i class="fas fa-remove" style="font-size:14px"></i></button>
-                </td>
-            </tr>
-        `;
-        rezultateTable.innerHTML += piesaRow;
-    });
+    if(currentURL.includes("piese_admin")){
+        const rezultateTable = document.getElementById('rezultate-tabel');
+        rezultateTable.innerHTML = ''; // Resetează tabela
 
-    totalPages = data.totalPages; // Actualizează totalPages
-    updatePaginationControls(); // Actualizează controalele de paginare
-
-    // Adaugă eveniment pentru butoanele de editare
-    document.querySelectorAll('.edit-button').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.stopPropagation();
-            const id = this.getAttribute('data-id');
-            get_details(id); // Apelează funcția pentru a obține detaliile
+         data.piese.forEach(piese => {
+            const piesaRow = `
+                <tr data-id="${piese.id}">
+                    <td>${piese.id}</td>
+                    <td>${piese.masina}</td>
+                    <td>${piese.nume}</td>
+                    <td>${piese.tipCaroserie}</td>
+                    <td>${piese.pret}</td>
+                    <td>${piese.discount}</td>
+                    <td>
+                        <button class="edit-button" data-id="${piese.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
+                    </td>
+                    <td>
+                        <button class="delete-button" data-id="${piese.id}"><i class="fas fa-remove" style="font-size:14px"></i></button>
+                    </td>
+                </tr>
+            `;
+            rezultateTable.innerHTML += piesaRow;
         });
-    });
-        // Adaugă eveniment pentru butoanele de delete
-    document.querySelectorAll('.delete-button').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.stopPropagation();
-            const id = this.getAttribute('data-id');
-            const link = `${API_BASE_URL}/Piese/` + id;  
 
-
-            Swal.fire({
-            title: 'Sunteți sigur?',
-            text: 'Această acțiune va șterge elementul definitiv.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Da, șterge!',
-            cancelButtonText: 'Anulează',
-            reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        debugger;
-                        //del(id, link);
-                        //showDeleteSuccessMessage();
-                        //initializePage();
-
-                        
-                         del(id, link).then(() => {
-                            showDeleteSuccessMessage();
-                            initializePage();
-                        }).catch((error) => {
-                            console.error('Eroare la ștergere:', error);
-                            Swal.fire('Eroare!', 'A apărut o eroare la ștergere.', 'error');
-                        });    
-
-
-
-                    }
-                });
+         // Adaugă eveniment pentru butoanele de editare
+        document.querySelectorAll('.edit-button').forEach(button => {
+            debugger;
+            button.addEventListener('click', function (event) {
+                event.stopPropagation();
+                const id = this.getAttribute('data-id');
+                get_details(id); // Apelează funcția pentru a obține detaliile
             });
-    });
+        });
+            // Adaugă eveniment pentru butoanele de delete
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.stopPropagation();
+                const id = this.getAttribute('data-id');
+                const link = `${API_BASE_URL}/Piese/` + id;  
+
+
+                Swal.fire({
+                title: 'Sunteți sigur?',
+                text: 'Această acțiune va șterge elementul definitiv.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Da, șterge!',
+                cancelButtonText: 'Anulează',
+                reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            debugger;
+                            //del(id, link);
+                            //showDeleteSuccessMessage();
+                            //initializePage();
+
+                            
+                            del(id, link).then(() => {
+                                showDeleteSuccessMessage();
+                                initializePage();
+                            }).catch((error) => {
+                                console.error('Eroare la ștergere:', error);
+                                Swal.fire('Eroare!', 'A apărut o eroare la ștergere.', 'error');
+                            });    
 
 
 
+                        }
+                    });
+                });
+        }); 
 
-    //Swal.close();
+    }
+    else{            
+        const rezultateTable = document.getElementById('rezultatePiese');
+        rezultateTable.innerHTML = ''; // Resetează tabela
 
-     // Întârzierea închiderii loader-ului
-     setTimeout(() => {
-        Swal.close(); // Închide loader-ul
-    }, 200); // Rămâne deschis pentru 1000 ms (1 secundă)
-
-
+        populatePieseShopGrid(data);       
+        totalPages = data.totalPages; // Actualizează totalPages
+        updatePaginationControls(); // Actualizează controalele de paginare       
+    }
 }
+
+
+
+
+
 
 
 
@@ -298,6 +303,7 @@ function populatePieseMasiniTable() {
 
                // Adaugă eveniment pentru butoanele de editare
             document.querySelectorAll('.edit-button').forEach(button => {
+                debugger;
                 button.addEventListener('click', function (event) {
                     event.stopPropagation();
                     const id = this.getAttribute('data-id');                    
@@ -355,6 +361,36 @@ function pieseMasinaApiCall(carId,callback) {
 }
 
 
+function carsApiCall(callback) {
+    debugger;
+    const url = `${API_BASE_URL}/CarsRegister/searchMasiniReg?SearchTerm=${encodeURIComponent(searchTerm)}&PageNumber=${encodeURIComponent(currentPage)}&PageSize=${encodeURIComponent(pageSize)}&OrderBy=${encodeURIComponent(orderTerm)}`;
+    
+    // Afișează loaderul
+    Swal.fire({
+        title: 'Loading...',
+        text: 'Please wait while we fetch the data.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Eroare la obținerea datelor');
+            }
+            return response.json();
+        })
+        .then(data => {
+            //populateMainGrid(data);
+            callback(data);
+        })
+        .catch(error => {
+            console.error('Eroare:', error);
+            document.getElementById('rezultate-tabel').innerText = 'A apărut o eroare la căutarea pieselor.';
+        });
+}
 
 
 //**********  GET WITH CALL BACK ********************************************************************* */
@@ -1154,7 +1190,13 @@ async function  sku_gen(controlId) {
 
 //autocomplete
 document.addEventListener('DOMContentLoaded', function () {    
-    //debugger;        
+    //debugger;       
+    const params = getUrlParams();
+    if (params.type && params.id && params.name) {
+        handleMenuClick(params.type, params.id, params.name);
+    }
+    
+
     if(currentURL.includes("masini_add") || currentURL.includes("piese_add")){ 
         $("#tb_nume").autocomplete({
             source: function (request, response) {
@@ -1265,6 +1307,18 @@ if (slides.length > 0 && dots.length > 0) {
     showSlide(currentSlide);
 }
 
+
+function getUrlParams() {
+    const params = {};
+    const queryString = window.location.search.substring(1);
+    const pairs = queryString.split("&");
+    for (let i = 0; i < pairs.length; i++) {
+        const pair = pairs[i].split("=");
+        params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+    }
+    return params;
+}
+
 async function generateDynamicMenu() {
     //debugger;
     try {
@@ -1295,7 +1349,9 @@ async function generateDynamicMenu() {
                     categoriiTipMap.set(tipId, tipElement.querySelector('.submenu'));
 
                     tipElement.querySelector('.menu-link').addEventListener('click', function () {
-                        debugger;
+                        debugger;  
+                        //const url = `piese.html?type=tip&id=${encodeURIComponent(tipId)}&name=${encodeURIComponent(tipNume)}`;
+                        //window.location.href = url; //relative to domain                                                                 
                         handleMenuClick('tip', tipId, tipNume);   
                         
                     });
@@ -1334,14 +1390,16 @@ async function generateDynamicMenu() {
         });
 
           const toggleButton = document.getElementById('menuButton'); // presupunem că ai un buton
-            toggleButton.addEventListener('click', () => {
-            const currentDisplay = getComputedStyle(menu).display;
-            menu.style.display = currentDisplay === 'none' ? 'flex' : 'none';
-            });
-
-            menu.addEventListener('mouseleave', () => {
-            menu.style.display = 'none';
-            });
+            debugger;
+                if(toggleButton != null){                
+                toggleButton.addEventListener('click', () => {
+                const currentDisplay = getComputedStyle(menu).display;
+                menu.style.display = currentDisplay === 'none' ? 'flex' : 'none';
+                });
+                menu.addEventListener('mouseleave', () => {
+                menu.style.display = 'none';
+                });
+            }
     } catch (error) {
         console.error('Eroare la generarea meniului dinamic:', error);
     }
@@ -1349,7 +1407,7 @@ async function generateDynamicMenu() {
 
 
 async function handleMenuClick(level, id, name, parentTip = '', parentCategorie = '') {
-    debugger;
+    debugger; 
     document.getElementById("numeCatSelectata").value = name;
     if (level === 'tip') {
         selectedTip = name;
@@ -1387,9 +1445,34 @@ async function handleMenuClick(level, id, name, parentTip = '', parentCategorie 
         console.error('Eroare la filtrarea pieselor:', error);
     }
 
-     populateApiPath();
-     
+    if(currentURL.includes("index")){
+        var url = window.location.href;
+        window.location.href = url;    
+    }     
+    populateApiPath();
 }
+
+    
+async function populateApiPath(){
+        //debugger;
+        if(marca == "" && model == "" && generatie == "" && IdSubCat == "" && Nivel == ""){
+            pieseApiCall(populatePieseShopGrid);                       
+        }
+        else{
+            //debugger;
+            pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
+            .then(data => {                
+                populatePieseShopGrid(data);
+            })
+                .catch(error => {
+                    console.error('Eroare la obținerea datelor:', error);
+            });     
+        }                    
+}
+
+
+     
+   
 
 
 //nou-functie pentru filtrare directa cu link in browser
@@ -1487,5 +1570,22 @@ function changeOrderBy() {
     orderTerm = document.getElementById('order_term').value;    
     pieseApiCall(populateMainGrid);
 }
+
+
+function cauta(){    
+    debugger;
+    searchTerm = document.getElementById('tb_cauta').value.trim();
+    if(window.location.href.includes("index.")){
+        window.location.href = "/piese.html?search=" + searchTerm;
+    }
+    else{        
+        currentPage = 1; // Resetăm la prima pagină
+        pieseApiCall(populateMainGrid);
+    }
+    
+    
+}
+
+
 
 

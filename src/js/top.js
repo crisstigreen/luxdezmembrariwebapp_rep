@@ -2,8 +2,14 @@
 window.topHtmlLoaded = fetch('/top.html')
     .then(response => response.text())
     .then(data => {
-     
+        //debugger;
         document.body.insertAdjacentHTML('afterbegin', data);
+        //debugger;
+        const urlParams = new URLSearchParams(window.location.search);
+        var searchTerm = urlParams.get('search');
+        if(searchTerm != null){            
+            document.getElementById("tb_cauta").value = searchTerm;           
+        }
 
         return new Promise(resolve => {
         
@@ -93,6 +99,16 @@ window.topHtmlLoaded = fetch('/top.html')
 document.addEventListener('DOMContentLoaded', async function () {
     //debugger;
     await generateDynamicMenu();
+
+     document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
+        debugger;
+        if (event.key === 'Enter') {
+            debugger;
+            const searchTerm = document.getElementById('tb_cauta').value.trim();
+            currentPage = 1; // Resetăm la prima pagină
+            pieseApiCall(populateMainGrid);             
+        }
+    });
 });
     
 
@@ -121,4 +137,7 @@ window.addEventListener('pageshow', function(event) {
         window.location.reload();
     }
 });
+
+
+
 

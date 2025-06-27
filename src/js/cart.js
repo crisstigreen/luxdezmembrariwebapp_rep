@@ -90,8 +90,8 @@ function updateCartItemQuantity(itemId, action) {
 
     if (item) {
         let count = getCartCount();                
-        if (action === 'plus') {
-            item.quantity += 1;
+        if (action === 'plus') {            
+            item.quantity = parseInt(item.quantity) + 1;
             item.pretTotal = item.pret * item.quantity;
             count += 1;
 
@@ -277,14 +277,15 @@ function deleteLogged(itemId) {
 
 document.getElementById('btn_finalizeaza').addEventListener('click', () => {
     debugger;     
+     window.location='checkout.html';
 
-    const email = sessionStorage.getItem('email');   
+   /*  const email = sessionStorage.getItem('email');   
     if (email == null){ 
         window.location='login.html';
     }
     else{
         window.location='checkout.html';
-    }
+    } */
     
     
     

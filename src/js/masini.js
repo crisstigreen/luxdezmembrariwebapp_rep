@@ -149,7 +149,7 @@ function populatePieseShopGrid(data){
                         <div class="card-desc-piese">
                             <p>Masina: <span id="piesaMasina-${piesa.id}">${piesa.masina}</span></p>
                             <p style='display:none' id="piesaStoc-${piesa.id}">${piesa.stoc}</p>
-                            <p>Cod intern: <span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
+                            <p>Locatie: <span id="piesaCodintern-${piesa.id}">${piesa.locatie}</span></p>
                             <p>SKU_ID: <span id="piesasku_ID-${piesa.id}">${piesa.skU_Id}</span></p>
                             <p>Disponibilitate: ${piesa.stoc > 0 ? `<span> <img src='/images/CheckmarkCircle.svg' alt="Disponibil"/> În stoc (${piesa.stoc})` : '<span>Fără stoc</span>'}</p>
                         </div>

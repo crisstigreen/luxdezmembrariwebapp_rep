@@ -144,11 +144,7 @@ function clear(){
 
 
 async function sendResetPassword(event) {
-    debugger;
-    const resendButton = document.getElementById('resend_button');
-    resendButton.style.display = 'none';
-
-    // Previne comportamentul implicit al butonului
+    debugger;    
     if (event) event.preventDefault();
 
     if (validareResetPass() == false) {
@@ -168,21 +164,18 @@ async function sendResetPassword(event) {
         Email: email,
         Active: true               
     };
-    //db
     const url = `${API_BASE_URL}/UsersCodes`;
     var x = await insert(code, url);  
-    localStorage.setItem('codeId', x.id);
+    localStorage.setItem('codeId', x.data.id);
     localStorage.setItem('resetCode', resetCode);
     localStorage.setItem('email', email);
     debugger;
-    startTimer(180);     
+    startTimer(300);     
 }
 
 
-async function saveNewPassword(event) {  
-    var loader = document.getElementById("loader");
-    loader.style.display = "block";    
-
+async function saveNewPassword(event) { 
+    debugger;     
     let isValid = true;
     if (event) event.preventDefault();
     debugger;
@@ -209,12 +202,10 @@ async function saveNewPassword(event) {
         
     if(existingcode == null || existingcode.active == false){
         verifRed('tb_code');
-        document.getElementById('code_error').innerText = 'Codul este invalid sau a expirat.';
-        loader.style.display = "none";  
+        document.getElementById('code_error').innerText = 'Codul este invalid sau a expirat.';        
         return;
     }
-            
-     loader.style.display = "none";  
+                 
      
     // Validate new pass
     var x = validareNewPass();
@@ -564,7 +555,7 @@ function validareResetPass() {
     document.getElementById('email_error').innerText = '';
     
     // Validare email  --TEST CRISTI
-    debugger;
+    //debugger;
     var email = document.getElementById("tb_email").value;
 
     if (email == "") {

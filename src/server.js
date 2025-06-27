@@ -19,12 +19,17 @@ app.get('/.well-known/appspecific/com.chrome.devtools.json', (req, res) => {
 //***************************RUTE DETALII************************************  */
 
 app.get(/^\/:([a-z0-9\-]+)-(\d+)$/i, (req, res, next) => {
-  const url = req.originalUrl;           // ex: '/:alfa-romeo-...-549'
+  const url = req.originalUrl;           // ex: '/:daihatsu-boon-3-generation-2016---2019-548'
   const parts = url.split('-');          // split după cratimă
-  const last = parts[parts.length - 1];  // ultimul segment (ex: '549')
+  const last = parts[parts.length - 1];  // ultimul segment (ex: '548')
 
-  // Verifică numeric și lungimea ID-ului
-  if (!/^\d+$/.test(last) || last.length < 3) {
+  // Verifică numeric, lungimea ID-ului și să înceapă cu /:
+  if (!/^\d+$/.test(last) || last.length < 3 || !url.startsWith('/:')) {
+    return next();
+  }
+
+  // Verifică dacă URL-ul se termină cu ---<cifre>-<cifre>
+  if (!/---\d+-\d+$/i.test(url)) {
     return next();
   }
 
@@ -39,8 +44,10 @@ app.get(/^\/:([a-z0-9\-]+)-(\d+)$/i, (req, res, next) => {
   return res.sendFile(path.join(__dirname, 'masini-details.html'));
 });
 
-// 4. Rute specifice pentru detalii piese 
 
+
+
+// 4. Rute specifice pentru detalii piese 
 app.get(/^\/(([^\/]+-)?[^\/]+-)?([a-z0-9\-]+)-(\d+)$/i, (req, res, next) => {
     const url = req.originalUrl;
     const parts = url.split('-');
@@ -66,7 +73,6 @@ app.get(/^\/(([^\/]+-)?[^\/]+-)?([a-z0-9\-]+)-(\d+)$/i, (req, res, next) => {
 });
 
 
-
 //***************************RUTE FILTRARE MASINI************************************  */
 
 // Ruta pentru marca (ex: http://.../:alfa-romeo)
@@ -77,26 +83,7 @@ app.get('/::marca', (req, res, next) => {
   res.sendFile(path.join(__dirname, 'masini.html'));
 });
 
-// Ruta pentru marca-model (ex: http://.../:alfa-romeo-147)
-app.get('/::marca-:model', (req, res, next) => {
-  const { marca, model } = req.params;
-  const isValid =
-    /^[a-z0-9\-]+$/i.test(marca)
-    && /^[a-z0-9\-]+$/i.test(model);
-  if (!isValid) return next();
-  res.sendFile(path.join(__dirname, 'masini.html'));
-});
 
-// Ruta pentru marca-model-generatie (ex: http://.../:alfa-romeo-147-gt)
-app.get('/::marca-:model-:generatie', (req, res, next) => {
-  const { marca, model, generatie } = req.params;
-  const isValid =
-    /^[a-z0-9\-]+$/i.test(marca)
-    && /^[a-z0-9\-]+$/i.test(model)
-    && /^[a-z0-9\-]+$/i.test(generatie);
-  if (!isValid) return next();
-  res.sendFile(path.join(__dirname, 'masini.html'));
-});
 
 
 

@@ -338,7 +338,7 @@ async function fetchAndPopulatePieseData() {
         return;    
     }
     else{        
-        document.getElementById("tb_stoc").disabled = true;
+        //document.getElementById("tb_stoc").disabled = true;
         document.getElementById("tb_vandut").disabled = true;   
     }    
         
