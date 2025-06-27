@@ -29,7 +29,10 @@
           </div>
           <div>
              <label>Parola</label>
-             <input type="password" class="form-input" id="tb_pass" onclick="verifRemoveRed('tb_pass')" name="tb_pass" placeholder="Parola ta">
+            <div class="password-wrapper">
+                <input type="password" class="form-input" id="tb_pass" onclick="verifRemoveRed('tb_pass')" name="tb_pass" placeholder="Parola ta" />
+                <img src="images/EyeB.svg" alt="Toggle password visibility" class="toggle-password" onclick="togglePassword('tb_pass', this)" />
+            </div>
              <p id="pass_error" class="text-danger"></p>
           </div>
           <div>

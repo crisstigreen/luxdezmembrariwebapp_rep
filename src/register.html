@@ -43,18 +43,22 @@
                 <input type="text" class="form-input" id="tb_user" onclick="verifRemoveRed('tb_user')" name="tb_user" placeholder="Numele tău de utilizator">
                 <p id="user_error" class="error-message"></p>
             </div>
-              <div class="col-6">
-                <label for="tb_password">Parola</label>
-                <input type="password" class="form-input" id="tb_pass" onclick="verifRemoveRed('tb_pass')" name="tb_pass">
-                <p>Parola trebuie să aibă cel puțin 8 caractere, o literă mare, o literă mică, un număr și un caracter special</p>
-                <p id="pass_error" class="error-message"></p>
+            <div class="col-6">
+            <label for="tb_password">Parola</label>
+            <div class="password-wrapper">
+                <input type="password" class="form-input" id="tb_pass" onclick="verifRemoveRed('tb_pass')" name="tb_pass" placeholder="Introdu o parola" />
+                <img src="images/EyeB.svg" alt="Toggle password visibility" class="toggle-password" onclick="togglePassword('tb_pass', this)" />
+            </div>
+            <p>Parola trebuie să aibă cel puțin 8 caractere, o literă mare, o literă mică, un număr și un caracter special</p>
+            <p id="pass_error" class="error-message"></p>
             </div>
             <div class="col-6">
-                <div id="divPersonale" style="width: 20px; padding-left: 3px; padding-top: 1px;">
+                <div id="divPersonale">
                      <input type="checkbox" id="tb_check" name="tb_check" onclick="verifRemoveRed('divPersonale')">
+                    <label for="tb_check">Sunt de acord cu prelucrarea datelor mele personale</label>
                 </div>
                 
-                <label for="tb_check">Sunt de acord cu prelucrarea datelor mele personale</label>
+              
             </div>
             <div class="col-6">
                  <button class="btn-primary" type="submit" id="bt_register" onclick="registerUser(event)" >Crează Contul<img src="images/PersonAdd.svg" alt="Cont Nou"></button>

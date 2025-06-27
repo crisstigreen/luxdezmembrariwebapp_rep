@@ -385,7 +385,7 @@ function validareRegister() {
     var datePersonale = document.getElementById("tb_check").checked;
     if(datePersonale == false){
         isValid = false;
-        verifRed('divPersonale');
+        verifRed('tb_check');
     }
 
     return isValid;
@@ -459,7 +459,16 @@ function loginLink() {
     window.location.href = 'login.html'; //relative to domain
 }
 
-
+function togglePassword(inputId, icon) {
+  const input = document.getElementById(inputId);
+  if (input.type === "password") {
+    input.type = "text";
+    icon.src = "eye-off.svg"; // You’ll need this second icon too
+  } else {
+    input.type = "password";
+    icon.src = "eye.svg";
+  }
+}
 
 
 function showInsertSuccessMessage() {
