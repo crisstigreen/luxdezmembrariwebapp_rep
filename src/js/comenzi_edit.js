@@ -108,17 +108,24 @@ function fetchAndPopulateTable() {
 }
 
 function populateTable(data) {
+    debugger;
     return new Promise((resolve, reject) => {
         const rezultateTable = document.getElementById('rezultate-tabel');
         rezultateTable.innerHTML = ''; // Resetează tabela
 
         data.forEach(com => {
+            debugger;
+            var piesaLink = ChangeLinkFunc(com.marca, com.model, com.generatie);
+            //const link = `${API_BASE_URL}/InfoCars/GetCategorieDetails/` + id;
+                  /* <td>${com.piesaAuto}</td> */
             const comRow = `
                 <tr data-id="${com.orderItemID}">
                     <td>${com.orderItemID}</td>
                     <td>${com.orderID}</td>
                     <td>${com.masina}</td>
-                    <td>${com.piesaAuto}</td>
+                                  
+                    <td style='cursor: pointer'><a href="${piesaLink}-${com.id}" target='_blank'>${com.piesaAuto}</a></td>
+                                        
                     <td>${com.articolServiciu}</td>
                     <td>${com.quantity}</td>
                     <td>${com.unitPrice}</td>                         
@@ -303,7 +310,7 @@ function getQueryParam(param) {
 }
 
 function populateResponsabilDropdown() {
-    debugger;
+    //debugger;
     const url = `${API_BASE_URL}/Users/light`;    
     
     return fetch(url) // Returnează promisiunea
@@ -356,7 +363,7 @@ async function populateFields(data) {
     const timeValue = `${hours}:${minutes}`;
     const timeInput = document.getElementById('time_comanda');
     timeInput.value = timeValue;   
-    debugger;       
+    //debugger;       
     await setSelectedText('ddd_status', data[0].status);   
     if (data[0].status === "Comenzi pierdute/anulate"){        
         document.getElementById('lb_comandaAnulata').style.display = 'block';
@@ -722,7 +729,7 @@ async function updateOrderDefault(order) {
 
 /* tabs */
 function openTab(evt, tabName) {
-    debugger;
+    //debugger;
     var i, tabcontent, tabbuttons;
     tabcontent = document.getElementsByClassName("tab-content");
     for (i = 0; i < tabcontent.length; i++) {

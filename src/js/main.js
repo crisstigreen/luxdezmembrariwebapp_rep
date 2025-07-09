@@ -123,7 +123,7 @@ let searchTerm = ''; // Variabilă pentru a stoca termenul de căutare
 
 
 document.addEventListener('DOMContentLoaded', async function () {
-    debugger;          
+    //debugger;          
     //await carsApiCall(populateMasiniShopGrid);
 
     document.querySelectorAll(".link-masini").forEach(link => {

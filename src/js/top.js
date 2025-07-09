@@ -95,22 +95,22 @@ window.topHtmlLoaded = fetch('/top.html')
     }).catch(error => {
         console.error('Eroare la încărcarea top.html:', error);
     });
-
+    
 document.addEventListener('DOMContentLoaded', async function () {
-    //debugger;
     await generateDynamicMenu();
 
-     document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
-        debugger;
+    document.getElementById('tb_cauta').addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
-            debugger;
             const searchTerm = document.getElementById('tb_cauta').value.trim();
             currentPage = 1; // Resetăm la prima pagină
-            pieseApiCall(populateMainGrid);             
+            if (window.location.pathname.includes("piese.html")) {
+                pieseApiCall(populateMainGrid);
+            } else {
+                window.location.href = `piese.html?search=${encodeURIComponent(searchTerm)}`;
+            }
         }
     });
 });
-    
 
 async function GetUser(userId){
     //debugger;

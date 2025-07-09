@@ -231,11 +231,11 @@ async function  registerPiesaFunc(){
     var um = document.getElementById('tb_um').value;  
     var discount = document.getElementById('tb_discount').value;
     var locatie = document.getElementById('tb_locatie').value;
-    var stoc = document.getElementById('tb_stoc').value || -1;    
-    var vandut = document.getElementById('tb_vandut').value || -1;    
+    var stoc = document.getElementById('tb_stoc').value || 0    
+    var vandut = document.getElementById('tb_vandut').value || 0;    
     var vizibil= document.getElementById("ddd_vizibil");
     var vizibilText= vizibil.options[vizibil.selectedIndex].text;
-    var skU_ID = document.getElementById('tb_sku').value || -1;       
+    var skU_ID = document.getElementById('tb_sku').value || 0;       
     var utl = document.getElementById('tb_utl').value;       
     var IdSubCat = getSelectedValue('ddd_subcateg');   
     var imagini = ""; 
@@ -375,7 +375,7 @@ async function fetchAndPopulatePieseData() {
                 //await getGeneratiiForDropdown(modelId, populateCheckboxesGeneratie);    
                 await getGeneratiiForDropdown(modelId, populateGeneratiiDropdown);    
 
-                // Extrage și setează generația
+                // Extrage și setează generatia
                 var generatieName = await  extractCarGeneratie(data.masina, modelName);                                     
                 const generatieDropdown = document.getElementById('ddd_generatii');
                 const generatieOption = Array.from(generatieDropdown.options).find(option => option.text === generatieName);
@@ -414,8 +414,8 @@ async function populateOtherFields(data) {
     document.getElementById('tb_um').value = data.um || '';
     document.getElementById('tb_discount').value = data.discount || '0';
     document.getElementById('tb_locatie').value = data.locatie || '';
-    document.getElementById('tb_stoc').value = data.stoc || '';    
-    document.getElementById('tb_vandut').value = data.vandut || '';
+    document.getElementById('tb_stoc').value = data.stoc || '0';    
+    document.getElementById('tb_vandut').value = data.vandut || '0';
     await setSelectedValue('ddd_vizibil', data.vizibilitate);    
     document.getElementById('tb_sku').value = data.skU_Id || '';
     document.getElementById('tb_utl').value = data.utl || '';

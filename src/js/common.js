@@ -10,6 +10,9 @@ let marca = "";
 let model = "";
 let generatie = "";
 let Nivel = "";
+let dddSel = "";
+let selectedText = "";
+
 
 var currentURL = window.location.href;
 
@@ -174,11 +177,22 @@ async function pieseApiCall(callback) {
 
 function populateMainGrid(data){
     debugger;
+      
+    totalPages = data.totalPages; // Actualizează totalPages
+    updatePaginationControls(); // Actualizează controalele de paginare      
+
     if(currentURL.includes("piese_admin")){
         const rezultateTable = document.getElementById('rezultate-tabel');
         rezultateTable.innerHTML = ''; // Resetează tabela
 
          data.piese.forEach(piese => {
+        const poza = piese.imagini && piese.imagini.length > 0 
+            ? `<img src="https://luxdezmembrari.fra1.cdn.digitaloceanspaces.com/luxdezmembrari/${piese.imagini[0]}" 
+                alt="piesa" 
+                style="width: 50px; height: auto; object-fit: cover; cursor: zoom-in;" 
+                onclick="deschidePoza(this.src)">`
+            : '';
+
             const piesaRow = `
                 <tr data-id="${piese.id}">
                     <td>${piese.id}</td>
@@ -187,6 +201,10 @@ function populateMainGrid(data){
                     <td>${piese.tipCaroserie}</td>
                     <td>${piese.pret}</td>
                     <td>${piese.discount}</td>
+                    <td>${piese.codPiesa}</td>
+                    <td>${piese.locatie}</td>
+                    <td>${piese.stoc}</td>
+                    <td>${poza }</td>
                     <td>
                         <button class="edit-button" data-id="${piese.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
                     </td>
@@ -200,7 +218,7 @@ function populateMainGrid(data){
 
          // Adaugă eveniment pentru butoanele de editare
         document.querySelectorAll('.edit-button').forEach(button => {
-            debugger;
+            //debugger;
             button.addEventListener('click', function (event) {
                 event.stopPropagation();
                 const id = this.getAttribute('data-id');
@@ -258,8 +276,20 @@ function populateMainGrid(data){
 }
 
 
+function deschidePoza(src) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    modalImg.src = src;
+    modal.style.display = 'flex';
+}
 
 
+if(document.getElementById('imageModal') != null)
+{
+    document.getElementById('imageModal').addEventListener('click', function () {
+        this.style.display = 'none';
+    });
+}
 
 
 
@@ -303,7 +333,7 @@ function populatePieseMasiniTable() {
 
                // Adaugă eveniment pentru butoanele de editare
             document.querySelectorAll('.edit-button').forEach(button => {
-                debugger;
+                //debugger;
                 button.addEventListener('click', function (event) {
                     event.stopPropagation();
                     const id = this.getAttribute('data-id');                    
@@ -456,7 +486,7 @@ async function getGeneratiiForDropdown(modelId, callback) {
             var generatii = await get(link);  
             callback(generatii);                       
     } catch (error) {
-        console.error('A apărut o eroare la apelarea API-ului pentru generații:', error);
+                console.error('A apărut o eroare la apelarea API-ului pentru generatii:', error);
     }
 }
 
@@ -534,19 +564,19 @@ async function extractCarGeneratie(fullName, model) {
     let generatie = '';
     let parts = rest.split(/ (?=\S)/); // Împarte la prima apariție a unui spațiu urmat de un caracter non-spațiu
 
-    const generatieList = getGeneratieList(); // Obține lista de generații actuală
+        const generatieList = getGeneratieList(); // Obține lista de generatii actuală
 
     for (let i = 0; i < parts.length; i++) {
         if (generatie) generatie += ' ';
         generatie += parts[i];
         
-        // Verifică dacă generația este validă
+        // Verifică dacă generatia este validă
         if (generatieList.includes(generatie)) {
             return generatie;
         }
     }
 
-    return 'Unknown Generation'; // Dacă nu se găsește nicio generație
+        return 'Unknown Generation'; // Dacă nu se găsește nicio generatie
 }
 
 //**********  POPULATE DD ********************************************************************* */
@@ -595,7 +625,7 @@ function populateGeneratiiDropdown(generatii) {
         }
     }    
     const dropdown = document.getElementById('ddd_generatii');
-    dropdown.innerHTML = '<option value="">Selecteaza generația</option>'; // Resetare dropdown
+    dropdown.innerHTML = '<option value="">Selecteaza generatia</option>'; // Resetare dropdown
 
     // Adaugă opțiunile din lista de generații
     generatii.items.forEach(generatie => {
@@ -623,7 +653,7 @@ if (dddCarsElement) {
             getModelsForDropdown(marcaId, populateModelsDropdown);
         } else {
             // Curăță dropdown-ul de modele dacă nu este selectată nicio marcă
-            document.getElementById('ddd_models').innerHTML = '<option value="">Selectează modelul</option>';
+            document.getElementById('ddd_models').innerHTML = '<option value="">Selecteaza modelul</option>';
         }
 
         //debugger;    
@@ -643,8 +673,8 @@ if (dddModelsElement) {
         if (modelId) {
             getGeneratiiForDropdown(modelId, populateGeneratiiDropdown);
         } else {
-            // Curăță dropdown-ul de generații dacă nu este selectat niciun model
-            document.getElementById('ddd_generatii').innerHTML = '<option value="">Selectează generația</option>';
+            // Curăță dropdown-ul de generatii dacă nu este selectat niciun model
+            document.getElementById('ddd_generatii').innerHTML = '<option value="">Selecteaza generatia</option>';
         }
         if(currentURL.includes("index")) {return};
         handleModelChange(modelId);
@@ -814,7 +844,31 @@ function populateTipCaroserieDropdown() {
 
 
 function ChangeLink(marca, model, generatie) { 
-    //debugger;
+    debugger;
+/*     let marcaUrl = marca.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+    let modelUrl = model ? model.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+    let generatieUrl = generatie ? generatie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
+
+    // Construiește URL-ul nou
+    let newPath = currentURL.includes('masini') ? ':' + marcaUrl : marcaUrl;
+    if (modelUrl) {
+        newPath += '-' + modelUrl;
+    }
+    if (generatieUrl) {
+        newPath += '-' + generatieUrl;
+    } */
+
+     let newUrl = ChangeLinkFunc(marca,model,generatie);
+
+     selectedText = newUrl;
+
+    // Actualizează URL-ul fără reîncărcare
+    history.pushState({}, '', newUrl);
+
+    console.log("URL actualizat:", newUrl);
+}
+
+function ChangeLinkFunc(marca, model, generatie){
     let marcaUrl = marca.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
     let modelUrl = model ? model.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
     let generatieUrl = generatie ? generatie.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') : '';
@@ -828,12 +882,10 @@ function ChangeLink(marca, model, generatie) {
         newPath += '-' + generatieUrl;
     }
 
-    let newUrl = `/${newPath}`;
+     let newUrl = currentURL.includes('/:') ? `/:${newPath}` : `/${newPath}`;
 
-    // Actualizează URL-ul fără reîncărcare
-    history.pushState({}, '', newUrl);
+     return newUrl;
 
-    console.log("URL actualizat:", newUrl);
 }
 
 function ChangeLinkCateg(tip, categorie, subcategorie) {
@@ -860,6 +912,7 @@ function ChangeLinkCateg(tip, categorie, subcategorie) {
 function handleMarcaChange(marcaId) {  //container este container ul tot
     debugger;
     currentPage = 1;
+    dddSel = "ddd";
     document.getElementById('tb_cauta').value = "";
     getDescriere('Marca',marcaId);
     model = "";
@@ -868,7 +921,8 @@ function handleMarcaChange(marcaId) {  //container este container ul tot
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {    
             debugger;     
-            if(currentURL.includes("piese")){
+                if(currentURL.includes("piese") || !currentURL.includes("/:")){
+                 selectedTip = "piese.html";
                  populatePieseShopGrid(data);   
             }
             else{
@@ -893,7 +947,8 @@ function handleModelChange(modelId) {
     model = getSelectedText('ddd_models') == "Selecteaza modelul" ? "" : getSelectedText('ddd_models');
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {                           
-             if(currentURL.includes("piese")){
+             if(currentURL.includes("piese") || !currentURL.includes("/:")){
+                selectedTip = "piese.html";
                  populatePieseShopGrid(data);   
             }
             else{
@@ -913,10 +968,11 @@ function handleGeneratieChange(checkbox,container) {
     document.getElementById('tb_cauta').value = "";
     getDescriere('Generatie',generatieId);
     generatie = getSelectedText('ddd_generatii');
-    generatie = getSelectedText('ddd_generatii') == "electează generația" ? "" : getSelectedText('ddd_generatii');
+    generatie = getSelectedText('ddd_generatii') == "selectează generația" ? "" : getSelectedText('ddd_generatii');
     pieseApiCallFields(marca, model, generatie, currentPage, pageSize, orderTerm)
         .then(data => {                
-             if(currentURL.includes("piese")){
+            if(currentURL.includes("piese") || !currentURL.includes("/:")){
+                selectedTip = "piese.html";
                  populatePieseShopGrid(data);   
             }
             else{
@@ -1551,6 +1607,7 @@ function updatePaginationControls() {
 }
 
 function changePage(delta) {
+    debugger;
     if ((delta === -1 && currentPage > 1) || (delta === 1 && currentPage < totalPages)) {
         currentPage += delta;
         pieseApiCall(populateMainGrid);
@@ -1572,11 +1629,46 @@ function changeOrderBy() {
 }
 
 
-function cauta(){    
+function cauta(event){    
     debugger;
+    const buton = event.currentTarget; // sau event.target
     searchTerm = document.getElementById('tb_cauta').value.trim();
     if(window.location.href.includes("index.")){
-        window.location.href = "/piese.html?search=" + searchTerm;
+
+        if(buton.id == "cautaBtn"){
+            window.location.href = "/piese.html?search=" + searchTerm;
+        }
+        else{
+            const selectCar = document.getElementById('ddd_cars');
+            const selectedCar = selectCar.options[selectCar.selectedIndex].text;            
+            //marca
+            if  (selectedCar != "Selecteaza marca"){
+                selectedText = selectedCar;
+            }
+            else{
+                return;
+            }
+            //model     
+            const selectModel = document.getElementById('ddd_models');
+            const selectedModel = selectModel.options[selectModel.selectedIndex].text;
+
+            if  (selectedModel != "Selecteaza modelul"){
+                selectedText += "-" + selectedModel;
+            }
+           
+
+            //generatie     
+            const selectGeneratie = document.getElementById('ddd_generatii');
+            const selectedGeneratie = selectGeneratie.options[selectGeneratie.selectedIndex].text;
+
+            if  (selectedGeneratie != "Selecteaza generatia"){
+                selectedText += "-" + selectedGeneratie;
+                ChangeLink(selectedCar,selectedModel, selectedGeneratie);                
+            }                      
+
+            
+            window.location.href = selectedText.toLowerCase();
+        }               
     }
     else{        
         currentPage = 1; // Resetăm la prima pagină
@@ -1587,5 +1679,14 @@ function cauta(){
 }
 
 
+function calculProfit(){
+    debugger;
+    var pretAchizitie = document.getElementById("tb_pretAchizitie").value;
+    var valoarePieseVandute = document.getElementById("tb_valPieseVandute").value;
+    document.getElementById("tb_profitMasina").value = valoarePieseVandute - pretAchizitie;
+    //document.getElementById("tb_procentProfit").value = (valoarePieseVandute/pretAchizitie) * 100;        
 
+    const procentProfit = ((valoarePieseVandute - pretAchizitie) / pretAchizitie) * 100;
+    document.getElementById("tb_procentProfit").value = procentProfit.toFixed(2) + " %";
+}
 

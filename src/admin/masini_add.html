@@ -211,7 +211,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-12 ddd">
                                         <input type="file" id="fileInput" accept="image/*" multiple>
-                                        <label for="fileInput">Selectează Poze</label>  
+                                        <label for="fileInput">Selecteaza Poze</label>  
                                     </div>
                                     <div class="col-md-12 ddd">
                                         <div class="preview" id="preview"></div>
@@ -229,7 +229,45 @@
                                     </div>
                                 </div>                           
                             </div>
-                        </form>                        
+                        </form>   
+                        INFO VANZARI
+
+                  
+                        <div class="row">
+                            <!-- Coloana 1 - 30% -->
+                            <div class="col-12 col-md-3">
+                                <div class="border p-3 mb-3">
+                                    <div class="form-group">
+                                    <label for="tb_pretAchizitie">Pret achizitie</label>
+                                    <input type="number" min="0" class="form-control" onblur="calculProfit()" id="tb_pretAchizitie" name="tb_pretAchizitie">
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="tb_valPieseVandute">Valoare piese vandute</label>
+                                    <input type="number" min="0" class="form-control" onblur="calculProfit()" id="tb_valPieseVandute" name="tb_valoarePieseVandute">
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="tb_NrPieseVandute">Numar piese vandute</label>
+                                    <input type="number" min="0" class="form-control" id="tb_NrPieseVandute" name="tb_numarPieseVandute">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Coloana 2 - restul de spațiu -->
+                            <div class="col-12 col-md-3">
+                                <div class="border p-3 mb-3">
+                                    <div class="form-group">
+                                    <label for="altCamp1">Profit masina</label>
+                                    <input type="text" class="form-control" id="tb_profitMasina" name="tb_profitMasina">
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="altCamp2">Procent profit</label>
+                                    <input type="text" class="form-control" id="tb_procentProfit" name="tb_procentProfit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
                     </div>
                     
                     <div id="tab2" class="tab-content" style="display:none">        
@@ -346,7 +384,9 @@
                                 </div>                           
 
                                                         
-                            </div>  
+                            </div> 
+                            
+                            
                             
                      <!--    <form action="#" method="post">
                         </form>     -->                                                       

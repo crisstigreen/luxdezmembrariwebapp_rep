@@ -170,11 +170,11 @@ function populatePieseMasiniTable() {
             const rezultateTable = document.getElementById('rezultate-tabel');
             rezultateTable.innerHTML = ''; // Resetează tabela
 
-            data.piese.forEach(piesa => {
+       /*      data.piese.forEach(piesa => {
                 const piesaRow = `
                     <tr data-id="${piesa.id}">
                         <td>${piesa.id}</td>
-                        <td>${piesa.nume}</td>
+                        <td>${piesa.nume}</td>                        
                         <td>${piesa.nrOrdine}</td>
                         <td>${piesa.stoc}</td>
                         <td>${piesa.vandut}</td>
@@ -189,7 +189,29 @@ function populatePieseMasiniTable() {
                     </tr>
                 `;
                 rezultateTable.innerHTML += piesaRow;
+            }); */
+
+            data.piese.forEach((piesa, index) => {
+                const piesaRow = `
+                    <tr data-id="${piesa.id}">
+                        <td>${piesa.id}</td>
+                        <td>${piesa.nume}</td>
+                        <td>${index + 1}</td> <!-- AICI este numărul de ordine -->
+                        <td>${piesa.stoc}</td>
+                        <td>${piesa.vandut}</td>
+                        <td>${piesa.stoc - piesa.vandut}</td>
+                        <td>${piesa.pret}</td>
+                        <td>${piesa.discount}</td>
+                        <td>${calculatePretVanzare(piesa.pret, piesa.discount)}</td>
+                        <td>${piesa.autovit}</td>
+                        <td>
+                            <button class="edit-button" data-id="${piesa.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
+                        </td>
+                    </tr>
+                `;
+                rezultateTable.innerHTML += piesaRow;
             });
+
 
                // Adaugă eveniment pentru butoanele de editare
             document.querySelectorAll('.edit-button').forEach(button => {
@@ -273,7 +295,7 @@ async function fetchAndPopulateCarData() {
                 const generatieDropdown = document.getElementById('ddd_generatii');
                 const generatieOption = Array.from(generatieDropdown.options).find(option => option.text === generatieName);
                 if (generatieOption) {
-                    await setSelectedValue('ddd_generatii', generatieName); // Setează generația selectată
+                    await setSelectedValue('ddd_generatii', generatieName); // Setează generatia selectată
                 } else {
                     console.error('Generația nu a fost găsită.');
                 }                            
@@ -321,15 +343,19 @@ async function populateOtherFields(data) {
     document.getElementById('tb_nrUsi').value = data.nrUsi || ''; 
     document.getElementById('tb_nrViteze').value = data.nrViteze || ''; 
     document.getElementById('tb_alteDetalii').value = data.alteDetaliiTrans || ''; 
-
     document.getElementById('tb_putere').value = data.putere || ''; 
     document.getElementById('tb_puterecp').value = data.putereCP || ''; 
 
+    document.getElementById('tb_pretAchizitie').value = data.pret || ''; 
+    document.getElementById('tb_valPieseVandute').value = data.valoarePiese || ''; 
+     document.getElementById('tb_NrPieseVandute').value = data.totalPieseVandute || ''; 
+
+    calculProfit();
 
 }
 
 function extractGeneratie(nume) {
-    // Expresie regulată pentru a găsi generația în paranteze rotunde
+    // Expresie regulată pentru a găsi generatia în paranteze rotunde
     const generatiePattern = /\b([^\(]+\([^\)]+\)\s*\([^\)]+\))/;
     const match = nume.match(generatiePattern);
     if (match) {
@@ -470,6 +496,10 @@ async function registerCarFunc() {
     var vizibil= document.getElementById("ddd_vizibil");
     var vizibilText= vizibil.options[vizibil.selectedIndex].text;
     var puterecp = document.getElementById('tb_puterecp').value  || 0;
+    var pretAchizitie = document.getElementById("tb_pretAchizitie").value || 0;;
+    var pieseVandute = document.getElementById("tb_valPieseVandute").value || 0;;
+    var nrPieseVandute = document.getElementById("tb_NrPieseVandute").value || 0;;
+
 
     debugger;
     const carId = getQueryParam('id');
@@ -500,14 +530,18 @@ async function registerCarFunc() {
         culoare: culoareText,
         discount: discount,
         nrViteze: nrViteze,
-        puterecp: puterecp
+        puterecp: puterecp,
+        pret: pretAchizitie,
+        valoarePiese: pieseVandute, 
+        TotalPieseVandute: nrPieseVandute
+
     };
  
     if (carId != null) {
         const updateResponse = 
         await update(carId, data, `${API_BASE_URL}/CarsRegister/${carId}`); 
          if (selectedFiles && selectedFiles.length > 0) {
-            uploadImagini(selectedFiles, piesaId, 'masini');
+            uploadImagini(selectedFiles, carId, 'masini');
         }            
                                     
         //ORDINE PIESA - ATENTIE
@@ -650,4 +684,6 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         };
         reader.readAsDataURL(file);
     }
-});
+}); 
+
+

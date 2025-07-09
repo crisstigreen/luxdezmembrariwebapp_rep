@@ -42,6 +42,7 @@ window.onload = function() {
 
 window.addEventListener('DOMContentLoaded', () => {
     //debugger;     
+    dddSel = "";
     const urlParams = new URLSearchParams(window.location.search);
     var searchTerm = urlParams.get('search');
     if(searchTerm != null){
@@ -208,6 +209,9 @@ async function pieseApiCallFields(marca, model, generatie, currentPage, pageSize
     var tipFiltrareObj = await get(link);
     tipFiltrare = tipFiltrareObj.length == 0 ? "byCateg" : "byMarca";
     
+    if(dddSel == "ddd"){
+        tipFiltrare = "byCateg";
+    }
 
     //EXTRAG DIN URL   
     var menuSend = "";
@@ -229,6 +233,9 @@ async function pieseApiCallFields(marca, model, generatie, currentPage, pageSize
         {
             linkId = `${API_BASE_URL}/Piese?menu=` + menuSend + `&tip=` + Nivel;
             IdSubCat = await get(linkId);
+            if(dddSel == "ddd"){
+                IdSubCat = "";
+            }
         }
     }
     else{                             //*****byMarca        

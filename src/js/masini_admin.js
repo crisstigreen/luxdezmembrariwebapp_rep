@@ -37,7 +37,9 @@ function updateResultsTable(data) {
                 <td>${car.status}</td>
                 <td>${car.images}</td>
                 <td>${car.autovit}</td>
-         
+                <td>
+                    ${car.pret == null ? '' : (((car.valoarePiese - car.pret) / car.pret) * 100).toFixed(2) + " %"}
+                </td>
                 
                 <td>
                     <button class="edit-button" data-id="${car.id}"><i class="fas fa-edit" style="font-size:14px"></i></button>
@@ -45,11 +47,14 @@ function updateResultsTable(data) {
                 <td>
                     <button class="delete-button" data-id="${car.id}"><i class="fas fa-remove" style="font-size:14px"></i></button>
                 </td>
+               
             </tr>
         `;
         rezultateTable.innerHTML += carRow;
     });
 
+
+    //(valoarePieseVandute/pretAchizitie) * 100; 
     totalPages = data.totalPages; // Actualizează totalPages
     updatePaginationControls(); // Actualizează controalele de paginare
 
